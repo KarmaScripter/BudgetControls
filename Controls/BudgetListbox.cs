@@ -207,7 +207,7 @@ namespace BudgetExecution
             _BorderColor = Design.BudgetColors.LightBorder;
             _Style = Design.Style.Light;
             _AutoStyle = true;
-            Font = new Font( "Segoe UI", 8f );
+            Font = new Font( "Roboto", 8f );
             DoubleBuffered = true;
             BackColor = Design.BudgetColors.LightDefault;
             ForeColor = Design.BudgetColors.LightFont;

@@ -1,4 +1,4 @@
-// ******************************************************************************************
+﻿// ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
 //     Created:                 06-05-2023
@@ -570,10 +570,8 @@ namespace BudgetExecution
             _InvertForeColor = false;
             _AutoStyle = true;
             _MouseState = Helpers.MouseState.None;
-            Font = new Font( "Segoe UI", 9f );
-
-            SetStyle(
-                ControlStyles.UserPaint
+            Font = new Font( "Roboto", 9f );
+            SetStyle( ControlStyles.UserPaint
                 | ControlStyles.ResizeRedraw
                 | ControlStyles.SupportsTransparentBackColor
                 | ControlStyles.AllPaintingInWmPaint

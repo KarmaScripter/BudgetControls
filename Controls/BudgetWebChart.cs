@@ -1044,7 +1044,7 @@ namespace BudgetExecution
             _FillMode = FillModes.Gradient;
             _AutoStyle = true;
             _MouseState = Helpers.MouseState.None;
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
             Size = new Size( 250, 250 );
             UpdateStyles( );
         }

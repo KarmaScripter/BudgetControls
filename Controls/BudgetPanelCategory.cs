@@ -730,7 +730,7 @@ namespace BudgetExecution
             _GradientPointA = new Point( 0, 0 );
             _GradientPointB = new Point( Width, Height );
             _AutoStyle = true;
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
 
             SetStyle(
                 ControlStyles.UserPaint

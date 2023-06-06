@@ -331,10 +331,10 @@ namespace BudgetExecution
             _Headline = "Headline Text";
             _SubText = "Sub-Text";
             _HeadlineFont = new Font( "Segoe UI Light", 14f );
-            _SubTextFont = new Font( "Segoe UI", 9f );
+            _SubTextFont = new Font( "Roboto", 9f );
             _Checked = false;
             ColorScheme = new MainColorScheme( );
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
 
             SetStyle(
                 ControlStyles.UserPaint

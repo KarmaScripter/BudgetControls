@@ -1,10 +1,10 @@
-// ******************************************************************************************
+﻿// ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
 //     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        06-05-2023
+//     Last Modified On:        06-06-2023
 // ******************************************************************************************
 // <copyright file="BudgetExpander.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -38,23 +38,23 @@
 // </summary>
 // ******************************************************************************************
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace BudgetExecution
 {
     using Properties;
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
 
     /// <summary>
     /// A class collection for rendering an expander.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Panel" />
-    [ DesignerCategory( "Code" ) ]
+    [DesignerCategory( "Code" ) ]
     [ ToolboxBitmap( typeof( BudgetExpander ), "BudgetExpander.bmp" ) ]
     public class BudgetExpander : Panel
     {
@@ -85,9 +85,9 @@ namespace BudgetExecution
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether to draw interect area.
+        /// Gets or sets a value indicating whether to draw intersect area.
         /// </summary>
-        /// <value><c>true</c> if draw interect area; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if draw intersect area; otherwise, <c>false</c>.</value>
         [ Browsable( false ) ]
         [ Category( "Developing" ) ]
         [ ComVisible( false ) ]
@@ -109,14 +109,8 @@ namespace BudgetExecution
         [ Description( "Sets the size to be expanded." ) ]
         public Size ExpandedSize
         {
-            get
-            {
-                return _ExpandedSize;
-            }
-            set
-            {
-                _ExpandedSize = value;
-            }
+            get { return _ExpandedSize; }
+            set { _ExpandedSize = value; }
         }
 
         /// <summary>
@@ -128,14 +122,8 @@ namespace BudgetExecution
         [ Description( "Sets the size when not expanded." ) ]
         public Size NoneSize
         {
-            get
-            {
-                return _NoneSize;
-            }
-            set
-            {
-                _NoneSize = value;
-            }
+            get { return _NoneSize; }
+            set { _NoneSize = value; }
         }
 
         /// <summary>
@@ -148,10 +136,7 @@ namespace BudgetExecution
         [ Description( "Sets the state." ) ]
         public eState State
         {
-            get
-            {
-                return _State;
-            }
+            get { return _State; }
             set
             {
                 if( value != eState.Expanded )
@@ -182,8 +167,7 @@ namespace BudgetExecution
             Size = new Size( 150, 15 );
             _NoneSize = new Size( 150, 15 );
             _ExpandedSize = new Size( 300, 150 );
-            Font = new Font( "Segoe UI", 9f );
-
+            Font = new Font( "Roboto", 9f );
             SetStyle(
                 ControlStyles.UserPaint
                 | ControlStyles.ResizeRedraw
@@ -200,7 +184,6 @@ namespace BudgetExecution
         protected override void OnMouseDown( MouseEventArgs e )
         {
             var rectangle = new Rectangle( 2, 2, Width, Height );
-
             if( !rectangle.Contains( e.Location ) )
             {
                 CurrentState = MouseState.None;
@@ -232,7 +215,6 @@ namespace BudgetExecution
         protected override void OnMouseMove( MouseEventArgs e )
         {
             var rectangle = new Rectangle( checked( Width - 14 ), 2, 10, 10 );
-
             if( !rectangle.Contains( e.Location ) )
             {
                 CurrentState = MouseState.None;
@@ -253,7 +235,6 @@ namespace BudgetExecution
         protected override void OnMouseUp( MouseEventArgs e )
         {
             var rectangle = new Rectangle( checked( Width - 14 ), 2, 10, 10 );
-
             if( !rectangle.Contains( e.Location ) )
             {
                 CurrentState = MouseState.None;
@@ -293,7 +274,6 @@ namespace BudgetExecution
             var rectangle1 = new Rectangle( 0, 5, checked( Width - 16 ), 5 );
             graphics.SmoothingMode = SmoothingMode.HighQuality;
             graphics.Clear( BackColor );
-
             if( _State != eState.None )
             {
                 pointArray = new Point[ 3 ];
@@ -304,19 +284,16 @@ namespace BudgetExecution
                 point = new Point( checked( Width - 9 ), 5 );
                 pointArray[ 2 ] = point;
                 var pointArray1 = pointArray;
-
                 if( CurrentState == MouseState.None )
                 {
                     Brush solidBrush = new SolidBrush( Color.FromArgb( 98, 98, 98 ) );
                     graphics.FillPolygon( solidBrush, pointArray1 );
-
                     graphics.DrawPolygon( new Pen( new SolidBrush( Color.FromArgb( 98, 98, 98 ) ) ),
                         pointArray1 );
                 }
                 else if( CurrentState == MouseState.Over )
                 {
                     graphics.FillPolygon( new SolidBrush( BackColor ), pointArray1 );
-
                     graphics.DrawPolygon(
                         new Pen( new SolidBrush( Color.FromArgb( 0, 164, 240 ) ) ), pointArray1 );
                 }
@@ -331,26 +308,22 @@ namespace BudgetExecution
                 point2 = new Point( checked( Width - 9 ), 8 );
                 pointArray[ 2 ] = point2;
                 var pointArray2 = pointArray;
-
                 if( CurrentState == MouseState.None )
                 {
                     Brush brush = new SolidBrush( Color.FromArgb( 98, 98, 98 ) );
                     graphics.FillPolygon( brush, pointArray2 );
-
                     graphics.DrawPolygon( new Pen( new SolidBrush( Color.FromArgb( 98, 98, 98 ) ) ),
                         pointArray2 );
                 }
                 else if( CurrentState == MouseState.Over )
                 {
                     graphics.FillPolygon( new SolidBrush( BackColor ), pointArray2 );
-
                     graphics.DrawPolygon(
                         new Pen( new SolidBrush( Color.FromArgb( 0, 164, 240 ) ) ), pointArray2 );
                 }
             }
 
             graphics.DrawImageUnscaledAndClipped( Resources.PointRow, rectangle1 );
-
             if( DrawInterectArea )
             {
                 graphics.DrawRectangle( Pens.Red, rectangle );

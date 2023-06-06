@@ -759,7 +759,7 @@ namespace BudgetExecution
             FormBorderStyle = FormBorderStyle.None;
             BackColor = Color.White;
             ForeColor = Color.Black;
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
 
             SetStyle(
                 ControlStyles.UserPaint

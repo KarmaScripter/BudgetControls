@@ -1011,7 +1011,7 @@ namespace BudgetExecution
             _MouseState = Helpers.MouseState.None;
             _HotIndex = -1;
             _AutoStyle = true;
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
 
             SetStyle(
                 ControlStyles.UserPaint

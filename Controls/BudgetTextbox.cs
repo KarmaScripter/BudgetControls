@@ -914,7 +914,7 @@ namespace BudgetExecution
             _Scrollbars = ScrollBars.None;
             _AutoStyle = true;
             _MouseState = Helpers.MouseState.None;
-            Font = new Font( "Segoe UI", 9f );
+            Font = new Font( "Roboto", 9f );
 
             SetStyle(
                 ControlStyles.UserPaint
