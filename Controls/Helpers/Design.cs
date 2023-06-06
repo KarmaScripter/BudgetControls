@@ -485,9 +485,9 @@ namespace BudgetExecution
 
 
         /// <summary>
-        /// Class MetroColors.
+        /// Class BudgetColors.
         /// </summary>
-        public class MetroColors
+        public class BudgetColors
         {
             /// <summary>
             /// The accent blue
@@ -637,7 +637,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._AccentBlue;
+                    return Design.BudgetColors._AccentBlue;
                 }
             }
 
@@ -649,7 +649,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._AccentDarkBlue;
+                    return Design.BudgetColors._AccentDarkBlue;
                 }
             }
 
@@ -661,7 +661,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._AccentLightBlue;
+                    return Design.BudgetColors._AccentLightBlue;
                 }
             }
 
@@ -673,7 +673,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._AccentOrange;
+                    return Design.BudgetColors._AccentOrange;
                 }
             }
 
@@ -685,7 +685,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._AccentPurple;
+                    return Design.BudgetColors._AccentPurple;
                 }
             }
 
@@ -697,7 +697,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkDefault;
+                    return Design.BudgetColors._DarkDefault;
                 }
             }
 
@@ -709,7 +709,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkDisabled;
+                    return Design.BudgetColors._DarkDisabled;
                 }
             }
 
@@ -721,7 +721,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkDisabledFont;
+                    return Design.BudgetColors._DarkDisabledFont;
                 }
             }
 
@@ -733,7 +733,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkFont;
+                    return Design.BudgetColors._DarkFont;
                 }
             }
 
@@ -745,7 +745,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkHover;
+                    return Design.BudgetColors._DarkHover;
                 }
             }
 
@@ -757,7 +757,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkIcon;
+                    return Design.BudgetColors._DarkIcon;
                 }
             }
 
@@ -769,7 +769,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DarkTaskColor;
+                    return Design.BudgetColors._DarkTaskColor;
                 }
             }
 
@@ -781,7 +781,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._DisabledBorder;
+                    return Design.BudgetColors._DisabledBorder;
                 }
             }
 
@@ -793,7 +793,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightBorder;
+                    return Design.BudgetColors._LightBorder;
                 }
             }
 
@@ -805,7 +805,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightDarkDefault;
+                    return Design.BudgetColors._LightDarkDefault;
                 }
             }
 
@@ -817,7 +817,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightDefault;
+                    return Design.BudgetColors._LightDefault;
                 }
             }
 
@@ -829,7 +829,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightDisabled;
+                    return Design.BudgetColors._LightDisabled;
                 }
             }
 
@@ -841,7 +841,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightDisabledFont;
+                    return Design.BudgetColors._LightDisabledFont;
                 }
             }
 
@@ -853,7 +853,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightFont;
+                    return Design.BudgetColors._LightFont;
                 }
             }
 
@@ -865,7 +865,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightHover;
+                    return Design.BudgetColors._LightHover;
                 }
             }
 
@@ -877,7 +877,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightIcon;
+                    return Design.BudgetColors._LightIcon;
                 }
             }
 
@@ -889,7 +889,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._LightSwitchRail;
+                    return Design.BudgetColors._LightSwitchRail;
                 }
             }
 
@@ -901,7 +901,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._PopUpBorder;
+                    return Design.BudgetColors._PopUpBorder;
                 }
             }
 
@@ -913,7 +913,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._PopUpFont;
+                    return Design.BudgetColors._PopUpFont;
                 }
             }
 
@@ -925,7 +925,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._SelectionColor;
+                    return Design.BudgetColors._SelectionColor;
                 }
             }
 
@@ -937,7 +937,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._TabItemHover;
+                    return Design.BudgetColors._TabItemHover;
                 }
             }
 
@@ -949,7 +949,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._TaskColor;
+                    return Design.BudgetColors._TaskColor;
                 }
             }
 
@@ -961,50 +961,50 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.MetroColors._TextShadow;
+                    return Design.BudgetColors._TextShadow;
                 }
             }
 
             /// <summary>
-            /// Initializes static members of the <see cref="MetroColors"/> class.
+            /// Initializes static members of the <see cref="BudgetColors"/> class.
             /// </summary>
-            static MetroColors()
+            static BudgetColors()
             {
-                Design.MetroColors._AccentBlue = Color.FromArgb(0, 122, 204);
-                Design.MetroColors._AccentPurple = Color.FromArgb(104, 33, 122);
-                Design.MetroColors._AccentOrange = Color.FromArgb(202, 81, 0);
-                Design.MetroColors._AccentDarkBlue = Color.FromArgb(0, 99, 165);
-                Design.MetroColors._AccentLightBlue = Color.FromArgb(0, 153, 255);
-                Design.MetroColors._SelectionColor = Color.FromArgb(30, 0, 122, 204);
-                Design.MetroColors._PopUpBorder = Color.FromArgb(240, 240, 240);
-                Design.MetroColors._PopUpFont = Color.FromArgb(106, 115, 124);
-                Design.MetroColors._TabItemHover = Color.FromArgb(10, 0, 122, 204);
-                Design.MetroColors._DisabledBorder = Color.FromArgb(200, 200, 200);
-                Design.MetroColors._TaskColor = Color.FromArgb(230, 230, 230);
-                Design.MetroColors._DarkTaskColor = Color.FromArgb(25, 25, 25);
-                Design.MetroColors._LightDefault = Color.White;
-                Design.MetroColors._LightDarkDefault = Color.FromArgb(230, 230, 230);
-                Design.MetroColors._LightHover = Color.FromArgb(240, 240, 240);
-                Design.MetroColors._LightIcon = Color.Black;
-                Design.MetroColors._LightBorder = Color.FromArgb(98, 98, 98);
-                Design.MetroColors._LightFont = Color.Black;
-                Design.MetroColors._LightDisabled = Color.FromArgb(250, 250, 250);
-                Design.MetroColors._LightDisabledFont = Color.Gray;
-                Design.MetroColors._LightSwitchRail = Color.FromArgb(190, 190, 190);
-                Design.MetroColors._DarkDefault = Color.FromArgb(40, 40, 40);
-                Design.MetroColors._DarkHover = Color.FromArgb(63, 63, 63);
-                Design.MetroColors._DarkIcon = Color.FromArgb(241, 241, 241);
-                Design.MetroColors._DarkFont = Color.FromArgb(153, 153, 153);
-                Design.MetroColors._DarkDisabled = Color.FromArgb(35, 35, 35);
-                Design.MetroColors._DarkDisabledFont = Color.FromArgb(133, 133, 133);
-                Design.MetroColors._TextShadow = Color.FromArgb(30, Color.Black);
+                Design.BudgetColors._AccentBlue = Color.FromArgb(0, 122, 204);
+                Design.BudgetColors._AccentPurple = Color.FromArgb(104, 33, 122);
+                Design.BudgetColors._AccentOrange = Color.FromArgb(202, 81, 0);
+                Design.BudgetColors._AccentDarkBlue = Color.FromArgb(0, 99, 165);
+                Design.BudgetColors._AccentLightBlue = Color.FromArgb(0, 153, 255);
+                Design.BudgetColors._SelectionColor = Color.FromArgb(30, 0, 122, 204);
+                Design.BudgetColors._PopUpBorder = Color.FromArgb(240, 240, 240);
+                Design.BudgetColors._PopUpFont = Color.FromArgb(106, 115, 124);
+                Design.BudgetColors._TabItemHover = Color.FromArgb(10, 0, 122, 204);
+                Design.BudgetColors._DisabledBorder = Color.FromArgb(200, 200, 200);
+                Design.BudgetColors._TaskColor = Color.FromArgb(230, 230, 230);
+                Design.BudgetColors._DarkTaskColor = Color.FromArgb(25, 25, 25);
+                Design.BudgetColors._LightDefault = Color.White;
+                Design.BudgetColors._LightDarkDefault = Color.FromArgb(230, 230, 230);
+                Design.BudgetColors._LightHover = Color.FromArgb(240, 240, 240);
+                Design.BudgetColors._LightIcon = Color.Black;
+                Design.BudgetColors._LightBorder = Color.FromArgb(98, 98, 98);
+                Design.BudgetColors._LightFont = Color.Black;
+                Design.BudgetColors._LightDisabled = Color.FromArgb(250, 250, 250);
+                Design.BudgetColors._LightDisabledFont = Color.Gray;
+                Design.BudgetColors._LightSwitchRail = Color.FromArgb(190, 190, 190);
+                Design.BudgetColors._DarkDefault = Color.FromArgb(40, 40, 40);
+                Design.BudgetColors._DarkHover = Color.FromArgb(63, 63, 63);
+                Design.BudgetColors._DarkIcon = Color.FromArgb(241, 241, 241);
+                Design.BudgetColors._DarkFont = Color.FromArgb(153, 153, 153);
+                Design.BudgetColors._DarkDisabled = Color.FromArgb(35, 35, 35);
+                Design.BudgetColors._DarkDisabledFont = Color.FromArgb(133, 133, 133);
+                Design.BudgetColors._TextShadow = Color.FromArgb(30, Color.Black);
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="MetroColors"/> class.
+            /// Initializes a new instance of the <see cref="BudgetColors"/> class.
             /// </summary>
             [DebuggerNonUserCode]
-            public MetroColors()
+            public BudgetColors()
             {
             }
 
@@ -1058,11 +1058,11 @@ namespace BudgetExecution
                 Color color = defaultColor;
                 if (style == Design.Style.Light)
                 {
-                    color = (isEnabled ? Design.MetroColors.LightDefault : Design.MetroColors.LightDisabled);
+                    color = (isEnabled ? Design.BudgetColors.LightDefault : Design.BudgetColors.LightDisabled);
                 }
                 else if (style == Design.Style.Dark)
                 {
-                    color = (isEnabled ? Design.MetroColors.DarkDefault : Design.MetroColors.DarkDisabled);
+                    color = (isEnabled ? Design.BudgetColors.DarkDefault : Design.BudgetColors.DarkDisabled);
                 }
                 return color;
             }
@@ -1079,11 +1079,11 @@ namespace BudgetExecution
                 Color color = defaultColor;
                 if (style == Design.Style.Light)
                 {
-                    color = (isEnabled ? Design.MetroColors.LightFont : Design.MetroColors.LightDisabledFont);
+                    color = (isEnabled ? Design.BudgetColors.LightFont : Design.BudgetColors.LightDisabledFont);
                 }
                 else if (style == Design.Style.Dark)
                 {
-                    color = (isEnabled ? Design.MetroColors.DarkFont : Design.MetroColors.DarkDisabledFont);
+                    color = (isEnabled ? Design.BudgetColors.DarkFont : Design.BudgetColors.DarkDisabledFont);
                 }
                 return color;
             }
