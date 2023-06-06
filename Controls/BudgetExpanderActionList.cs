@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetExpanderActionList.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -44,69 +44,78 @@ using System.ComponentModel.Design;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetExpanderActionList.
-	/// </summary>
-	/// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-	public class BudgetExpanderActionList : DesignerActionList
-	{
-		/// <summary>
-		/// The ex
-		/// </summary>
-		private BudgetExpander _ex;
+    /// <summary>
+    /// Class BudgetExpanderActionList.
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
+    public class BudgetExpanderActionList : DesignerActionList
+    {
+        /// <summary>
+        /// The ex
+        /// </summary>
+        private BudgetExpander _ex;
 
-		/// <summary>
-		/// The designer action SVC
-		/// </summary>
-		private DesignerActionUIService designerActionSvc;
+        /// <summary>
+        /// The designer action SVC
+        /// </summary>
+        private DesignerActionUIService designerActionSvc;
 
-		/// <summary>
-		/// Gets or sets the state.
-		/// </summary>
-		/// <value>The state.</value>
-		public BudgetExpander.eState State
-		{
-			get
-			{
-				return this._ex.State;
-			}
-			set
-			{
-				this._ex.State = value;
-				this.designerActionSvc.Refresh(this._ex);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        /// <value>The state.</value>
+        public BudgetExpander.eState State
+        {
+            get
+            {
+                return _ex.State;
+            }
+            set
+            {
+                _ex.State = value;
+                designerActionSvc.Refresh( _ex );
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetExpanderActionList"/> class.
-		/// </summary>
-		/// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-		public BudgetExpanderActionList(IComponent component) : base(component)
-		{
-			this.designerActionSvc = null;
-			this._ex = (BudgetExpander)component;
-			this.designerActionSvc = (DesignerActionUIService)this.GetService(typeof(DesignerActionUIService));
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetExpanderActionList"/> class.
+        /// </summary>
+        /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
+        public BudgetExpanderActionList( IComponent component )
+            : base( component )
+        {
+            designerActionSvc = null;
+            _ex = (BudgetExpander)component;
 
-		/// <summary>
-		/// Betas this instance.
-		/// </summary>
-		public void BETA()
-		{
-			Interaction.MsgBox("Bitte beachten Sie, dass dieses Control noch in der BETA-Test-Phase ist und somit den ein oder anderen Fehler aufweist.\r\nIch bitte um Ihr Verständnis!", MsgBoxStyle.Information, "Hinweis!");
-			this.designerActionSvc.Refresh(this._ex);
-		}
+            designerActionSvc =
+                (DesignerActionUIService)GetService( typeof( DesignerActionUIService ) );
+        }
 
-		/// <summary>
-		/// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
-		/// </summary>
-		/// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-		public override DesignerActionItemCollection GetSortedActionItems()
-		{
-			DesignerActionItemCollection designerActionItemCollection = new DesignerActionItemCollection();
-			designerActionItemCollection.Add(new DesignerActionHeaderItem("Properties"));
-			designerActionItemCollection.Add(new DesignerActionPropertyItem("State", "State:", "Properties", "Der Status des Expanders."));
-			return designerActionItemCollection;
-		}
-	}
+        /// <summary>
+        /// Betas this instance.
+        /// </summary>
+        public void BETA( )
+        {
+            Interaction.MsgBox(
+                "Bitte beachten Sie, dass dieses Control noch in der BETA-Test-Phase ist und somit den ein oder anderen Fehler aufweist.\r\nIch bitte um Ihr Verständnis!",
+                MsgBoxStyle.Information, "Hinweis!" );
+
+            designerActionSvc.Refresh( _ex );
+        }
+
+        /// <summary>
+        /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
+        /// </summary>
+        /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
+        public override DesignerActionItemCollection GetSortedActionItems( )
+        {
+            var designerActionItemCollection = new DesignerActionItemCollection( );
+            designerActionItemCollection.Add( new DesignerActionHeaderItem( "Properties" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "State", "State:",
+                "Properties", "Der Status des Expanders." ) );
+
+            return designerActionItemCollection;
+        }
+    }
 }

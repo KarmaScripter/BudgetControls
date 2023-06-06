@@ -1,12 +1,12 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
-// <copyright file="MetroCheckBoxDesigner.cs" company="Terry D. Eppler">
+// <copyright file="BudgetCheckBoxDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
 //    US Environmental Protection Agency (US EPA).
 //    Copyright ©  2023  Terry Eppler
@@ -34,7 +34,7 @@
 //    You can contact me at:   terryeppler@gmail.com or eppler.terry@epa.gov
 // </copyright>
 // <summary>
-//   MetroCheckBoxDesigner.cs
+//   BudgetCheckBoxDesigner.cs
 // </summary>
 // ******************************************************************************************
 
@@ -64,12 +64,13 @@ namespace BudgetExecution
         {
             get
             {
-                if (this.lists == null)
+                if( lists == null )
                 {
-                    this.lists = new DesignerActionListCollection();
-                    this.lists.Add(new BudgetCheckBoxActionList(this.Component));
+                    lists = new DesignerActionListCollection( );
+                    lists.Add( new BudgetCheckBoxActionList( Component ) );
                 }
-                return this.lists;
+
+                return lists;
             }
         }
 
@@ -81,7 +82,7 @@ namespace BudgetExecution
         {
             get
             {
-                return (BudgetCheckBox)this.Control;
+                return (BudgetCheckBox)Control;
             }
         }
 
@@ -89,19 +90,19 @@ namespace BudgetExecution
         /// Gets the selection rules that indicate the movement capabilities of a component.
         /// </summary>
         /// <value>The selection rules.</value>
-        public override System.Windows.Forms.Design.SelectionRules SelectionRules
+        public override SelectionRules SelectionRules
         {
             get
             {
-                return (SelectionRules)268435456 | (SelectionRules)4 | System.Windows.Forms.Design.SelectionRules.RightSizeable;
+                return (SelectionRules)268435456 | (SelectionRules)4 | SelectionRules.RightSizeable;
             }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetCheckBoxDesigner"/> class.
         /// </summary>
-        [DebuggerNonUserCode]
-        public BudgetCheckBoxDesigner()
+        [ DebuggerNonUserCode ]
+        public BudgetCheckBoxDesigner( )
         {
         }
 
@@ -109,13 +110,13 @@ namespace BudgetExecution
         /// Allows a designer to change or remove items from the set of properties that it exposes through a <see cref="T:System.ComponentModel.TypeDescriptor" />.
         /// </summary>
         /// <param name="properties">The properties for the class of the component.</param>
-        protected override void PostFilterProperties(IDictionary properties)
+        protected override void PostFilterProperties( IDictionary properties )
         {
-            properties.Remove("BackgroundImage");
-            properties.Remove("BackgroundImageLayout");
-            properties.Remove("BorderStyle");
-            properties.Remove("RightToLeft");
-            base.PostFilterProperties(properties);
+            properties.Remove( "BackgroundImage" );
+            properties.Remove( "BackgroundImageLayout" );
+            properties.Remove( "BorderStyle" );
+            properties.Remove( "RightToLeft" );
+            base.PostFilterProperties( properties );
         }
     }
 }

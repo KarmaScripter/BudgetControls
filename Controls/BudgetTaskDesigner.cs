@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTaskDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,21 +47,25 @@ using System.Text;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetTaskDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetTaskDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetTaskDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetTaskDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +81,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroTaskSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroTaskSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +106,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroTaskSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroTaskSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroTaskSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +126,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetTask colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroTaskSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroTaskSmartTagActionList(IComponent component) : base(component)
+        public MetroTaskSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetTask;
+            colUserControl = component as BudgetTask;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +153,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +182,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +198,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -202,7 +214,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("FinishedColor").SetValue(colUserControl, value);
+                GetPropertyByName( "FinishedColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -218,7 +230,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("HoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "HoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -234,7 +246,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineColor").SetValue(colUserControl, value);
+                GetPropertyByName( "LineColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -250,7 +262,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Style").SetValue(colUserControl, value);
+                GetPropertyByName( "Style" ).SetValue( colUserControl, value );
             }
         }
 
@@ -266,7 +278,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -282,7 +294,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("StartPointWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "StartPointWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -296,7 +308,6 @@ namespace BudgetExecution
             set
             {
                 colUserControl.PieAngle.StartAngle = value;
-                
             }
         }
 
@@ -310,7 +321,6 @@ namespace BudgetExecution
             set
             {
                 colUserControl.PieAngle.SweepAngle = value;
-
             }
         }
 
@@ -326,7 +336,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Points").SetValue(colUserControl, value);
+                GetPropertyByName( "Points" ).SetValue( colUserControl, value );
             }
         }
 
@@ -338,82 +348,60 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionPropertyItem("BackColor",
-                                 "Back Color", "Appearance",
-                                 "Selects the background color."));
+            items.Add( new DesignerActionPropertyItem( "BackColor", "Back Color", "Appearance",
+                "Selects the background color." ) );
 
-            items.Add(new DesignerActionPropertyItem("ForeColor",
-                                 "Fore Color", "Appearance",
-                                 "Sets the foreground color."));
+            items.Add( new DesignerActionPropertyItem( "ForeColor", "Fore Color", "Appearance",
+                "Sets the foreground color." ) );
 
-            items.Add(new DesignerActionPropertyItem("FinishedColor",
-                                 "Finished Color", "Appearance",
-                                 "Sets the finished color."));
+            items.Add( new DesignerActionPropertyItem( "FinishedColor", "Finished Color",
+                "Appearance", "Sets the finished color." ) );
 
-            items.Add(new DesignerActionPropertyItem("HoverColor",
-                                 "Hovered Color", "Appearance",
-                                 "Sets the hovered color."));
+            items.Add( new DesignerActionPropertyItem( "HoverColor", "Hovered Color", "Appearance",
+                "Sets the hovered color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "LineColor", "Line Color", "Appearance",
+                "Sets the line color." ) );
 
-            items.Add(new DesignerActionPropertyItem("LineColor",
-                "Line Color", "Appearance",
-                "Sets the line color."));
+            items.Add( new DesignerActionPropertyItem( "Shape", "Shape", "Appearance",
+                "Sets the line color." ) );
 
-            items.Add(new DesignerActionPropertyItem("Shape",
-                "Shape", "Appearance",
-                "Sets the line color."));
+            items.Add( new DesignerActionPropertyItem( "Style", "Style", "Appearance",
+                "Sets the style." ) );
 
+            items.Add( new DesignerActionPropertyItem( "StartPointWidth", "Start PointWidth",
+                "Appearance", "Sets the starting point." ) );
 
-            items.Add(new DesignerActionPropertyItem("Style",
-                "Style", "Appearance",
-                "Sets the style."));
+            items.Add( new DesignerActionPropertyItem( "StartAngle", "Start Angle", "Appearance",
+                "Sets the starting angle." ) );
 
-            items.Add(new DesignerActionPropertyItem("StartPointWidth",
-                "Start PointWidth", "Appearance",
-                "Sets the starting point."));
+            items.Add( new DesignerActionPropertyItem( "SweepAngle", "Sweep Angle", "Appearance",
+                "Sets the sweep angle." ) );
 
-
-            items.Add(new DesignerActionPropertyItem("StartAngle",
-                "Start Angle", "Appearance",
-                "Sets the starting angle."));
-
-            items.Add(new DesignerActionPropertyItem("SweepAngle",
-                "Sweep Angle", "Appearance",
-                "Sets the sweep angle."));
-
-            items.Add(new DesignerActionPropertyItem("Points",
-                "Points", "Appearance",
-                "Set the points."));
+            items.Add( new DesignerActionPropertyItem( "Points", "Points", "Appearance",
+                "Set the points." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

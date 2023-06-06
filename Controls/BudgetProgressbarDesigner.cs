@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetProgressbarDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -38,30 +38,34 @@
 // </summary>
 // ******************************************************************************************
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing;
-using System.Text;
-
 namespace BudgetExecution
 {
-
+    using System.Security.Permissions;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Design;
+    using System;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.ComponentModel.Design;
+    using System.Drawing;
+    using System.Text;
+    
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetProgressbarDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetProgressbarDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetProgressbarDesigner : System.Windows.Forms.Design.ControlDesigner
+    [PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetProgressbarDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +81,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroProgressbarSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroProgressbarSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +106,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroProgressbarSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroProgressbarSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroProgressbarSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +126,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetProgressbar colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroProgressbarSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroProgressbarSmartTagActionList(IComponent component) : base(component)
+        public MetroProgressbarSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetProgressbar;
+            colUserControl = component as BudgetProgressbar;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +153,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +182,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +198,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -202,7 +214,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DrawBorder").SetValue(colUserControl, value);
+                GetPropertyByName( "DrawBorder" ).SetValue( colUserControl, value );
             }
         }
 
@@ -218,7 +230,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("IsRound").SetValue(colUserControl, value);
+                GetPropertyByName( "IsRound" ).SetValue( colUserControl, value );
             }
         }
 
@@ -234,7 +246,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ShowValueAsText").SetValue(colUserControl, value);
+                GetPropertyByName( "ShowValueAsText" ).SetValue( colUserControl, value );
             }
         }
 
@@ -250,7 +262,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("UseGradient").SetValue(colUserControl, value);
+                GetPropertyByName( "UseGradient" ).SetValue( colUserControl, value );
             }
         }
 
@@ -258,7 +270,7 @@ namespace BudgetExecution
         /// Gets or sets the orientation.
         /// </summary>
         /// <value>The orientation.</value>
-        public System.Windows.Forms.Orientation Orientation
+        public Orientation Orientation
         {
             get
             {
@@ -266,7 +278,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Orientation").SetValue(colUserControl, value);
+                GetPropertyByName( "Orientation" ).SetValue( colUserControl, value );
             }
         }
 
@@ -282,7 +294,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Style").SetValue(colUserControl, value);
+                GetPropertyByName( "Style" ).SetValue( colUserControl, value );
             }
         }
 
@@ -298,7 +310,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -314,7 +326,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DefaultColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DefaultColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -330,7 +342,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("GradientColor").SetValue(colUserControl, value);
+                GetPropertyByName( "GradientColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -346,7 +358,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ProgressColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ProgressColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -362,7 +374,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Maximum").SetValue(colUserControl, value);
+                GetPropertyByName( "Maximum" ).SetValue( colUserControl, value );
             }
         }
 
@@ -378,7 +390,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RoundingArc").SetValue(colUserControl, value);
+                GetPropertyByName( "RoundingArc" ).SetValue( colUserControl, value );
             }
         }
 
@@ -394,7 +406,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SpecialSymbol").SetValue(colUserControl, value);
+                GetPropertyByName( "SpecialSymbol" ).SetValue( colUserControl, value );
             }
         }
 
@@ -410,7 +422,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Value").SetValue(colUserControl, value);
+                GetPropertyByName( "Value" ).SetValue( colUserControl, value );
             }
         }
 
@@ -422,103 +434,74 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Behaviour"));
-            
-            
-            items.Add(new DesignerActionPropertyItem("DrawBorder",
-                                 "Show Border", "Behaviour",
-                                 "Set to show the border of the progress."));
+            items.Add( new DesignerActionHeaderItem( "Behaviour" ) );
 
-            items.Add(new DesignerActionPropertyItem("IsRound",
-                                 "Rounding", "Behaviour",
-                                 "Set to enable rounding of the corners."));
+            items.Add( new DesignerActionPropertyItem( "DrawBorder", "Show Border", "Behaviour",
+                "Set to show the border of the progress." ) );
 
+            items.Add( new DesignerActionPropertyItem( "IsRound", "Rounding", "Behaviour",
+                "Set to enable rounding of the corners." ) );
 
-            items.Add(new DesignerActionPropertyItem("ShowValueAsText",
-                "Show Percentage", "Behaviour",
-                "Set to show value as text."));
+            items.Add( new DesignerActionPropertyItem( "ShowValueAsText", "Show Percentage",
+                "Behaviour", "Set to show value as text." ) );
 
-            items.Add(new DesignerActionPropertyItem("UseGradient",
-                "Use Gradient", "Behaviour",
-                "Set to enable gradient usage."));
+            items.Add( new DesignerActionPropertyItem( "UseGradient", "Use Gradient", "Behaviour",
+                "Set to enable gradient usage." ) );
 
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionPropertyItem( "Orientation", "Orientation", "Appearance",
+                "Sets the orientation of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("Orientation",
-                "Orientation", "Appearance",
-                "Sets the orientation of the progress."));
+            items.Add( new DesignerActionPropertyItem( "Style", "Style", "Appearance",
+                "Sets the style of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("Style",
-                "Style", "Appearance",
-                "Sets the style of the progress."));
+            items.Add( new DesignerActionPropertyItem( "ProgressColor", "Progress Color",
+                "Appearance", "Sets the color of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("ProgressColor",
-                "Progress Color", "Appearance",
-                "Sets the color of the progress."));
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Sets the border color of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Sets the border color of the progress."));
+            items.Add( new DesignerActionPropertyItem( "DefaultColor", "Default Color",
+                "Appearance", "Sets the default color of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("DefaultColor",
-                "Default Color", "Appearance",
-                "Sets the default color of the progress."));
+            items.Add( new DesignerActionPropertyItem( "GradientColor", "Gradient Color",
+                "Appearance", "Sets the gradient color of the progress." ) );
 
+            items.Add( new DesignerActionPropertyItem( "ForeColor", "Fore Color", "Appearance",
+                "Set the percentage color." ) );
 
-            items.Add(new DesignerActionPropertyItem("GradientColor",
-                "Gradient Color", "Appearance",
-                "Sets the gradient color of the progress."));
+            items.Add( new DesignerActionPropertyItem( "Maximum", "Maximum", "Appearance",
+                "Sets the maximum value of the progress." ) );
 
-            
-            items.Add(new DesignerActionPropertyItem("ForeColor",
-                "Fore Color", "Appearance",
-                "Set the percentage color."));
+            items.Add( new DesignerActionPropertyItem( "RoundingArc", "Radius", "Appearance",
+                "Sets the rounding corners of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("Maximum",
-                "Maximum", "Appearance",
-                "Sets the maximum value of the progress."));
+            items.Add( new DesignerActionPropertyItem( "SpecialSymbol", "Special Symbol",
+                "Appearance", "Sets the special symbol of the progress." ) );
 
-            items.Add(new DesignerActionPropertyItem("RoundingArc",
-                "Radius", "Appearance",
-                "Sets the rounding corners of the progress."));
-
-
-            items.Add(new DesignerActionPropertyItem("SpecialSymbol",
-                "Special Symbol", "Appearance",
-                "Sets the special symbol of the progress."));
-
-            items.Add(new DesignerActionPropertyItem("Value",
-                "Value", "Appearance",
-                "Sets the value of the progress."));
+            items.Add( new DesignerActionPropertyItem( "Value", "Value", "Appearance",
+                "Sets the value of the progress." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

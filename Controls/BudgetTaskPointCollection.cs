@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTaskPointCollection.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -44,110 +44,121 @@ using System.Collections.ObjectModel;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetTaskPointCollection.
-	/// </summary>
-	/// <seealso cref="System.Collections.ObjectModel.Collection{BudgetExecution.MetroTaskPoint}" />
-	public class BudgetTaskPointCollection : Collection<BudgetTaskPoint>
-	{
+    /// <summary>
+    /// Class BudgetTaskPointCollection.
+    /// </summary>
+    /// <seealso cref="System.Collections.ObjectModel.Collection{BudgetExecution.MetroTaskPoint}" />
+    public class BudgetTaskPointCollection : Collection<BudgetTaskPoint>
+    {
+        /// <summary>
+        /// Adds the items.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        public void AddItems( BudgetTaskPoint[ ] items )
+        {
+            var length = checked( items.Length - 1 );
 
-		/// <summary>
-		/// Adds the items.
-		/// </summary>
-		/// <param name="items">The items.</param>
-		public void AddItems(BudgetTaskPoint[] items)
-		{
-			int length = checked(checked((int)items.Length) - 1);
-			for (int i = 0; i <= length; i = checked(i + 1))
-			{
-				this.Add(items[i]);
-				EventHandler<BudgetTaskPointCollectionEventArgs> eventHandler = this.ItemAdded;
-				if (eventHandler != null)
-				{
-					eventHandler(this, new BudgetTaskPointCollectionEventArgs(items[i]));
-				}
-			}
-		}
+            for( var i = 0; i <= length; i = checked( i + 1 ) )
+            {
+                Add( items[ i ] );
+                var eventHandler = ItemAdded;
 
-		/// <summary>
-		/// Removes all elements from the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
-		/// </summary>
-		protected override void ClearItems()
-		{
-			IEnumerator<BudgetTaskPoint> enumerator = null;
-			using (enumerator)
-			{
-				enumerator = this.GetEnumerator();
-				while (enumerator.MoveNext())
-				{
-					BudgetTaskPoint current = enumerator.Current;
-					EventHandler<BudgetTaskPointCollectionEventArgs> eventHandler = this.ItemRemoving;
-					if (eventHandler != null)
-					{
-						eventHandler(this, new BudgetTaskPointCollectionEventArgs(current));
-					}
-				}
-			}
-			base.ClearItems();
-		}
+                if( eventHandler != null )
+                {
+                    eventHandler( this, new BudgetTaskPointCollectionEventArgs( items[ i ] ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1" /> at the specified index.
-		/// </summary>
-		/// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
-		/// <param name="item">The object to insert. The value can be null for reference types.</param>
-		protected override void InsertItem(int index, BudgetTaskPoint item)
-		{
-			base.InsertItem(index, item);
-			EventHandler<BudgetTaskPointCollectionEventArgs> eventHandler = this.ItemAdded;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTaskPointCollectionEventArgs(item));
-			}
-		}
+        /// <summary>
+        /// Removes all elements from the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
+        /// </summary>
+        protected override void ClearItems( )
+        {
+            IEnumerator<BudgetTaskPoint> enumerator = null;
 
-		/// <summary>
-		/// Removes the element at the specified index of the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
-		/// </summary>
-		/// <param name="index">The zero-based index of the element to remove.</param>
-		protected override void RemoveItem(int index)
-		{
-			EventHandler<BudgetTaskPointCollectionEventArgs> eventHandler = this.ItemRemoving;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTaskPointCollectionEventArgs(this[index]));
-			}
-			base.RemoveItem(index);
-		}
+            using( enumerator )
+            {
+                enumerator = GetEnumerator( );
 
-		/// <summary>
-		/// Replaces the element at the specified index.
-		/// </summary>
-		/// <param name="index">The zero-based index of the element to replace.</param>
-		/// <param name="item">The new value for the element at the specified index. The value can be null for reference types.</param>
-		protected override void SetItem(int index, BudgetTaskPoint item)
-		{
-			EventHandler<BudgetTaskPointCollectionEventArgs> eventHandler = this.ItemRemoving;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTaskPointCollectionEventArgs(this[index]));
-			}
-			base.SetItem(index, item);
-			eventHandler = this.ItemAdded;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTaskPointCollectionEventArgs(item));
-			}
-		}
+                while( enumerator.MoveNext( ) )
+                {
+                    var current = enumerator.Current;
+                    var eventHandler = ItemRemoving;
 
-		/// <summary>
-		/// Occurs when [item added].
-		/// </summary>
-		public event EventHandler<BudgetTaskPointCollectionEventArgs> ItemAdded;
+                    if( eventHandler != null )
+                    {
+                        eventHandler( this, new BudgetTaskPointCollectionEventArgs( current ) );
+                    }
+                }
+            }
 
-		/// <summary>
-		/// Occurs when [item removing].
-		/// </summary>
-		public event EventHandler<BudgetTaskPointCollectionEventArgs> ItemRemoving;
-	}
+            base.ClearItems( );
+        }
+
+        /// <summary>
+        /// Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1" /> at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+        /// <param name="item">The object to insert. The value can be null for reference types.</param>
+        protected override void InsertItem( int index, BudgetTaskPoint item )
+        {
+            base.InsertItem( index, item );
+            var eventHandler = ItemAdded;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTaskPointCollectionEventArgs( item ) );
+            }
+        }
+
+        /// <summary>
+        /// Removes the element at the specified index of the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to remove.</param>
+        protected override void RemoveItem( int index )
+        {
+            var eventHandler = ItemRemoving;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTaskPointCollectionEventArgs( this[ index ] ) );
+            }
+
+            base.RemoveItem( index );
+        }
+
+        /// <summary>
+        /// Replaces the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to replace.</param>
+        /// <param name="item">The new value for the element at the specified index. The value can be null for reference types.</param>
+        protected override void SetItem( int index, BudgetTaskPoint item )
+        {
+            var eventHandler = ItemRemoving;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTaskPointCollectionEventArgs( this[ index ] ) );
+            }
+
+            base.SetItem( index, item );
+            eventHandler = ItemAdded;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTaskPointCollectionEventArgs( item ) );
+            }
+        }
+
+        /// <summary>
+        /// Occurs when [item added].
+        /// </summary>
+        public event EventHandler<BudgetTaskPointCollectionEventArgs> ItemAdded;
+
+        /// <summary>
+        /// Occurs when [item removing].
+        /// </summary>
+        public event EventHandler<BudgetTaskPointCollectionEventArgs> ItemRemoving;
+    }
 }

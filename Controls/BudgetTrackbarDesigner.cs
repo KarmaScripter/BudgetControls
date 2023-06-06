@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackbarDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,21 +47,25 @@ using System.Text;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetTrackbarDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetTrackbarDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetTrackbarDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetTrackbarDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +81,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new BudgetTrackbarSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new BudgetTrackbarSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +106,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class BudgetTrackbarSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class BudgetTrackbarSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class BudgetTrackbarSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +126,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetTrackbar colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetTrackbarSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public BudgetTrackbarSmartTagActionList(IComponent component) : base(component)
+        public BudgetTrackbarSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetTrackbar;
+            colUserControl = component as BudgetTrackbar;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +153,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +182,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +198,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -202,7 +214,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SingleSlider").SetValue(colUserControl, value);
+                GetPropertyByName( "SingleSlider" ).SetValue( colUserControl, value );
             }
         }
 
@@ -218,7 +230,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SliderStyle").SetValue(colUserControl, value);
+                GetPropertyByName( "SliderStyle" ).SetValue( colUserControl, value );
             }
         }
 
@@ -234,7 +246,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -250,7 +262,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("GradientColor").SetValue(colUserControl, value);
+                GetPropertyByName( "GradientColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -266,7 +278,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("HoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "HoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -282,7 +294,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LeftColor").SetValue(colUserControl, value);
+                GetPropertyByName( "LeftColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -298,7 +310,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RegionColor").SetValue(colUserControl, value);
+                GetPropertyByName( "RegionColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -314,7 +326,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RightColor").SetValue(colUserControl, value);
+                GetPropertyByName( "RightColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -330,7 +342,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SliderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "SliderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -346,7 +358,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Maximum").SetValue(colUserControl, value);
+                GetPropertyByName( "Maximum" ).SetValue( colUserControl, value );
             }
         }
 
@@ -362,7 +374,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Minimum").SetValue(colUserControl, value);
+                GetPropertyByName( "Minimum" ).SetValue( colUserControl, value );
             }
         }
 
@@ -378,7 +390,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RailWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "RailWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -394,7 +406,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RoundingArc").SetValue(colUserControl, value);
+                GetPropertyByName( "RoundingArc" ).SetValue( colUserControl, value );
             }
         }
 
@@ -410,7 +422,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SecondValue").SetValue(colUserControl, value);
+                GetPropertyByName( "SecondValue" ).SetValue( colUserControl, value );
             }
         }
 
@@ -426,7 +438,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SliderWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "SliderWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -442,10 +454,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Value").SetValue(colUserControl, value);
+                GetPropertyByName( "Value" ).SetValue( colUserControl, value );
             }
         }
-
 
         #endregion
 
@@ -455,97 +466,72 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Appearance"));
-            
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionPropertyItem("SingleSlider",
-                                 "Single Slider", "Appearance",
-                                 "Enable start and end slider."));
+            items.Add( new DesignerActionPropertyItem( "SingleSlider", "Single Slider",
+                "Appearance", "Enable start and end slider." ) );
 
-            items.Add(new DesignerActionPropertyItem("SliderStyle",
-                                 "Slider Style", "Appearance",
-                                 "Sets the slider style."));
-            
-            items.Add(new DesignerActionPropertyItem("GradientColor",
-                "Gradient Color", "Appearance",
-                "Sets the gradient color."));
+            items.Add( new DesignerActionPropertyItem( "SliderStyle", "Slider Style", "Appearance",
+                "Sets the slider style." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Sets the border color."));
+            items.Add( new DesignerActionPropertyItem( "GradientColor", "Gradient Color",
+                "Appearance", "Sets the gradient color." ) );
 
-            items.Add(new DesignerActionPropertyItem("HoverColor",
-                "Hover Color", "Appearance",
-                "Sets the color when hovered."));
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Sets the border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("LeftColor",
-                "Left Color", "Appearance",
-                "Sets the left color."));
+            items.Add( new DesignerActionPropertyItem( "HoverColor", "Hover Color", "Appearance",
+                "Sets the color when hovered." ) );
 
-            items.Add(new DesignerActionPropertyItem("RegionColor",
-                "Region Color", "Appearance",
-                "Sets the region color."));
+            items.Add( new DesignerActionPropertyItem( "LeftColor", "Left Color", "Appearance",
+                "Sets the left color." ) );
 
-            items.Add(new DesignerActionPropertyItem("SliderColor",
-                "Slider Color", "Appearance",
-                "Sets the slider color."));
+            items.Add( new DesignerActionPropertyItem( "RegionColor", "Region Color", "Appearance",
+                "Sets the region color." ) );
 
-            items.Add(new DesignerActionPropertyItem("Maximum",
-                "Maximum", "Appearance",
-                "Sets the maximum value."));
+            items.Add( new DesignerActionPropertyItem( "SliderColor", "Slider Color", "Appearance",
+                "Sets the slider color." ) );
 
-            items.Add(new DesignerActionPropertyItem("Minimum",
-                "Minimum", "Appearance",
-                "Sets the minimum value."));
+            items.Add( new DesignerActionPropertyItem( "Maximum", "Maximum", "Appearance",
+                "Sets the maximum value." ) );
 
-            items.Add(new DesignerActionPropertyItem("RoundingArc",
-                "Radius", "Appearance",
-                "Sets the rounding corners of the rounded rectangles."));
+            items.Add( new DesignerActionPropertyItem( "Minimum", "Minimum", "Appearance",
+                "Sets the minimum value." ) );
 
-            items.Add(new DesignerActionPropertyItem("RailWidth",
-                "Rail Width", "Appearance",
-                "Sets the rail width."));
+            items.Add( new DesignerActionPropertyItem( "RoundingArc", "Radius", "Appearance",
+                "Sets the rounding corners of the rounded rectangles." ) );
 
-            items.Add(new DesignerActionPropertyItem("SliderWidth",
-                "Slider Width", "Appearance",
-                "Sets the slider width."));
+            items.Add( new DesignerActionPropertyItem( "RailWidth", "Rail Width", "Appearance",
+                "Sets the rail width." ) );
 
-            items.Add(new DesignerActionPropertyItem("SecondValue",
-                "Second Value", "Appearance",
-                "Sets the second value."));
+            items.Add( new DesignerActionPropertyItem( "SliderWidth", "Slider Width", "Appearance",
+                "Sets the slider width." ) );
 
-            items.Add(new DesignerActionPropertyItem("Value",
-                "Value", "Appearance",
-                "Sets the value of the slider."));
+            items.Add( new DesignerActionPropertyItem( "SecondValue", "Second Value", "Appearance",
+                "Sets the second value." ) );
 
+            items.Add( new DesignerActionPropertyItem( "Value", "Value", "Appearance",
+                "Sets the value of the slider." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

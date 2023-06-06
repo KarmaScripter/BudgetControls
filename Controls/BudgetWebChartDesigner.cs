@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetWebChartDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,21 +47,27 @@ using System.Text;
 
 namespace BudgetExecution
 {
+    using System.Drawing.Drawing2D;
+    using System.Security.Permissions;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetWebChartDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetWebChartDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetWebChartDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetWebChartDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +83,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new BudgetWebChartSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new BudgetWebChartSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +108,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class BudgetWebChartSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class BudgetWebChartSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class BudgetWebChartSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +128,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetWebChart colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetWebChartSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public BudgetWebChartSmartTagActionList(IComponent component) : base(component)
+        public BudgetWebChartSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetWebChart;
+            colUserControl = component as BudgetWebChart;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +155,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +184,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +200,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -194,16 +208,15 @@ namespace BudgetExecution
         /// Gets or sets the tool tip.
         /// </summary>
         /// <value>The tool tip.</value>
-        public virtual System.Windows.Forms.ToolTip ToolTip
+        public virtual ToolTip ToolTip
         {
-
             get
             {
                 return colUserControl.ToolTip;
             }
             set
             {
-                GetPropertyByName("ToolTip").SetValue(colUserControl, value);
+                GetPropertyByName( "ToolTip" ).SetValue( colUserControl, value );
             }
         }
 
@@ -219,7 +232,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ChartWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "ChartWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -235,7 +248,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("CornerBorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "CornerBorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -251,7 +264,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("CornerFillColor").SetValue(colUserControl, value);
+                GetPropertyByName( "CornerFillColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -267,7 +280,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DesignModeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DesignModeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -283,7 +296,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("FillColor").SetValue(colUserControl, value);
+                GetPropertyByName( "FillColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -299,7 +312,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("InnerStructureColor").SetValue(colUserControl, value);
+                GetPropertyByName( "InnerStructureColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -315,7 +328,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("FillSecondColor").SetValue(colUserControl, value);
+                GetPropertyByName( "FillSecondColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -331,7 +344,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("OuterStructureBorder").SetValue(colUserControl, value);
+                GetPropertyByName( "OuterStructureBorder" ).SetValue( colUserControl, value );
             }
         }
 
@@ -347,7 +360,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("WebBorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "WebBorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -363,7 +376,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("CornerShape").SetValue(colUserControl, value);
+                GetPropertyByName( "CornerShape" ).SetValue( colUserControl, value );
             }
         }
 
@@ -379,7 +392,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DrawInnerStructure").SetValue(colUserControl, value);
+                GetPropertyByName( "DrawInnerStructure" ).SetValue( colUserControl, value );
             }
         }
 
@@ -395,10 +408,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DrawWebPoints").SetValue(colUserControl, value);
+                GetPropertyByName( "DrawWebPoints" ).SetValue( colUserControl, value );
             }
         }
-
 
         /// <summary>
         /// Gets or sets a value indicating whether [show tool tip].
@@ -412,7 +424,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ShowToolTip").SetValue(colUserControl, value);
+                GetPropertyByName( "ShowToolTip" ).SetValue( colUserControl, value );
             }
         }
 
@@ -428,7 +440,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("WebBorderIsGradient").SetValue(colUserControl, value);
+                GetPropertyByName( "WebBorderIsGradient" ).SetValue( colUserControl, value );
             }
         }
 
@@ -444,11 +456,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BezierCurve").SetValue(colUserControl, value);
+                GetPropertyByName( "BezierCurve" ).SetValue( colUserControl, value );
             }
         }
-
-
 
         /// <summary>
         /// Gets or sets the fill mode.
@@ -462,7 +472,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("FillMode").SetValue(colUserControl, value);
+                GetPropertyByName( "FillMode" ).SetValue( colUserControl, value );
             }
         }
 
@@ -470,7 +480,7 @@ namespace BudgetExecution
         /// Gets or sets the hatch style.
         /// </summary>
         /// <value>The hatch style.</value>
-        public System.Drawing.Drawing2D.HatchStyle HatchStyle
+        public HatchStyle HatchStyle
         {
             get
             {
@@ -478,7 +488,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("HatchStyle").SetValue(colUserControl, value);
+                GetPropertyByName( "HatchStyle" ).SetValue( colUserControl, value );
             }
         }
 
@@ -494,7 +504,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("InnerStructureStages").SetValue(colUserControl, value);
+                GetPropertyByName( "InnerStructureStages" ).SetValue( colUserControl, value );
             }
         }
 
@@ -510,7 +520,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("InnerStructureWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "InnerStructureWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -526,7 +536,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Points").SetValue(colUserControl, value);
+                GetPropertyByName( "Points" ).SetValue( colUserControl, value );
             }
         }
 
@@ -542,7 +552,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("WebPoints").SetValue(colUserControl, value);
+                GetPropertyByName( "WebPoints" ).SetValue( colUserControl, value );
             }
         }
 
@@ -558,7 +568,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("PointSize").SetValue(colUserControl, value);
+                GetPropertyByName( "PointSize" ).SetValue( colUserControl, value );
             }
         }
 
@@ -574,7 +584,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("WebBorderWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "WebBorderWidth" ).SetValue( colUserControl, value );
             }
         }
 
@@ -590,10 +600,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("WebPointWidth").SetValue(colUserControl, value);
+                GetPropertyByName( "WebPointWidth" ).SetValue( colUserControl, value );
             }
         }
-
 
         #endregion
 
@@ -603,145 +612,100 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Behaviour"));
+            items.Add( new DesignerActionHeaderItem( "Behaviour" ) );
 
-            items.Add(new DesignerActionPropertyItem("BezierCurve",
-                "Bezier Curve", "Behaviour",
-                "Set to use bezier curve."));
+            items.Add( new DesignerActionPropertyItem( "BezierCurve", "Bezier Curve", "Behaviour",
+                "Set to use bezier curve." ) );
 
-            items.Add(new DesignerActionPropertyItem("ShowToolTip",
-                "Show ToolTip", "Behaviour",
-                "Set to show the tooltip."));
-            
-            items.Add(new DesignerActionPropertyItem("WebBorderIsGradient",
-                "Gradient Web Border", "Behaviour",
-                "Enable web border to be gradient."));
-            
-            items.Add(new DesignerActionPropertyItem("DrawInnerStructure",
-                "Show Inner Shape", "Behaviour",
-                "Set to show the inner shape."));
+            items.Add( new DesignerActionPropertyItem( "ShowToolTip", "Show ToolTip", "Behaviour",
+                "Set to show the tooltip." ) );
 
-            items.Add(new DesignerActionPropertyItem("DrawWebPoints",
-                "Show Web Points", "Behaviour",
-                "Set to show the web points."));
+            items.Add( new DesignerActionPropertyItem( "WebBorderIsGradient", "Gradient Web Border",
+                "Behaviour", "Enable web border to be gradient." ) );
 
+            items.Add( new DesignerActionPropertyItem( "DrawInnerStructure", "Show Inner Shape",
+                "Behaviour", "Set to show the inner shape." ) );
 
-            items.Add(new DesignerActionHeaderItem("Colors"));
+            items.Add( new DesignerActionPropertyItem( "DrawWebPoints", "Show Web Points",
+                "Behaviour", "Set to show the web points." ) );
 
-            
-            items.Add(new DesignerActionPropertyItem("CornerBorderColor",
-                                 "Corner Border Color", "Colors",
-                                 "Sets the border color of the corners."));
+            items.Add( new DesignerActionHeaderItem( "Colors" ) );
 
-            items.Add(new DesignerActionPropertyItem("CornerFillColor",
-                                 "Corner Fill Color", "Colors",
-                                 "Sets the solid fill color of the corner."));
+            items.Add( new DesignerActionPropertyItem( "CornerBorderColor", "Corner Border Color",
+                "Colors", "Sets the border color of the corners." ) );
 
-            items.Add(new DesignerActionPropertyItem("DesignModeColor",
-                                 "Design Mode Color", "Colors",
-                                 "Sets the design mode color."));
+            items.Add( new DesignerActionPropertyItem( "CornerFillColor", "Corner Fill Color",
+                "Colors", "Sets the solid fill color of the corner." ) );
 
+            items.Add( new DesignerActionPropertyItem( "DesignModeColor", "Design Mode Color",
+                "Colors", "Sets the design mode color." ) );
 
-            items.Add(new DesignerActionPropertyItem("FillColor",
-                "Fill Color", "Colors",
-                "Sets the solid fill color."));
+            items.Add( new DesignerActionPropertyItem( "FillColor", "Fill Color", "Colors",
+                "Sets the solid fill color." ) );
 
-            items.Add(new DesignerActionPropertyItem("InnerStructureColor",
-                "Inner Shape Color", "Colors",
-                "Sets the inner shape color."));
+            items.Add( new DesignerActionPropertyItem( "InnerStructureColor", "Inner Shape Color",
+                "Colors", "Sets the inner shape color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "FillSecondColor", "Second Fill Color",
+                "Colors", "Set the second fill color." ) );
 
-            items.Add(new DesignerActionPropertyItem("FillSecondColor",
-                "Second Fill Color", "Colors",
-                "Set the second fill color."));
+            items.Add( new DesignerActionPropertyItem( "OuterStructureBorder", "Outer Shape Border",
+                "Colors", "Sets the outer border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("OuterStructureBorder",
-                "Outer Shape Border", "Colors",
-                "Sets the outer border color."));
+            items.Add( new DesignerActionPropertyItem( "WebBorderColor", "Web Border Color",
+                "Colors", "Sets the web border color." ) );
 
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionPropertyItem("WebBorderColor",
-                "Web Border Color", "Colors",
-                "Sets the web border color."));
+            items.Add( new DesignerActionPropertyItem( "Points", "Points", "Appearance",
+                "Sets the points." ) );
 
+            items.Add( new DesignerActionPropertyItem( "CornerShape", "Corner Shape", "Appearance",
+                "Sets the corner shape." ) );
 
+            items.Add( new DesignerActionPropertyItem( "FillMode", "Fill Mode", "Appearance",
+                "Sets the fill mode." ) );
 
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionPropertyItem( "HatchStyle", "Hatch Style", "Appearance",
+                "Sets the hatch style." ) );
 
+            items.Add( new DesignerActionPropertyItem( "InnerStructureStages", "Inner Shape Stages",
+                "Appearance", "Sets the inner shape stages." ) );
 
-            items.Add(new DesignerActionPropertyItem("Points",
-                "Points", "Appearance",
-                "Sets the points."));
+            items.Add( new DesignerActionPropertyItem( "InnerStructureWidth", "Inner Shape Width",
+                "Appearance", "Sets the innner shape width." ) );
 
+            items.Add( new DesignerActionPropertyItem( "PointSize", "Point Size", "Appearance",
+                "Sets the point size." ) );
 
-            items.Add(new DesignerActionPropertyItem("CornerShape",
-                "Corner Shape", "Appearance",
-                "Sets the corner shape."));
+            items.Add( new DesignerActionPropertyItem( "ChartWidth", "Chart Width", "Appearance",
+                "Sets the chart width." ) );
 
+            items.Add( new DesignerActionPropertyItem( "WebBorderWidth", "Web Border Width",
+                "Appearance", "Sets the web border width." ) );
 
-            items.Add(new DesignerActionPropertyItem("FillMode",
-                "Fill Mode", "Appearance",
-                "Sets the fill mode."));
-
-            items.Add(new DesignerActionPropertyItem("HatchStyle",
-                "Hatch Style", "Appearance",
-                "Sets the hatch style."));
-
-
-            items.Add(new DesignerActionPropertyItem("InnerStructureStages",
-                "Inner Shape Stages", "Appearance",
-                "Sets the inner shape stages."));
-
-            items.Add(new DesignerActionPropertyItem("InnerStructureWidth",
-                "Inner Shape Width", "Appearance",
-                "Sets the innner shape width."));
-
-            
-            items.Add(new DesignerActionPropertyItem("PointSize",
-                "Point Size", "Appearance",
-                "Sets the point size."));
-
-
-            items.Add(new DesignerActionPropertyItem("ChartWidth",
-                "Chart Width", "Appearance",
-                "Sets the chart width."));
-
-            items.Add(new DesignerActionPropertyItem("WebBorderWidth",
-                "Web Border Width", "Appearance",
-                "Sets the web border width."));
-
-
-            items.Add(new DesignerActionPropertyItem("WebPointWidth",
-                "Web Point Width", "Appearance",
-                "Sets the web point width."));
+            items.Add( new DesignerActionPropertyItem( "WebPointWidth", "Web Point Width",
+                "Appearance", "Sets the web point width." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

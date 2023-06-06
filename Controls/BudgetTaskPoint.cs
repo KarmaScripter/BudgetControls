@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTaskPoint.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -43,192 +43,192 @@ using System.Drawing;
 
 namespace BudgetExecution
 {
+    /// <summary>
+    /// Class BudgetTaskPoint.
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
+    public class BudgetTaskPoint : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// The finished
+        /// </summary>
+        private bool _Finished;
 
+        /// <summary>
+        /// The enabled
+        /// </summary>
+        private bool _Enabled;
 
-	/// <summary>
-	/// Class BudgetTaskPoint.
-	/// </summary>
-	/// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
-	public class BudgetTaskPoint : INotifyPropertyChanged
-	{
+        /// <summary>
+        /// The circe color
+        /// </summary>
+        private Color _CirceColor;
 
-		/// <summary>
-		/// The finished
-		/// </summary>
-		private bool _Finished;
+        /// <summary>
+        /// The icon
+        /// </summary>
+        private Image _Icon;
 
-		/// <summary>
-		/// The enabled
-		/// </summary>
-		private bool _Enabled;
+        /// <summary>
+        /// The circle width
+        /// </summary>
+        private int _CircleWidth;
 
-		/// <summary>
-		/// The circe color
-		/// </summary>
-		private Color _CirceColor;
+        /// <summary>
+        /// The text
+        /// </summary>
+        private string _Text;
 
-		/// <summary>
-		/// The icon
-		/// </summary>
-		private Image _Icon;
+        /// <summary>
+        /// Gets or sets the color of the circe.
+        /// </summary>
+        /// <value>The color of the circe.</value>
+        public Color CirceColor
+        {
+            get
+            {
+                return _CirceColor;
+            }
+            set
+            {
+                _CirceColor = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
-		/// <summary>
-		/// The circle width
-		/// </summary>
-		private int _CircleWidth;
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this,
+                        new PropertyChangedEventArgs( "CirceColor" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// The text
-		/// </summary>
-		private string _Text;
+        /// <summary>
+        /// Gets or sets the width of the circle.
+        /// </summary>
+        /// <value>The width of the circle.</value>
+        public int CircleWidth
+        {
+            get
+            {
+                return _CircleWidth;
+            }
+            set
+            {
+                _CircleWidth = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
-		/// <summary>
-		/// Gets or sets the color of the circe.
-		/// </summary>
-		/// <value>The color of the circe.</value>
-		public Color CirceColor
-		{
-			get
-			{
-				return this._CirceColor;
-			}
-			set
-			{
-				this._CirceColor = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("CirceColor"));
-				}
-			}
-		}
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this,
+                        new PropertyChangedEventArgs( "CircleWidth" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the width of the circle.
-		/// </summary>
-		/// <value>The width of the circle.</value>
-		public int CircleWidth
-		{
-			get
-			{
-				return this._CircleWidth;
-			}
-			set
-			{
-				this._CircleWidth = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("CircleWidth"));
-				}
-			}
-		}
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="BudgetTaskPoint"/> is enabled.
+        /// </summary>
+        /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+        public bool Enabled
+        {
+            get
+            {
+                return _Enabled;
+            }
+            set
+            {
+                _Enabled = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
-		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="BudgetTaskPoint"/> is enabled.
-		/// </summary>
-		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
-		public bool Enabled
-		{
-			get
-			{
-				return this._Enabled;
-			}
-			set
-			{
-				this._Enabled = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Enabled"));
-				}
-			}
-		}
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Enabled" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="BudgetTaskPoint"/> is finished.
-		/// </summary>
-		/// <value><c>true</c> if finished; otherwise, <c>false</c>.</value>
-		public bool Finished
-		{
-			get
-			{
-				return this._Finished;
-			}
-			set
-			{
-				this._Finished = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Finished"));
-				}
-			}
-		}
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="BudgetTaskPoint"/> is finished.
+        /// </summary>
+        /// <value><c>true</c> if finished; otherwise, <c>false</c>.</value>
+        public bool Finished
+        {
+            get
+            {
+                return _Finished;
+            }
+            set
+            {
+                _Finished = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
-		/// <summary>
-		/// Gets or sets the icon.
-		/// </summary>
-		/// <value>The icon.</value>
-		public Image Icon
-		{
-			get
-			{
-				return this._Icon;
-			}
-			set
-			{
-				this._Icon = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Icon"));
-				}
-			}
-		}
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Finished" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the text.
-		/// </summary>
-		/// <value>The text.</value>
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				this._Text = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Text"));
-				}
-			}
-		}
+        /// <summary>
+        /// Gets or sets the icon.
+        /// </summary>
+        /// <value>The icon.</value>
+        public Image Icon
+        {
+            get
+            {
+                return _Icon;
+            }
+            set
+            {
+                _Icon = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Icon" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetTaskPoint"/> class.
-		/// </summary>
-		public BudgetTaskPoint()
-		{
-			this._Finished = false;
-			this._Enabled = true;
-			this._CirceColor = Design.BudgetColors.AccentBlue;
-			this._Icon = null;
-			this._CircleWidth = 20;
-			this._Text = string.Empty;
-		}
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <value>The text.</value>
+        public string Text
+        {
+            get
+            {
+                return _Text;
+            }
+            set
+            {
+                _Text = value;
+                var propertyChangedEventHandler = PropertyChanged;
 
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Text" ) );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Occurs when [property changed].
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
-	
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetTaskPoint"/> class.
+        /// </summary>
+        public BudgetTaskPoint( )
+        {
+            _Finished = false;
+            _Enabled = true;
+            _CirceColor = Design.BudgetColors.AccentBlue;
+            _Icon = null;
+            _CircleWidth = 20;
+            _Text = string.Empty;
+        }
 
-
+        /// <summary>
+        /// Occurs when [property changed].
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

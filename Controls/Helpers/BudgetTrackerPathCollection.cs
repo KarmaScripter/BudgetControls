@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackerPathCollection.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -52,7 +52,7 @@ namespace BudgetExecution
     /// </summary>
     /// <seealso cref="System.Collections.ObjectModel.Collection{BudgetExecution.BudgetTrackerPath}" />
     public class BudgetTrackerPathCollection : Collection<BudgetTrackerPath>
-	{
+    {
         /// <summary>
         /// The enc list
         /// </summary>
@@ -61,128 +61,149 @@ namespace BudgetExecution
         /// <summary>
         /// Initializes static members of the <see cref="BudgetTrackerPathCollection"/> class.
         /// </summary>
-        [DebuggerNonUserCode]
-		static BudgetTrackerPathCollection()
-		{
-			BudgetTrackerPathCollection.__ENCList = new List<WeakReference>();
-		}
+        [ DebuggerNonUserCode ]
+        static BudgetTrackerPathCollection( )
+        {
+            BudgetTrackerPathCollection.__ENCList = new List<WeakReference>( );
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetTrackerPathCollection"/> class.
         /// </summary>
-        [DebuggerNonUserCode]
-		public BudgetTrackerPathCollection()
-		{
-			BudgetTrackerPathCollection.__ENCAddToList(this);
-		}
+        [ DebuggerNonUserCode ]
+        public BudgetTrackerPathCollection( )
+        {
+            BudgetTrackerPathCollection.__ENCAddToList( this );
+        }
 
         /// <summary>
         /// Encs the add to list.
         /// </summary>
         /// <param name="value">The value.</param>
-        [DebuggerNonUserCode]
-		private static void __ENCAddToList(object value)
-		{
-			List<WeakReference> _ENCList = BudgetTrackerPathCollection.__ENCList;
-			Monitor.Enter(_ENCList);
-			try
-			{
-				if (BudgetTrackerPathCollection.__ENCList.Count == BudgetTrackerPathCollection.__ENCList.Capacity)
-				{
-					int item = 0;
-					int count = checked(BudgetTrackerPathCollection.__ENCList.Count - 1);
-					for (int i = 0; i <= count; i = checked(i + 1))
-					{
-						if (BudgetTrackerPathCollection.__ENCList[i].IsAlive)
-						{
-							if (i != item)
-							{
-								BudgetTrackerPathCollection.__ENCList[item] = BudgetTrackerPathCollection.__ENCList[i];
-							}
-							item = checked(item + 1);
-						}
-					}
-					BudgetTrackerPathCollection.__ENCList.RemoveRange(item, checked(BudgetTrackerPathCollection.__ENCList.Count - item));
-					BudgetTrackerPathCollection.__ENCList.Capacity = BudgetTrackerPathCollection.__ENCList.Count;
-				}
-				BudgetTrackerPathCollection.__ENCList.Add(new WeakReference(RuntimeHelpers.GetObjectValue(value)));
-			}
-			finally
-			{
-				Monitor.Exit(_ENCList);
-			}
-		}
+        [ DebuggerNonUserCode ]
+        private static void __ENCAddToList( object value )
+        {
+            var _ENCList = BudgetTrackerPathCollection.__ENCList;
+            Monitor.Enter( _ENCList );
+
+            try
+            {
+                if( BudgetTrackerPathCollection.__ENCList.Count
+                   == BudgetTrackerPathCollection.__ENCList.Capacity )
+                {
+                    var item = 0;
+                    var count = checked( BudgetTrackerPathCollection.__ENCList.Count - 1 );
+
+                    for( var i = 0; i <= count; i = checked( i + 1 ) )
+                    {
+                        if( BudgetTrackerPathCollection.__ENCList[ i ].IsAlive )
+                        {
+                            if( i != item )
+                            {
+                                BudgetTrackerPathCollection.__ENCList[ item ] =
+                                    BudgetTrackerPathCollection.__ENCList[ i ];
+                            }
+
+                            item = checked( item + 1 );
+                        }
+                    }
+
+                    BudgetTrackerPathCollection.__ENCList.RemoveRange( item,
+                        checked( BudgetTrackerPathCollection.__ENCList.Count - item ) );
+
+                    BudgetTrackerPathCollection.__ENCList.Capacity =
+                        BudgetTrackerPathCollection.__ENCList.Count;
+                }
+
+                BudgetTrackerPathCollection.__ENCList.Add(
+                    new WeakReference( RuntimeHelpers.GetObjectValue( value ) ) );
+            }
+            finally
+            {
+                Monitor.Exit( _ENCList );
+            }
+        }
 
         /// <summary>
         /// Removes all elements from the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
         /// </summary>
-        protected override void ClearItems()
-		{
-			IEnumerator<BudgetTrackerPath> enumerator = null;
-			using (enumerator)
-			{
-				enumerator = this.GetEnumerator();
-				while (enumerator.MoveNext())
-				{
-					BudgetTrackerPath current = enumerator.Current;
-					EventHandler<BudgetTrackerPathCollectionEventArgs> eventHandler = this.ItemRemoving;
-					if (eventHandler != null)
-					{
-						eventHandler(this, new BudgetTrackerPathCollectionEventArgs(current));
-					}
-				}
-			}
-			base.ClearItems();
-		}
+        protected override void ClearItems( )
+        {
+            IEnumerator<BudgetTrackerPath> enumerator = null;
+
+            using( enumerator )
+            {
+                enumerator = GetEnumerator( );
+
+                while( enumerator.MoveNext( ) )
+                {
+                    var current = enumerator.Current;
+                    var eventHandler = ItemRemoving;
+
+                    if( eventHandler != null )
+                    {
+                        eventHandler( this, new BudgetTrackerPathCollectionEventArgs( current ) );
+                    }
+                }
+            }
+
+            base.ClearItems( );
+        }
 
         /// <summary>
         /// Inserts an element into the <see cref="T:System.Collections.ObjectModel.Collection`1" /> at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
         /// <param name="item">The object to insert. The value can be null for reference types.</param>
-        protected override void InsertItem(int index, BudgetTrackerPath item)
-		{
-			base.InsertItem(index, item);
-			EventHandler<BudgetTrackerPathCollectionEventArgs> eventHandler = this.ItemAdded;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTrackerPathCollectionEventArgs(item));
-			}
-		}
+        protected override void InsertItem( int index, BudgetTrackerPath item )
+        {
+            base.InsertItem( index, item );
+            var eventHandler = ItemAdded;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTrackerPathCollectionEventArgs( item ) );
+            }
+        }
 
         /// <summary>
         /// Removes the element at the specified index of the <see cref="T:System.Collections.ObjectModel.Collection`1" />.
         /// </summary>
         /// <param name="index">The zero-based index of the element to remove.</param>
-        protected override void RemoveItem(int index)
-		{
-			EventHandler<BudgetTrackerPathCollectionEventArgs> eventHandler = this.ItemRemoving;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTrackerPathCollectionEventArgs(this[index]));
-			}
-			base.RemoveItem(index);
-		}
+        protected override void RemoveItem( int index )
+        {
+            var eventHandler = ItemRemoving;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTrackerPathCollectionEventArgs( this[ index ] ) );
+            }
+
+            base.RemoveItem( index );
+        }
 
         /// <summary>
         /// Replaces the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element to replace.</param>
         /// <param name="item">The new value for the element at the specified index. The value can be null for reference types.</param>
-        protected override void SetItem(int index, BudgetTrackerPath item)
-		{
-			EventHandler<BudgetTrackerPathCollectionEventArgs> eventHandler = this.ItemRemoving;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTrackerPathCollectionEventArgs(this[index]));
-			}
-			base.SetItem(index, item);
-			eventHandler = this.ItemAdded;
-			if (eventHandler != null)
-			{
-				eventHandler(this, new BudgetTrackerPathCollectionEventArgs(item));
-			}
-		}
+        protected override void SetItem( int index, BudgetTrackerPath item )
+        {
+            var eventHandler = ItemRemoving;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTrackerPathCollectionEventArgs( this[ index ] ) );
+            }
+
+            base.SetItem( index, item );
+            eventHandler = ItemAdded;
+
+            if( eventHandler != null )
+            {
+                eventHandler( this, new BudgetTrackerPathCollectionEventArgs( item ) );
+            }
+        }
 
         /// <summary>
         /// Occurs when [item added].
@@ -193,5 +214,5 @@ namespace BudgetExecution
         /// Occurs when [item removing].
         /// </summary>
         public event EventHandler<BudgetTrackerPathCollectionEventArgs> ItemRemoving;
-	}
+    }
 }

@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetListbox.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -46,209 +46,223 @@ using System.Windows.Forms;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetListbox.
-	/// </summary>
-	/// <seealso cref="System.Windows.Forms.ListBox" />
-	[Description("Ein Listbox-Steuerelement im Metrostil.")]
-	[DesignerCategory("Code")]
-	[ToolboxBitmap(typeof(ListBox))]
-	public class BudgetListbox : ListBox
-	{
-		#region Private Fields
-		/// <summary>
-		/// The selection color
-		/// </summary>
-		private Color _SelectionColor;
+    /// <summary>
+    /// Class BudgetListbox.
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.ListBox" />
+    [ Description( "Ein Listbox-Steuerelement im Metrostil." ) ]
+    [ DesignerCategory( "Code" ) ]
+    [ ToolboxBitmap( typeof( ListBox ) ) ]
+    public class BudgetListbox : ListBox
+    {
+        #region Private Fields
 
-		/// <summary>
-		/// The border color
-		/// </summary>
-		private Color _BorderColor;
+        /// <summary>
+        /// The selection color
+        /// </summary>
+        private Color _SelectionColor;
 
-		/// <summary>
-		/// The style
-		/// </summary>
-		private Design.Style _Style;
+        /// <summary>
+        /// The border color
+        /// </summary>
+        private Color _BorderColor;
 
-		/// <summary>
-		/// The automatic style
-		/// </summary>
-		private bool _AutoStyle;
-		#endregion
+        /// <summary>
+        /// The style
+        /// </summary>
+        private Design.Style _Style;
 
-		#region Public Properties        
-		/// <summary>
-		/// Gets or sets a value indicating whether to enable automatic style.
-		/// </summary>
-		/// <value><c>true</c> if automatic style; otherwise, <c>false</c>.</value>
-		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Description("Sets a value indicating whether to enable automatic style.")]
-		public bool AutoStyle
-		{
-			get
-			{
-				return this._AutoStyle;
-			}
-			set
-			{
-				if (this._AutoStyle != value)
-				{
-					this._AutoStyle = value;
-					this.Invalidate();
-				}
-			}
-		}
+        /// <summary>
+        /// The automatic style
+        /// </summary>
+        private bool _AutoStyle;
 
-		/// <summary>
-		/// Gets or sets the color of the border.
-		/// </summary>
-		/// <value>The color of the border.</value>
-		[Category("Appearance")]
-		[Description("Sets the color of the border.")]
-		public Color BorderColor
-		{
-			get
-			{
-				return this._BorderColor;
-			}
-			set
-			{
-				if (this._BorderColor != value)
-				{
-					this._BorderColor = value;
-					this.Invalidate();
-				}
-			}
-		}
+        #endregion
 
-		/// <summary>
-		/// Gets or sets the color of the selection.
-		/// </summary>
-		/// <value>The color of the selection.</value>
-		[Category("Appearance")]
-		[Description("Sets the color of the selection.")]
-		public Color SelectionColor
-		{
-			get
-			{
-				return this._SelectionColor;
-			}
-			set
-			{
-				if (this._SelectionColor != value)
-				{
-					this._SelectionColor = value;
-					this.Invalidate();
-				}
-			}
-		}
+        #region Public Properties
 
-		/// <summary>
-		/// Gets or sets the style.
-		/// </summary>
-		/// <value>The style.</value>
-		[Browsable(true)]
-		[Category("Appearance")]
-		[DefaultValue(0)]
-		[Description("Sets the style.")]
-		[RefreshProperties(RefreshProperties.All)]
-		public Design.Style Style
-		{
-			get
-			{
-				return this._Style;
-			}
-			set
-			{
-				if (value != this._Style)
-				{
-					this._Style = value;
-					switch (value)
-					{
-						case Design.Style.Light:
-							{
-								this._SelectionColor = Design.BudgetColors.AccentBlue;
-								this._BorderColor = Design.BudgetColors.LightBorder;
-								this.BackColor = Design.BudgetColors.LightDefault;
-								this.ForeColor = Design.BudgetColors.LightFont;
-								break;
-							}
-						case Design.Style.Dark:
-							{
-								this._SelectionColor = Design.BudgetColors.AccentBlue;
-								this._BorderColor = Design.BudgetColors.LightBorder;
-								this.BackColor = Design.BudgetColors.DarkDefault;
-								this.ForeColor = Design.BudgetColors.DarkFont;
-								break;
-							}
-					}
-					this.Invalidate();
-				}
-			}
-		}
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable automatic style.
+        /// </summary>
+        /// <value><c>true</c> if automatic style; otherwise, <c>false</c>.</value>
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Sets a value indicating whether to enable automatic style." ) ]
+        public bool AutoStyle
+        {
+            get
+            {
+                return _AutoStyle;
+            }
+            set
+            {
+                if( _AutoStyle != value )
+                {
+                    _AutoStyle = value;
+                    Invalidate( );
+                }
+            }
+        }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the color of the border.
+        /// </summary>
+        /// <value>The color of the border.</value>
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the border." ) ]
+        public Color BorderColor
+        {
+            get
+            {
+                return _BorderColor;
+            }
+            set
+            {
+                if( _BorderColor != value )
+                {
+                    _BorderColor = value;
+                    Invalidate( );
+                }
+            }
+        }
 
-		#region Constructor
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetListbox" /> class.
-		/// </summary>
-		public BudgetListbox()
-		{
-			this._SelectionColor = Design.BudgetColors.AccentBlue;
-			this._BorderColor = Design.BudgetColors.LightBorder;
-			this._Style = Design.Style.Light;
-			this._AutoStyle = true;
-			this.Font = new System.Drawing.Font("Segoe UI", 8f);
-			this.DoubleBuffered = true;
-			this.BackColor = Design.BudgetColors.LightDefault;
-			this.ForeColor = Design.BudgetColors.LightFont;
-			this.BorderStyle = System.Windows.Forms.BorderStyle.None;
-		}
-		#endregion
+        /// <summary>
+        /// Gets or sets the color of the selection.
+        /// </summary>
+        /// <value>The color of the selection.</value>
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the selection." ) ]
+        public Color SelectionColor
+        {
+            get
+            {
+                return _SelectionColor;
+            }
+            set
+            {
+                if( _SelectionColor != value )
+                {
+                    _SelectionColor = value;
+                    Invalidate( );
+                }
+            }
+        }
 
-		#region Methods and Overrides
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.ListBox.DrawItem" /> event.
-		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.DrawItemEventArgs" /> that contains the event data.</param>
-		protected override void OnDrawItem(DrawItemEventArgs e)
-		{
-			e.DrawBackground();
-			if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-			{
-				using (SolidBrush solidBrush = new SolidBrush(this._SelectionColor))
-				{
-					e.Graphics.FillRectangle(solidBrush, e.Bounds);
-				}
-			}
-			using (Pen pen = new Pen(this._BorderColor))
-			{
-				e.Graphics.DrawRectangle(pen, 0, 0, checked(this.Width - 1), checked(this.Height - 1));
-			}
-			if (this.Items.Count > 0)
-			{
-				using (SolidBrush solidBrush1 = new SolidBrush(e.ForeColor))
-				{
-					e.Graphics.DrawString(this.GetItemText(RuntimeHelpers.GetObjectValue(this.Items[e.Index])), e.Font, solidBrush1, e.Bounds);
-				}
-			}
-			e.DrawFocusRectangle();
-			base.OnDrawItem(e);
-		}
+        /// <summary>
+        /// Gets or sets the style.
+        /// </summary>
+        /// <value>The style.</value>
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the style." ) ]
+        [ RefreshProperties( RefreshProperties.All ) ]
+        public Design.Style Style
+        {
+            get
+            {
+                return _Style;
+            }
+            set
+            {
+                if( value != _Style )
+                {
+                    _Style = value;
 
-		/// <summary>
-		/// Specifies when the window handle has been created so that column width and other characteristics can be set. Inheriting classes should call base.OnHandleCreated.
-		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-		protected override void OnHandleCreated(EventArgs e)
-		{
-			this.Select();
-			base.OnHandleCreated(e);
-		} 
-		#endregion
+                    switch( value )
+                    {
+                        case Design.Style.Light:
+                        {
+                            _SelectionColor = Design.BudgetColors.AccentBlue;
+                            _BorderColor = Design.BudgetColors.LightBorder;
+                            BackColor = Design.BudgetColors.LightDefault;
+                            ForeColor = Design.BudgetColors.LightFont;
+                            break;
+                        }
+                        case Design.Style.Dark:
+                        {
+                            _SelectionColor = Design.BudgetColors.AccentBlue;
+                            _BorderColor = Design.BudgetColors.LightBorder;
+                            BackColor = Design.BudgetColors.DarkDefault;
+                            ForeColor = Design.BudgetColors.DarkFont;
+                            break;
+                        }
+                    }
 
-	}
+                    Invalidate( );
+                }
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetListbox" /> class.
+        /// </summary>
+        public BudgetListbox( )
+        {
+            _SelectionColor = Design.BudgetColors.AccentBlue;
+            _BorderColor = Design.BudgetColors.LightBorder;
+            _Style = Design.Style.Light;
+            _AutoStyle = true;
+            Font = new Font( "Segoe UI", 8f );
+            DoubleBuffered = true;
+            BackColor = Design.BudgetColors.LightDefault;
+            ForeColor = Design.BudgetColors.LightFont;
+            BorderStyle = BorderStyle.None;
+        }
+
+        #endregion
+
+        #region Methods and Overrides
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.ListBox.DrawItem" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.DrawItemEventArgs" /> that contains the event data.</param>
+        protected override void OnDrawItem( DrawItemEventArgs e )
+        {
+            e.DrawBackground( );
+
+            if( ( e.State & DrawItemState.Selected ) == DrawItemState.Selected )
+            {
+                using( var solidBrush = new SolidBrush( _SelectionColor ) )
+                {
+                    e.Graphics.FillRectangle( solidBrush, e.Bounds );
+                }
+            }
+
+            using( var pen = new Pen( _BorderColor ) )
+            {
+                e.Graphics.DrawRectangle( pen, 0, 0, checked( Width - 1 ), checked( Height - 1 ) );
+            }
+
+            if( Items.Count > 0 )
+            {
+                using( var solidBrush1 = new SolidBrush( e.ForeColor ) )
+                {
+                    e.Graphics.DrawString(
+                        GetItemText( RuntimeHelpers.GetObjectValue( Items[ e.Index ] ) ), e.Font,
+                        solidBrush1, e.Bounds );
+                }
+            }
+
+            e.DrawFocusRectangle( );
+            base.OnDrawItem( e );
+        }
+
+        /// <summary>
+        /// Specifies when the window handle has been created so that column width and other characteristics can be set. Inheriting classes should call base.OnHandleCreated.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        protected override void OnHandleCreated( EventArgs e )
+        {
+            Select( );
+            base.OnHandleCreated( e );
+        }
+
+        #endregion
+    }
 }

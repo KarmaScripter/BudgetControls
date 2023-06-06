@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetWebChart.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -52,23 +52,25 @@ namespace BudgetExecution
     /// A class collection for rendering a metro-style web chart.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Control" />
-    [DefaultEvent("Click")]
-	[Description("A class for creating a web chart.")]
-	[DesignerCategory("Code")]
-	[ToolboxBitmap(typeof(BudgetWebChart))]
-    [Designer(typeof(BudgetWebChartDesigner))]
+    [ DefaultEvent( "Click" ) ]
+    [ Description( "A class for creating a web chart." ) ]
+    [ DesignerCategory( "Code" ) ]
+    [ ToolboxBitmap( typeof( BudgetWebChart ) ) ]
+    [ Designer( typeof( BudgetWebChartDesigner ) ) ]
     public class BudgetWebChart : Control
-	{
+    {
         #region ENUM
+
         /// <summary>
         /// Enum CornerShapes
         /// </summary>
         public enum CornerShapes
-	    {
+        {
             /// <summary>
             /// The rectangular
             /// </summary>
             Rectangular,
+
             /// <summary>
             /// The circular
             /// </summary>
@@ -79,53 +81,62 @@ namespace BudgetExecution
         /// Enum FillModes
         /// </summary>
         public enum FillModes
-	    {
+        {
             /// <summary>
             /// The solid
             /// </summary>
             Solid,
+
             /// <summary>
             /// The gradient
             /// </summary>
             Gradient,
+
             /// <summary>
             /// The multi gradient
             /// </summary>
             MultiGradient,
+
             /// <summary>
             /// The hatch
             /// </summary>
             Hatch
         }
+
         #endregion
 
         #region Private Fields
+
         /// <summary>
         /// The point collection
         /// </summary>
-        private BudgetWebChartPointCollection _PointCollection = new BudgetWebChartPointCollection();
+        private BudgetWebChartPointCollection _PointCollection = new( );
+
         /// <summary>
         /// The web points
         /// </summary>
-        private BudgetWebChartPoint webPoints = new BudgetWebChartPoint();
+        private BudgetWebChartPoint webPoints = new( );
+
         /// <summary>
         /// The web chart points
         /// </summary>
-        private List<BudgetWebChartPoint> webChartPoints = new List<BudgetWebChartPoint>();
+        private List<BudgetWebChartPoint> webChartPoints = new( );
+
         /// <summary>
         /// The enumerator
         /// </summary>
-        IEnumerator<BudgetWebChartPoint> enumerator = null;
+        private IEnumerator<BudgetWebChartPoint> enumerator = null;
+
         /// <summary>
         /// The enumerator1
         /// </summary>
-        IEnumerator<BudgetWebChartPoint> enumerator1 = null;
+        private IEnumerator<BudgetWebChartPoint> enumerator1 = null;
 
         /// <summary>
         /// The tool tip
         /// </summary>
-        [AccessedThroughProperty("ToolTip")]
-        private System.Windows.Forms.ToolTip toolTip = new ToolTip();
+        [ AccessedThroughProperty( "ToolTip" ) ]
+        private ToolTip toolTip = new( );
 
         /// <summary>
         /// The style
@@ -170,7 +181,7 @@ namespace BudgetExecution
         /// <summary>
         /// The web border is gradient
         /// </summary>
-        private bool _WebBorderIsGradient = false;
+        private bool _WebBorderIsGradient;
 
         /// <summary>
         /// The draw web points
@@ -187,7 +198,7 @@ namespace BudgetExecution
         /// <summary>
         /// The show tool tip
         /// </summary>
-        private bool _ShowToolTip = false;
+        private bool _ShowToolTip;
 
         /// <summary>
         /// The fill color
@@ -232,22 +243,22 @@ namespace BudgetExecution
         /// <summary>
         /// The hatch style
         /// </summary>
-        private System.Drawing.Drawing2D.HatchStyle _HatchStyle;
+        private HatchStyle _HatchStyle;
 
         /// <summary>
         /// The fill mode
         /// </summary>
-        private BudgetWebChart.FillModes _FillMode;
+        private FillModes _FillMode;
 
         /// <summary>
         /// The corner shape
         /// </summary>
-        private BudgetWebChart.CornerShapes _CornerShape = BudgetWebChart.CornerShapes.Circular;
+        private CornerShapes _CornerShape = CornerShapes.Circular;
 
         /// <summary>
         /// The outer points
         /// </summary>
-        private List<Rectangle> _OuterPoints = new List<Rectangle>();
+        private List<Rectangle> _OuterPoints = new( );
 
         /// <summary>
         /// The automatic style
@@ -267,32 +278,32 @@ namespace BudgetExecution
         /// <summary>
         /// The hot rectangle
         /// </summary>
-        private Rectangle _HotRectangle = new Rectangle();
+        private Rectangle _HotRectangle;
 
         /// <summary>
         /// The bezier curve
         /// </summary>
-        private bool bezierCurve = false;
+        private bool bezierCurve;
 
         #endregion
 
-        #region Public Properties        
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the tool tip.
         /// </summary>
         /// <value>The tool tip.</value>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual System.Windows.Forms.ToolTip ToolTip
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
+        public virtual ToolTip ToolTip
         {
-
             get
             {
-                return this.toolTip;
+                return toolTip;
             }
 
             set
             {
-                this.toolTip = value;
+                toolTip = value;
             }
         }
 
@@ -300,22 +311,22 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to enable/disable automatic style.
         /// </summary>
         /// <value><c>true</c> if automatic style; otherwise, <c>false</c>.</value>
-        [Category("Appearance")]
-        [DefaultValue(true)]
-        [Description("Sets a value indicating whether to enable/disable automatic style.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Sets a value indicating whether to enable/disable automatic style." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public bool AutoStyle
         {
             get
             {
-                return this._AutoStyle;
+                return _AutoStyle;
             }
             set
             {
-                if (this._AutoStyle != value)
+                if( _AutoStyle != value )
                 {
-                    this._AutoStyle = value;
-                    this.Invalidate();
+                    _AutoStyle = value;
+                    Invalidate( );
                 }
             }
         }
@@ -324,22 +335,23 @@ namespace BudgetExecution
         /// Gets or sets the width of the chart.
         /// </summary>
         /// <value>The width of the chart.</value>
-        [Category("Appearance")]
-        [DefaultValue(220)]
-        [Description("Sets the width of the chart.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 220 ) ]
+        [ Description( "Sets the width of the chart." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int ChartWidth
         {
             get
             {
-                return this._ChartWidth;
+                return _ChartWidth;
             }
             set
             {
-                if (this._ChartWidth != value && value > 10)
+                if( _ChartWidth != value
+                   && value > 10 )
                 {
-                    this._ChartWidth = value;
-                    this.Invalidate();
+                    _ChartWidth = value;
+                    Invalidate( );
                 }
             }
         }
@@ -348,11 +360,10 @@ namespace BudgetExecution
         /// Gets or sets the <see cref="T:System.Windows.Forms.ContextMenuStrip" /> associated with this control.
         /// </summary>
         /// <value>The context menu strip.</value>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new System.Windows.Forms.ContextMenuStrip ContextMenuStrip
+        [ Browsable( false ) ]
+        [ EditorBrowsable( EditorBrowsableState.Never ) ]
+        public new ContextMenuStrip ContextMenuStrip
         {
-
             get;
             set;
         }
@@ -361,21 +372,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the border's corner.
         /// </summary>
         /// <value>The color of the border's corner.</value>
-        [Category("Appearance")]
-        [Description("The color of the border's corner.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "The color of the border's corner." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color CornerBorderColor
         {
             get
             {
-                return this._CornerBorderColor;
+                return _CornerBorderColor;
             }
             set
             {
-                if (this._CornerBorderColor != value)
+                if( _CornerBorderColor != value )
                 {
-                    this._CornerBorderColor = value;
-                    this.Invalidate();
+                    _CornerBorderColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -384,21 +395,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the corner fill.
         /// </summary>
         /// <value>The color of the corner fill.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of the corner fill.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the corner fill." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color CornerFillColor
         {
             get
             {
-                return this._CornerFillColor;
+                return _CornerFillColor;
             }
             set
             {
-                if (this._CornerFillColor != value)
+                if( _CornerFillColor != value )
                 {
-                    this._CornerFillColor = value;
-                    this.Invalidate();
+                    _CornerFillColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -407,22 +418,22 @@ namespace BudgetExecution
         /// Gets or sets the corner shape.
         /// </summary>
         /// <value>The corner shape.</value>
-        [Category("Appearance")]
-        [DefaultValue(1)]
-        [Description("The corner shape.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public BudgetWebChart.CornerShapes CornerShape
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 1 ) ]
+        [ Description( "The corner shape." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
+        public CornerShapes CornerShape
         {
             get
             {
-                return this._CornerShape;
+                return _CornerShape;
             }
             set
             {
-                if (this._CornerShape != value)
+                if( _CornerShape != value )
                 {
-                    this._CornerShape = value;
-                    this.Invalidate();
+                    _CornerShape = value;
+                    Invalidate( );
                 }
             }
         }
@@ -431,21 +442,21 @@ namespace BudgetExecution
         /// Gets or sets the color of control when in design mode.
         /// </summary>
         /// <value>The color of the design mode.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of control when in design mode.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of control when in design mode." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color DesignModeColor
         {
             get
             {
-                return this._DesignModeColor;
+                return _DesignModeColor;
             }
             set
             {
-                if (this._DesignModeColor != value)
+                if( _DesignModeColor != value )
                 {
-                    this._DesignModeColor = value;
-                    this.Invalidate();
+                    _DesignModeColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -454,22 +465,22 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to draw inner structure.
         /// </summary>
         /// <value><c>true</c> if draw inner structure; otherwise, <c>false</c>.</value>
-        [Category("Appearance")]
-        [DefaultValue(true)]
-        [Description("Sets a value indicating whether to draw inner structure.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Sets a value indicating whether to draw inner structure." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public bool DrawInnerStructure
         {
             get
             {
-                return this._DrawInnerStructure;
+                return _DrawInnerStructure;
             }
             set
             {
-                if (this._DrawInnerStructure != value)
+                if( _DrawInnerStructure != value )
                 {
-                    this._DrawInnerStructure = value;
-                    this.Invalidate();
+                    _DrawInnerStructure = value;
+                    Invalidate( );
                 }
             }
         }
@@ -478,22 +489,22 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to draw web points.
         /// </summary>
         /// <value><c>true</c> if draw web points; otherwise, <c>false</c>.</value>
-        [Category("Appearance")]
-        [DefaultValue(true)]
-        [Description("Sets a value indicating whether to draw web points.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Sets a value indicating whether to draw web points." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public bool DrawWebPoints
         {
             get
             {
-                return this._DrawWebPoints;
+                return _DrawWebPoints;
             }
             set
             {
-                if (this._DrawWebPoints != value)
+                if( _DrawWebPoints != value )
                 {
-                    this._DrawWebPoints = value;
-                    this.Invalidate();
+                    _DrawWebPoints = value;
+                    Invalidate( );
                 }
             }
         }
@@ -502,21 +513,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the fill.
         /// </summary>
         /// <value>The color of the fill.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of the fill.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the fill." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color FillColor
         {
             get
             {
-                return this._FillColor;
+                return _FillColor;
             }
             set
             {
-                if (this._FillColor != value)
+                if( _FillColor != value )
                 {
-                    this._FillColor = value;
-                    this.Invalidate();
+                    _FillColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -525,22 +536,22 @@ namespace BudgetExecution
         /// Gets or sets the fill mode.
         /// </summary>
         /// <value>The fill mode.</value>
-        [Category("Appearance")]
-        [DefaultValue(0)]
-        [Description("Sets the fill mode.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public BudgetWebChart.FillModes FillMode
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the fill mode." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
+        public FillModes FillMode
         {
             get
             {
-                return this._FillMode;
+                return _FillMode;
             }
             set
             {
-                if (this._FillMode != value)
+                if( _FillMode != value )
                 {
-                    this._FillMode = value;
-                    this.Invalidate();
+                    _FillMode = value;
+                    Invalidate( );
                 }
             }
         }
@@ -549,21 +560,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the second fill.
         /// </summary>
         /// <value>The color of the fill second.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of the second fill.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the second fill." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color FillSecondColor
         {
             get
             {
-                return this._FillSecondColor;
+                return _FillSecondColor;
             }
             set
             {
-                if (this._FillSecondColor != value)
+                if( _FillSecondColor != value )
                 {
-                    this._FillSecondColor = value;
-                    this.Invalidate();
+                    _FillSecondColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -572,22 +583,22 @@ namespace BudgetExecution
         /// Gets or sets the hatch style.
         /// </summary>
         /// <value>The hatch style.</value>
-        [Category("Appearance")]
-        [DefaultValue(3)]
-        [Description("Sets the hatch style.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public System.Drawing.Drawing2D.HatchStyle HatchStyle
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 3 ) ]
+        [ Description( "Sets the hatch style." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
+        public HatchStyle HatchStyle
         {
             get
             {
-                return this._HatchStyle;
+                return _HatchStyle;
             }
             set
             {
-                if (this._HatchStyle != value)
+                if( _HatchStyle != value )
                 {
-                    this._HatchStyle = value;
-                    this.Invalidate();
+                    _HatchStyle = value;
+                    Invalidate( );
                 }
             }
         }
@@ -596,21 +607,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the inner structure.
         /// </summary>
         /// <value>The color of the inner structure.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of the inner structure.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the inner structure." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color InnerStructureColor
         {
             get
             {
-                return this._InnerStructureColor;
+                return _InnerStructureColor;
             }
             set
             {
-                if (this._InnerStructureColor != value)
+                if( _InnerStructureColor != value )
                 {
-                    this._InnerStructureColor = value;
-                    this.Invalidate();
+                    _InnerStructureColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -619,22 +630,22 @@ namespace BudgetExecution
         /// Gets or sets the inner structure stages.
         /// </summary>
         /// <value>The inner structure stages.</value>
-        [Category("Appearance")]
-        [DefaultValue(3)]
-        [Description("The inner structure stages.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 3 ) ]
+        [ Description( "The inner structure stages." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int InnerStructureStages
         {
             get
             {
-                return this._InnerStructureStages;
+                return _InnerStructureStages;
             }
             set
             {
-                if (this._InnerStructureStages != value)
+                if( _InnerStructureStages != value )
                 {
-                    this._InnerStructureStages = value;
-                    this.Invalidate();
+                    _InnerStructureStages = value;
+                    Invalidate( );
                 }
             }
         }
@@ -643,22 +654,22 @@ namespace BudgetExecution
         /// Gets or sets the width of the inner structure.
         /// </summary>
         /// <value>The width of the inner structure.</value>
-        [Category("Appearance")]
-        [DefaultValue(2)]
-        [Description("The width of the inner structure.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 2 ) ]
+        [ Description( "The width of the inner structure." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int InnerStructureWidth
         {
             get
             {
-                return this._InnerStructureWidth;
+                return _InnerStructureWidth;
             }
             set
             {
-                if (this._InnerStructureWidth != value)
+                if( _InnerStructureWidth != value )
                 {
-                    this._InnerStructureWidth = value;
-                    this.Invalidate();
+                    _InnerStructureWidth = value;
+                    Invalidate( );
                 }
             }
         }
@@ -667,21 +678,21 @@ namespace BudgetExecution
         /// Gets or sets the outer structure border.
         /// </summary>
         /// <value>The outer structure border.</value>
-        [Category("Appearance")]
-        [Description("The outer structure border.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "The outer structure border." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color OuterStructureBorder
         {
             get
             {
-                return this._OuterStructureBorder;
+                return _OuterStructureBorder;
             }
             set
             {
-                if (this._OuterStructureBorder != value)
+                if( _OuterStructureBorder != value )
                 {
-                    this._OuterStructureBorder = value;
-                    this.Invalidate();
+                    _OuterStructureBorder = value;
+                    Invalidate( );
                 }
             }
         }
@@ -690,21 +701,21 @@ namespace BudgetExecution
         /// Gets or sets the points.
         /// </summary>
         /// <value>The points.</value>
-        [Browsable(true)]
-        [Category("Data")]
-        [Description("The points.")]
-        [TypeConverter(typeof(ExpandableObjectConverter))]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [ Browsable( true ) ]
+        [ Category( "Data" ) ]
+        [ Description( "The points." ) ]
+        [ TypeConverter( typeof( ExpandableObjectConverter ) ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Content ) ]
         public BudgetWebChartPointCollection Points
         {
             get
             {
-                return this._PointCollection;
+                return _PointCollection;
             }
             set
             {
                 _PointCollection = value;
-                Invalidate();
+                Invalidate( );
             }
         }
 
@@ -712,16 +723,15 @@ namespace BudgetExecution
         /// Gets or sets the web points.
         /// </summary>
         /// <value>The web points.</value>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
+        [ TypeConverter( typeof( ExpandableObjectConverter ) ) ]
         public BudgetWebChartPoint WebPoints
         {
             get { return webPoints; }
             set
             {
                 webPoints = value;
-                Invalidate();
-
+                Invalidate( );
             }
         }
 
@@ -729,22 +739,23 @@ namespace BudgetExecution
         /// Gets or sets the size of the point.
         /// </summary>
         /// <value>The size of the point.</value>
-        [Category("Appearance")]
-        [DefaultValue(6)]
-        [Description("The size of the point.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 6 ) ]
+        [ Description( "The size of the point." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int PointSize
         {
             get
             {
-                return this._PointSize;
+                return _PointSize;
             }
             set
             {
-                if (this._PointSize != value && value >= 2)
+                if( _PointSize != value
+                   && value >= 2 )
                 {
-                    this._PointSize = value;
-                    this.Invalidate();
+                    _PointSize = value;
+                    Invalidate( );
                 }
             }
         }
@@ -753,9 +764,9 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether control's elements are aligned to support locales using right-to-left fonts.
         /// </summary>
         /// <value>The right to left.</value>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new System.Windows.Forms.RightToLeft RightToLeft
+        [ Browsable( false ) ]
+        [ EditorBrowsable( EditorBrowsableState.Never ) ]
+        public new RightToLeft RightToLeft
         {
             get;
             set;
@@ -765,22 +776,22 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to show tool tip.
         /// </summary>
         /// <value><c>true</c> if show tool tip; otherwise, <c>false</c>.</value>
-        [Category("Behavior")]
-        [DefaultValue(false)]
-        [Description("Sets a value indicating whether to show tool tip.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( false ) ]
+        [ Description( "Sets a value indicating whether to show tool tip." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public bool ShowToolTip
         {
             get
             {
-                return this._ShowToolTip;
+                return _ShowToolTip;
             }
             set
             {
-                if (this._ShowToolTip != value)
+                if( _ShowToolTip != value )
                 {
-                    this._ShowToolTip = value;
-                    this.Invalidate();
+                    _ShowToolTip = value;
+                    Invalidate( );
                 }
             }
         }
@@ -789,58 +800,86 @@ namespace BudgetExecution
         /// Gets or sets the style.
         /// </summary>
         /// <value>The style.</value>
-        [Browsable(true)]
-        [Category("Appearance")]
-        [DefaultValue(0)]
-        [Description("Sets the style.")]
-        [RefreshProperties(RefreshProperties.All)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the style." ) ]
+        [ RefreshProperties( RefreshProperties.All ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Design.Style Style
         {
             get
             {
-                return this._Style;
+                return _Style;
             }
             set
             {
-                if (value != this._Style)
+                if( value != _Style )
                 {
-                    this._Style = value;
-                    switch (value)
+                    _Style = value;
+
+                    switch( value )
                     {
                         case Design.Style.Light:
-                            {
-                                this._FillColor = Color.FromArgb(50, Design.BudgetColors.AccentBlue);
-                                this._FillSecondColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, 0.3f);
-                                this._WebBorderColor = Color.FromArgb(100, Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, -0.2f));
-                                this._OuterStructureBorder = Design.BudgetColors.LightBorder;
-                                this._DesignModeColor = Design.BudgetColors.LightBorder;
-                                this._CornerBorderColor = Design.BudgetColors.LightBorder;
-                                this._CornerFillColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.LightBorder, 0.2f);
-                                this._InnerStructureColor = Color.FromArgb(100, Design.BudgetColors.LightBorder);
-                                this.ForeColor = Design.BudgetColors.LightFont;
-                                break;
-                            }
+                        {
+                            _FillColor = Color.FromArgb( 50, Design.BudgetColors.AccentBlue );
+
+                            _FillSecondColor =
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.AccentBlue, 0.3f );
+
+                            _WebBorderColor = Color.FromArgb( 100,
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.AccentBlue, -0.2f ) );
+
+                            _OuterStructureBorder = Design.BudgetColors.LightBorder;
+                            _DesignModeColor = Design.BudgetColors.LightBorder;
+                            _CornerBorderColor = Design.BudgetColors.LightBorder;
+
+                            _CornerFillColor =
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.LightBorder, 0.2f );
+
+                            _InnerStructureColor =
+                                Color.FromArgb( 100, Design.BudgetColors.LightBorder );
+
+                            ForeColor = Design.BudgetColors.LightFont;
+                            break;
+                        }
                         case Design.Style.Dark:
-                            {
-                                this._FillColor = Color.FromArgb(50, Design.BudgetColors.AccentBlue);
-                                this._FillSecondColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, 0.3f);
-                                this._WebBorderColor = Color.FromArgb(100, Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, -0.2f));
-                                this._OuterStructureBorder = Design.BudgetColors.LightBorder;
-                                this._DesignModeColor = Design.BudgetColors.LightBorder;
-                                this._CornerBorderColor = Design.BudgetColors.LightBorder;
-                                this._CornerFillColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.LightBorder, 0.2f);
-                                this._InnerStructureColor = Color.FromArgb(100, Design.BudgetColors.LightBorder);
-                                this.ForeColor = Design.BudgetColors.DarkFont;
-                                break;
-                            }
+                        {
+                            _FillColor = Color.FromArgb( 50, Design.BudgetColors.AccentBlue );
+
+                            _FillSecondColor =
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.AccentBlue, 0.3f );
+
+                            _WebBorderColor = Color.FromArgb( 100,
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.AccentBlue, -0.2f ) );
+
+                            _OuterStructureBorder = Design.BudgetColors.LightBorder;
+                            _DesignModeColor = Design.BudgetColors.LightBorder;
+                            _CornerBorderColor = Design.BudgetColors.LightBorder;
+
+                            _CornerFillColor =
+                                Design.BudgetColors.ChangeColorBrightness(
+                                    Design.BudgetColors.LightBorder, 0.2f );
+
+                            _InnerStructureColor =
+                                Color.FromArgb( 100, Design.BudgetColors.LightBorder );
+
+                            ForeColor = Design.BudgetColors.DarkFont;
+                            break;
+                        }
                         default:
-                            {
-                                this._AutoStyle = false;
-                                break;
-                            }
+                        {
+                            _AutoStyle = false;
+                            break;
+                        }
                     }
-                    this.Invalidate();
+
+                    Invalidate( );
                 }
             }
         }
@@ -849,8 +888,8 @@ namespace BudgetExecution
         /// Gets or sets the text associated with this control.
         /// </summary>
         /// <value>The text.</value>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ Browsable( false ) ]
+        [ EditorBrowsable( EditorBrowsableState.Never ) ]
         public new string Text
         {
             get;
@@ -861,21 +900,21 @@ namespace BudgetExecution
         /// Gets or sets the color of the web border.
         /// </summary>
         /// <value>The color of the web border.</value>
-        [Category("Appearance")]
-        [Description("Sets the color of the web border.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color of the web border." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public Color WebBorderColor
         {
             get
             {
-                return this._WebBorderColor;
+                return _WebBorderColor;
             }
             set
             {
-                if (this._WebBorderColor != value)
+                if( _WebBorderColor != value )
                 {
-                    this._WebBorderColor = value;
-                    this.Invalidate();
+                    _WebBorderColor = value;
+                    Invalidate( );
                 }
             }
         }
@@ -884,22 +923,22 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether web border is gradient.
         /// </summary>
         /// <value><c>true</c> if web border is gradient; otherwise, <c>false</c>.</value>
-        [Category("Appearance")]
-        [DefaultValue(false)]
-        [Description("Sets a value indicating whether web border is gradient.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( false ) ]
+        [ Description( "Sets a value indicating whether web border is gradient." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public bool WebBorderIsGradient
         {
             get
             {
-                return this._WebBorderIsGradient;
+                return _WebBorderIsGradient;
             }
             set
             {
-                if (this._WebBorderIsGradient != value)
+                if( _WebBorderIsGradient != value )
                 {
-                    this._WebBorderIsGradient = value;
-                    this.Invalidate();
+                    _WebBorderIsGradient = value;
+                    Invalidate( );
                 }
             }
         }
@@ -908,22 +947,22 @@ namespace BudgetExecution
         /// Gets or sets the width of the web border.
         /// </summary>
         /// <value>The width of the web border.</value>
-        [Category("Appearance")]
-        [DefaultValue(2)]
-        [Description("Sets the width of the web border.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 2 ) ]
+        [ Description( "Sets the width of the web border." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int WebBorderWidth
         {
             get
             {
-                return this._WebBorderWidth;
+                return _WebBorderWidth;
             }
             set
             {
-                if (this._WebBorderWidth != value)
+                if( _WebBorderWidth != value )
                 {
-                    this._WebBorderWidth = value;
-                    this.Invalidate();
+                    _WebBorderWidth = value;
+                    Invalidate( );
                 }
             }
         }
@@ -932,22 +971,22 @@ namespace BudgetExecution
         /// Gets or sets the width of the web point.
         /// </summary>
         /// <value>The width of the web point.</value>
-        [Category("Appearance")]
-        [DefaultValue(4)]
-        [Description("Sets the width of the web point.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 4 ) ]
+        [ Description( "Sets the width of the web point." ) ]
+        [ DesignerSerializationVisibility( DesignerSerializationVisibility.Visible ) ]
         public int WebPointWidth
         {
             get
             {
-                return this._WebPointWidth;
+                return _WebPointWidth;
             }
             set
             {
-                if (this._WebPointWidth != value)
+                if( _WebPointWidth != value )
                 {
-                    this._WebPointWidth = value;
-                    this.Invalidate();
+                    _WebPointWidth = value;
+                    Invalidate( );
                 }
             }
         }
@@ -957,47 +996,57 @@ namespace BudgetExecution
         /// </summary>
         /// <value><c>true</c> if [bezier curve]; otherwise, <c>false</c>.</value>
         public bool BezierCurve
-	    {
-	        get { return bezierCurve; }
-	        set { bezierCurve = value;
-	            Invalidate();
-	        }
-	    }
+        {
+            get { return bezierCurve; }
+            set
+            {
+                bezierCurve = value;
+                Invalidate( );
+            }
+        }
 
         #endregion
 
-        #region Constructor        
+        #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetWebChart" /> class.
         /// </summary>
-        public BudgetWebChart()
+        public BudgetWebChart( )
         {
             //this.SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
+            SetStyle(
+                ControlStyles.AllPaintingInWmPaint
+                | ControlStyles.ResizeRedraw
+                | ControlStyles.UserPaint
+                | ControlStyles.DoubleBuffer
+                | ControlStyles.SupportsTransparentBackColor, true );
 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
-            
-            
-            this._FillColor = Color.FromArgb(50, Design.BudgetColors.AccentBlue);
-            this._FillSecondColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, 0.3f);
-            this._WebBorderColor = Color.FromArgb(100, Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, -0.2f));
-            this._OuterStructureBorder = Design.BudgetColors.LightBorder;
-            this._DesignModeColor = Design.BudgetColors.LightBorder;
-            this._CornerBorderColor = Design.BudgetColors.LightBorder;
-            this._CornerFillColor = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.LightBorder, 0.2f);
-            this._InnerStructureColor = Color.FromArgb(100, Design.BudgetColors.LightBorder);
-            this._HatchStyle = System.Drawing.Drawing2D.HatchStyle.BackwardDiagonal;
-            this._FillMode = BudgetWebChart.FillModes.Gradient;
-            
-           
-            this._AutoStyle = true;
-            this._MouseState = Helpers.MouseState.None;
-            
-            
-            this.Font = new System.Drawing.Font("Segoe UI", 9f);
-            this.Size = new System.Drawing.Size(250, 250);
-            
-            this.UpdateStyles();
+            _FillColor = Color.FromArgb( 50, Design.BudgetColors.AccentBlue );
+
+            _FillSecondColor =
+                Design.BudgetColors.ChangeColorBrightness( Design.BudgetColors.AccentBlue, 0.3f );
+
+            _WebBorderColor = Color.FromArgb( 100,
+                Design.BudgetColors.ChangeColorBrightness( Design.BudgetColors.AccentBlue,
+                    -0.2f ) );
+
+            _OuterStructureBorder = Design.BudgetColors.LightBorder;
+            _DesignModeColor = Design.BudgetColors.LightBorder;
+            _CornerBorderColor = Design.BudgetColors.LightBorder;
+
+            _CornerFillColor =
+                Design.BudgetColors.ChangeColorBrightness( Design.BudgetColors.LightBorder, 0.2f );
+
+            _InnerStructureColor = Color.FromArgb( 100, Design.BudgetColors.LightBorder );
+            _HatchStyle = HatchStyle.BackwardDiagonal;
+            _FillMode = FillModes.Gradient;
+            _AutoStyle = true;
+            _MouseState = Helpers.MouseState.None;
+            Font = new Font( "Segoe UI", 9f );
+            Size = new Size( 250, 250 );
+            UpdateStyles( );
         }
 
         #endregion
@@ -1009,21 +1058,25 @@ namespace BudgetExecution
         /// </summary>
         /// <param name="g">The g.</param>
         /// <param name="r">The r.</param>
-        protected void DrawDesignControl(Graphics g, Rectangle r)
+        protected void DrawDesignControl( Graphics g, Rectangle r )
         {
-            using (Pen pen = new Pen(this._DesignModeColor))
+            using( var pen = new Pen( _DesignModeColor ) )
             {
-                g.DrawEllipse(pen, r);
-                using (SolidBrush solidBrush = new SolidBrush(this._DesignModeColor))
+                g.DrawEllipse( pen, r );
+
+                using( var solidBrush = new SolidBrush( _DesignModeColor ) )
                 {
-                    StringFormat stringFormat = new StringFormat()
+                    var stringFormat = new StringFormat( )
                     {
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center
                     };
-                    using (StringFormat stringFormat1 = stringFormat)
+
+                    using( var stringFormat1 = stringFormat )
                     {
-                        g.DrawString("Points will appear on circle, once data added!\r\n(Will disappear once loaded)", new System.Drawing.Font(this.Font.FontFamily, 6f), solidBrush, r, stringFormat1);
+                        g.DrawString(
+                            "Points will appear on circle, once data added!\r\n(Will disappear once loaded)",
+                            new Font( Font.FontFamily, 6f ), solidBrush, r, stringFormat1 );
                     }
                 }
             }
@@ -1036,37 +1089,41 @@ namespace BudgetExecution
         /// <param name="centerPoint">The center point.</param>
         /// <param name="outerPoints">The outer points.</param>
         /// <param name="stageCount">The stage count.</param>
-        private void DrawInnerStructureGrid(Graphics g, Point centerPoint, Point[] outerPoints, int stageCount)
+        private void DrawInnerStructureGrid(
+            Graphics g, Point centerPoint, Point[ ] outerPoints, int stageCount )
         {
-            int num = 0;
-            int num1 = stageCount;
-            int num2 = 1;
-            while (num2 <= num1)
+            var num = 0;
+            var num1 = stageCount;
+            var num2 = 1;
+
+            while( num2 <= num1 )
             {
-                if (num2 != stageCount)
+                if( num2 != stageCount )
                 {
-                    num = checked(num + checked((int)Math.Round(100 / (double)stageCount)));
-                    List<Point> points = new List<Point>();
-                    using (Pen pen = new Pen(this._InnerStructureColor, (float)this._InnerStructureWidth))
+                    num = checked( num + checked( (int)Math.Round( 100 / (double)stageCount ) ) );
+                    var points = new List<Point>( );
+
+                    using( var pen = new Pen( _InnerStructureColor, _InnerStructureWidth ) )
                     {
-                        int length = checked(checked((int)outerPoints.Length) - 1);
-                        for (int i = 0; i <= length; i = checked(i + 1))
+                        var length = checked( outerPoints.Length - 1 );
+
+                        for( var i = 0; i <= length; i = checked( i + 1 ) )
                         {
-                            points.Add(this.GetPointOnLine(centerPoint, outerPoints[i], num));
-                            g.DrawLine(pen, centerPoint, outerPoints[i]);
+                            points.Add( GetPointOnLine( centerPoint, outerPoints[ i ], num ) );
+                            g.DrawLine( pen, centerPoint, outerPoints[ i ] );
                         }
 
-                        if (!BezierCurve)
+                        if( !BezierCurve )
                         {
-                            g.DrawPolygon(pen, points.ToArray());
+                            g.DrawPolygon( pen, points.ToArray( ) );
                         }
                         else
                         {
-                            g.DrawClosedCurve(pen, points.ToArray());
+                            g.DrawClosedCurve( pen, points.ToArray( ) );
                         }
-                        
                     }
-                    num2 = checked(num2 + 1);
+
+                    num2 = checked( num2 + 1 );
                 }
                 else
                 {
@@ -1082,11 +1139,14 @@ namespace BudgetExecution
         /// <param name="p2">The p2.</param>
         /// <param name="perc">The perc.</param>
         /// <returns>Point.</returns>
-        private Point GetPointOnLine(Point p1, Point p2, int perc)
+        private Point GetPointOnLine( Point p1, Point p2, int perc )
         {
-            float x = (float)((double)(checked(p2.X - p1.X)) * ((double)perc / 100) + (double)p1.X);
-            float y = (float)((double)(checked(p2.Y - p1.Y)) * ((double)perc / 100) + (double)p1.Y);
-            Point point = new Point(checked((int)Math.Round((double)x)), checked((int)Math.Round((double)y)));
+            var x = (float)( checked( p2.X - p1.X ) * ( (double)perc / 100 ) + p1.X );
+            var y = (float)( checked( p2.Y - p1.Y ) * ( (double)perc / 100 ) + p1.Y );
+
+            var point = new Point( checked( (int)Math.Round( x ) ),
+                checked( (int)Math.Round( y ) ) );
+
             return point;
         }
 
@@ -1103,284 +1163,321 @@ namespace BudgetExecution
         /// <param name="graphics">The graphics.</param>
         /// <param name="linearGradientBrush">The linear gradient brush.</param>
         private void DrawWeb(
-            Point point,
-            Point item,
-            Point point1,
-            List<Point> points,
-            List<Point> points1,
-            IEnumerator<BudgetWebChartPoint> enumerator,
-            IEnumerator<BudgetWebChartPoint> enumerator1,
-            Graphics graphics,
-            Brush linearGradientBrush
-            )
+            Point point, Point item, Point point1, List<Point> points,
+            List<Point> points1, IEnumerator<BudgetWebChartPoint> enumerator,
+            IEnumerator<BudgetWebChartPoint> enumerator1, Graphics graphics,
+            Brush linearGradientBrush )
         {
-            if (this.Points.Count >= 3)
+            if( Points.Count >= 3 )
             {
-                int num = 0;
+                var num = 0;
+                enumerator = Points.GetEnumerator( );
 
-                enumerator = this.Points.GetEnumerator();
-                while (enumerator.MoveNext())
+                while( enumerator.MoveNext( ) )
                 {
-                    BudgetWebChartPoint current = enumerator.Current;
-                    num = checked(num + checked((int)Math.Round(360 / (double)this.Points.Count)));
-                    Point point2 = new Point(checked((int)Math.Round((double)point1.X + (double)(checked(point1.X - this._PointSize)) * Math.Cos((double)num * 3.14159265358979 / 180))), checked((int)Math.Round((double)point1.Y + (double)(checked(point1.X - this._PointSize)) * Math.Sin((double)num * 3.14159265358979 / 180))));
-                    points1.Add(point2);
-                    points.Add(this.GetPointOnLine(point2, point1, checked(100 - current.Value)));
+                    var current = enumerator.Current;
+                    num = checked( num + checked( (int)Math.Round( 360 / (double)Points.Count ) ) );
+
+                    var point2 = new Point(
+                        checked( (int)Math.Round( point1.X
+                            + checked( point1.X - _PointSize )
+                            * Math.Cos( num * 3.14159265358979 / 180 ) ) ),
+                        checked( (int)Math.Round( point1.Y
+                            + checked( point1.X - _PointSize )
+                            * Math.Sin( num * 3.14159265358979 / 180 ) ) ) );
+
+                    points1.Add( point2 );
+                    points.Add( GetPointOnLine( point2, point1, checked( 100 - current.Value ) ) );
                 }
 
-                if (this._DrawInnerStructure)
+                if( _DrawInnerStructure )
                 {
-                    this.DrawInnerStructureGrid(graphics, point1, points1.ToArray(), this._InnerStructureStages);
+                    DrawInnerStructureGrid( graphics, point1, points1.ToArray( ),
+                        _InnerStructureStages );
                 }
-                using (Pen pen = new Pen(this._WebBorderColor, (float)this._WebBorderWidth))
+
+                using( var pen = new Pen( _WebBorderColor, _WebBorderWidth ) )
                 {
-                    if (!this._WebBorderIsGradient)
+                    if( !_WebBorderIsGradient )
                     {
-                        if (!BezierCurve)
+                        if( !BezierCurve )
                         {
-                            graphics.DrawPolygon(pen, points.ToArray());
+                            graphics.DrawPolygon( pen, points.ToArray( ) );
                         }
                         else
                         {
-                            graphics.DrawClosedCurve(pen, points.ToArray());
+                            graphics.DrawClosedCurve( pen, points.ToArray( ) );
                         }
-                        
                     }
                     else
                     {
-                        int count = checked(points.Count - 1);
-                        for (int i = 0; i <= count; i = checked(i + 1))
+                        var count = checked( points.Count - 1 );
+
+                        for( var i = 0; i <= count; i = checked( i + 1 ) )
                         {
-                            using (LinearGradientBrush linearGradientBrush1 = new LinearGradientBrush(points[i], (i == checked(points.Count - 1) ? points[0] : points[checked(i + 1)]), this.Points[i].Color, ((i == checked(points.Count - 1) ? this.Points[0] : this.Points[checked(i + 1)])).Color))
+                            using( var linearGradientBrush1 = new LinearGradientBrush( points[ i ],
+                                      i == checked( points.Count - 1 )
+                                          ? points[ 0 ]
+                                          : points[ checked( i + 1 ) ], Points[ i ].Color,
+                                      ( i == checked( points.Count - 1 )
+                                          ? Points[ 0 ]
+                                          : Points[ checked( i + 1 ) ] ).Color ) )
                             {
-                                using (Pen pen1 = new Pen(linearGradientBrush1, (float)this._WebBorderWidth))
+                                using( var pen1 = new Pen( linearGradientBrush1, _WebBorderWidth ) )
                                 {
-                                    graphics.DrawLine(pen1, points[i], (i == checked(points.Count - 1) ? points[0] : points[checked(i + 1)]));
+                                    graphics.DrawLine( pen1, points[ i ],
+                                        i == checked( points.Count - 1 )
+                                            ? points[ 0 ]
+                                            : points[ checked( i + 1 ) ] );
                                 }
                             }
                         }
                     }
-                    pen.Color = this._OuterStructureBorder;
-                    if (!BezierCurve)
+
+                    pen.Color = _OuterStructureBorder;
+
+                    if( !BezierCurve )
                     {
-                        graphics.DrawPolygon(pen, points1.ToArray());
+                        graphics.DrawPolygon( pen, points1.ToArray( ) );
                     }
                     else
                     {
-                        graphics.DrawClosedCurve(pen, points1.ToArray());
+                        graphics.DrawClosedCurve( pen, points1.ToArray( ) );
                     }
-                    
                 }
-                switch (this._FillMode)
+
+                switch( _FillMode )
                 {
-                    case BudgetWebChart.FillModes.Gradient:
+                    case FillModes.Gradient:
+                    {
+                        point = new Point( checked( (int)Math.Round( (double)_ChartWidth / 2 ) ),
+                            _ChartWidth );
+
+                        item = new Point( checked( (int)Math.Round( (double)_ChartWidth / 2 ) ),
+                            0 );
+
+                        linearGradientBrush = new LinearGradientBrush( point, item, _FillColor,
+                            _FillSecondColor );
+
+                        break;
+                    }
+                    case FillModes.MultiGradient:
+                    {
+                        var colors = new List<Color>( );
+                        enumerator1 = Points.GetEnumerator( );
+
+                        while( enumerator1.MoveNext( ) )
                         {
-                            point = new Point(checked((int)Math.Round((double)this._ChartWidth / 2)), this._ChartWidth);
-                            item = new Point(checked((int)Math.Round((double)this._ChartWidth / 2)), 0);
-                            linearGradientBrush = new LinearGradientBrush(point, item, this._FillColor, this._FillSecondColor);
-                            break;
+                            colors.Add( enumerator1.Current.Color );
                         }
-                    case BudgetWebChart.FillModes.MultiGradient:
+
+                        var pathGradientBrush = new PathGradientBrush( points.ToArray( ) )
                         {
-                            List<Color> colors = new List<Color>();
+                            CenterColor = _FillColor,
+                            SurroundColors = colors.ToArray( )
+                        };
 
+                        linearGradientBrush = pathGradientBrush;
+                        break;
+                    }
+                    case FillModes.Hatch:
+                    {
+                        linearGradientBrush =
+                            new HatchBrush( _HatchStyle, _FillColor, _FillSecondColor );
 
-                            enumerator1 = this.Points.GetEnumerator();
-                            while (enumerator1.MoveNext())
-                            {
-                                colors.Add(enumerator1.Current.Color);
-                            }
-
-                            PathGradientBrush pathGradientBrush = new PathGradientBrush(points.ToArray())
-                            {
-                                CenterColor = this._FillColor,
-                                SurroundColors = colors.ToArray()
-                            };
-
-                            linearGradientBrush = pathGradientBrush;
-                            break;
-                        }
-                    case BudgetWebChart.FillModes.Hatch:
-                        {
-                            linearGradientBrush = new HatchBrush(this._HatchStyle, this._FillColor, this._FillSecondColor);
-                            break;
-                        }
+                        break;
+                    }
                     default:
-                        {
-                            linearGradientBrush = new SolidBrush(this._FillColor);
-                            break;
-                        }
+                    {
+                        linearGradientBrush = new SolidBrush( _FillColor );
+                        break;
+                    }
                 }
 
-                if (!BezierCurve)
+                if( !BezierCurve )
                 {
-                    graphics.FillPolygon(linearGradientBrush, points.ToArray());
+                    graphics.FillPolygon( linearGradientBrush, points.ToArray( ) );
                 }
                 else
                 {
-                    graphics.FillClosedCurve(linearGradientBrush, points.ToArray());
+                    graphics.FillClosedCurve( linearGradientBrush, points.ToArray( ) );
                 }
-                
-                linearGradientBrush.Dispose();
-                int count1 = checked(points1.Count - 1);
-                for (int j = 0; j <= count1; j = checked(j + 1))
+
+                linearGradientBrush.Dispose( );
+                var count1 = checked( points1.Count - 1 );
+
+                for( var j = 0; j <= count1; j = checked( j + 1 ) )
                 {
-                    item = points1[j];
-                    int x = checked(item.X - checked((int)Math.Round((double)this._PointSize / 2)));
-                    point = points1[j];
-                    Rectangle rectangle1 = new Rectangle(x, checked(point.Y - checked((int)Math.Round((double)this._PointSize / 2))), this._PointSize, this._PointSize);
-                    using (SolidBrush solidBrush = new SolidBrush(this._CornerFillColor))
+                    item = points1[ j ];
+
+                    var x = checked( item.X
+                        - checked( (int)Math.Round( (double)_PointSize / 2 ) ) );
+
+                    point = points1[ j ];
+
+                    var rectangle1 = new Rectangle( x,
+                        checked( point.Y - checked( (int)Math.Round( (double)_PointSize / 2 ) ) ),
+                        _PointSize, _PointSize );
+
+                    using( var solidBrush = new SolidBrush( _CornerFillColor ) )
                     {
-                        using (Pen pen2 = new Pen(this._CornerBorderColor))
+                        using( var pen2 = new Pen( _CornerBorderColor ) )
                         {
-                            if (this._CornerShape != BudgetWebChart.CornerShapes.Rectangular)
+                            if( _CornerShape != CornerShapes.Rectangular )
                             {
-                                graphics.DrawEllipse(pen2, rectangle1);
-                                graphics.FillEllipse(solidBrush, rectangle1);
+                                graphics.DrawEllipse( pen2, rectangle1 );
+                                graphics.FillEllipse( solidBrush, rectangle1 );
                             }
                             else
                             {
-                                graphics.DrawRectangle(pen2, rectangle1);
-                                graphics.FillRectangle(solidBrush, rectangle1);
+                                graphics.DrawRectangle( pen2, rectangle1 );
+                                graphics.FillRectangle( solidBrush, rectangle1 );
                             }
                         }
                     }
-                    this._OuterPoints.Add(rectangle1);
+
+                    _OuterPoints.Add( rectangle1 );
                 }
-                if (this._DrawWebPoints)
+
+                if( _DrawWebPoints )
                 {
-                    int num1 = checked(points.Count - 1);
-                    for (int k = 0; k <= num1; k = checked(k + 1))
+                    var num1 = checked( points.Count - 1 );
+
+                    for( var k = 0; k <= num1; k = checked( k + 1 ) )
                     {
-                        using (SolidBrush solidBrush1 = new SolidBrush(this.Points[k].Color))
+                        using( var solidBrush1 = new SolidBrush( Points[ k ].Color ) )
                         {
-                            item = points[k];
-                            int x1 = checked(item.X - checked((int)Math.Round((double)this._WebPointWidth / 2)));
-                            point = points[k];
-                            graphics.FillEllipse(solidBrush1, x1, checked(point.Y - checked((int)Math.Round((double)this._WebPointWidth / 2))), this._WebPointWidth, this._WebPointWidth);
+                            item = points[ k ];
+
+                            var x1 = checked( item.X
+                                - checked( (int)Math.Round( (double)_WebPointWidth / 2 ) ) );
+
+                            point = points[ k ];
+
+                            graphics.FillEllipse( solidBrush1, x1,
+                                checked( point.Y
+                                    - checked( (int)Math.Round( (double)_WebPointWidth / 2 ) ) ),
+                                _WebPointWidth, _WebPointWidth );
                         }
                     }
                 }
             }
         }
-
 
         #endregion
 
         #region Overrides
 
-
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.</param>
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaint( PaintEventArgs e )
         {
-            Graphics graphics = e.Graphics;
+            var graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.HighQuality;
+            _ChartWidth = Width / 2 - 5 + ( Height / 2 - 5 );
+            var point = new Point( );
+            var item = new Point( );
 
+            var linbrush = new LinearGradientBrush( new Point( 0, 0 ), new Point( 10, 10 ),
+                Color.AliceBlue, Color.Red );
 
-            _ChartWidth = ((Width / 2) - 5) + ((Height / 2) - 5);
+            var points = new List<Point>( );
+            var points1 = new List<Point>( );
 
+            var point1 =
+                new Point(
+                    checked( _PointSize + checked( (int)Math.Round( (double)_ChartWidth / 2 ) ) ),
+                    checked( _PointSize + checked( (int)Math.Round( (double)_ChartWidth / 2 ) ) ) );
 
-            Point point = new Point();
-            Point item = new Point();
-            LinearGradientBrush linbrush = new LinearGradientBrush(new Point(0, 0), new Point(10, 10), Color.AliceBlue, Color.Red);
-            List<Point> points = new List<Point>();
-            List<Point> points1 = new List<Point>();
-            Point point1 = new Point(checked(this._PointSize + checked((int)Math.Round((double)this._ChartWidth / 2))), checked(this._PointSize + checked((int)Math.Round((double)this._ChartWidth / 2))));
+            var rectangle = new Rectangle( _PointSize, _PointSize, _ChartWidth, _ChartWidth );
+            points1.Clear( );
+            _OuterPoints.Clear( );
 
-            Rectangle rectangle = new Rectangle(this._PointSize, this._PointSize, this._ChartWidth, this._ChartWidth);
-            points1.Clear();
-            this._OuterPoints.Clear();
-
-
-
-            if (this.Points.Count < 3)
+            if( Points.Count < 3 )
             {
-
-                this.DrawDesignControl(graphics, rectangle);
-
+                DrawDesignControl( graphics, rectangle );
             }
 
-            DrawWeb(point, item, point1, points, points1, enumerator, enumerator1, graphics, linbrush);
+            DrawWeb( point, item, point1, points, points1,
+                enumerator, enumerator1, graphics, linbrush );
 
-            base.OnPaint(e);
-
+            base.OnPaint( e );
         }
-
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.BackColorChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnBackColorChanged(EventArgs e)
-	    {
-	        if (this.FindForm() is BudgetForm)
-	        {
-	            if (this._AutoStyle)
-	            {
-	                BudgetForm metroForm = (BudgetForm)this.FindForm();
-	                this.Style = metroForm.Style;
-	                this._Style = metroForm.Style;
-	                this.Invalidate();
-	            }
-	        }
-	        base.OnBackColorChanged(e);
-	    }
+        protected override void OnBackColorChanged( EventArgs e )
+        {
+            if( FindForm( ) is BudgetForm )
+            {
+                if( _AutoStyle )
+                {
+                    var metroForm = (BudgetForm)FindForm( );
+                    Style = metroForm.Style;
+                    _Style = metroForm.Style;
+                    Invalidate( );
+                }
+            }
+
+            base.OnBackColorChanged( e );
+        }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnMouseLeave(EventArgs e)
-	    {
-	        this._HotIndex = -1;
-	        this._HotRectangle = new Rectangle();
-	        base.OnMouseLeave(e);
-	    }
+        protected override void OnMouseLeave( EventArgs e )
+        {
+            _HotIndex = -1;
+            _HotRectangle = new Rectangle( );
+            base.OnMouseLeave( e );
+        }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-        protected override void OnMouseMove(MouseEventArgs e)
-	    {
-	        Rectangle rectangle = new Rectangle();
-	        if (this._ShowToolTip)
-	        {
-	            if (this._HotRectangle == rectangle)
-	            {
-	                int count = checked(this._OuterPoints.Count - 1);
-	                for (int i = 0; i <= count; i = checked(i + 1))
-	                {
-	                    if (this._OuterPoints[i].Contains(e.Location))
-	                    {
-	                        if (this._HotIndex != i)
-	                        {
-	                            if (this._HotRectangle == rectangle)
-	                            {
-	                                this._HotIndex = i;
-	                                this._HotRectangle = this._OuterPoints[i];
-	                                this.ToolTip.Show(this.Points[i].Text, this);
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	            else if (!this._HotRectangle.Contains(e.Location))
-	            {
-	                this._HotIndex = -1;
-	                this._HotRectangle = new Rectangle();
-	                this.ToolTip.Hide(this);
-	            }
-	        }
-	        base.OnMouseMove(e);
-	    }
+        protected override void OnMouseMove( MouseEventArgs e )
+        {
+            var rectangle = new Rectangle( );
+
+            if( _ShowToolTip )
+            {
+                if( _HotRectangle == rectangle )
+                {
+                    var count = checked( _OuterPoints.Count - 1 );
+
+                    for( var i = 0; i <= count; i = checked( i + 1 ) )
+                    {
+                        if( _OuterPoints[ i ].Contains( e.Location ) )
+                        {
+                            if( _HotIndex != i )
+                            {
+                                if( _HotRectangle == rectangle )
+                                {
+                                    _HotIndex = i;
+                                    _HotRectangle = _OuterPoints[ i ];
+                                    ToolTip.Show( Points[ i ].Text, this );
+                                }
+                            }
+                        }
+                    }
+                }
+                else if( !_HotRectangle.Contains( e.Location ) )
+                {
+                    _HotIndex = -1;
+                    _HotRectangle = new Rectangle( );
+                    ToolTip.Hide( this );
+                }
+            }
+
+            base.OnMouseMove( e );
+        }
 
         #endregion
-
-        
-        
     }
 }

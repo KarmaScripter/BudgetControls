@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetWebChartPointCollectionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,7 +47,7 @@ namespace BudgetExecution
     /// </summary>
     /// <seealso cref="System.EventArgs" />
     public class BudgetWebChartPointCollectionEventArgs : EventArgs
-	{
+    {
         /// <summary>
         /// The item
         /// </summary>
@@ -58,20 +58,20 @@ namespace BudgetExecution
         /// </summary>
         /// <value>The item.</value>
         public BudgetWebChartPoint Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetWebChartPointCollectionEventArgs"/> class.
         /// </summary>
         /// <param name="item">The item.</param>
-        public BudgetWebChartPointCollectionEventArgs(BudgetWebChartPoint item)
-		{
-			this._item = item;
-		}
-	}
+        public BudgetWebChartPointCollectionEventArgs( BudgetWebChartPoint item )
+        {
+            _item = item;
+        }
+    }
 }

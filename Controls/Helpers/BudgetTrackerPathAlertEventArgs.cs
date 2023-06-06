@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackerPathAlertEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,55 +42,55 @@ using System;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetTrackerPathAlertEventArgs.
-	/// </summary>
-	/// <seealso cref="System.EventArgs" />
-	public class BudgetTrackerPathAlertEventArgs : EventArgs
-	{
-		/// <summary>
-		/// The item
-		/// </summary>
-		private BudgetTrackerPath _item;
+    /// <summary>
+    /// Class BudgetTrackerPathAlertEventArgs.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class BudgetTrackerPathAlertEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The item
+        /// </summary>
+        private BudgetTrackerPath _item;
 
-		/// <summary>
-		/// The value
-		/// </summary>
-		private int _value;
+        /// <summary>
+        /// The value
+        /// </summary>
+        private int _value;
 
-		/// <summary>
-		/// Gets the item.
-		/// </summary>
-		/// <value>The item.</value>
-		public BudgetTrackerPath Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <value>The item.</value>
+        public BudgetTrackerPath Item
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
-		/// <summary>
-		/// Gets the value.
-		/// </summary>
-		/// <value>The value.</value>
-		public int Value
-		{
-			get
-			{
-				return this._value;
-			}
-		}
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public int Value
+        {
+            get
+            {
+                return _value;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetTrackerPathAlertEventArgs"/> class.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		/// <param name="value">The value.</param>
-		public BudgetTrackerPathAlertEventArgs(BudgetTrackerPath item, int value)
-		{
-			this._item = item;
-			this._value = value;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetTrackerPathAlertEventArgs"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="value">The value.</param>
+        public BudgetTrackerPathAlertEventArgs( BudgetTrackerPath item, int value )
+        {
+            _item = item;
+            _value = value;
+        }
+    }
 }

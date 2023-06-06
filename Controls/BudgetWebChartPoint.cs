@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetWebChartPoint.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,17 +42,18 @@ using System.ComponentModel;
 
 namespace BudgetExecution
 {
+    using System.Drawing;
+
     /// <summary>
     /// Class BudgetWebChartPoint.
     /// </summary>
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class BudgetWebChartPoint : INotifyPropertyChanged
     {
-
         /// <summary>
         /// The value
         /// </summary>
-        private int _value = 0;
+        private int _value;
 
         /// <summary>
         /// The text
@@ -62,74 +63,78 @@ namespace BudgetExecution
         /// <summary>
         /// The color
         /// </summary>
-        private System.Drawing.Color _Color = Design.BudgetColors.ChangeColorBrightness(Design.BudgetColors.AccentBlue, 0.3f);
+        private Color _Color =
+            Design.BudgetColors.ChangeColorBrightness( Design.BudgetColors.AccentBlue, 0.3f );
 
         /// <summary>
         /// Gets or sets the color.
         /// </summary>
         /// <value>The color.</value>
-        public System.Drawing.Color Color
-		{
-			get
-			{
-				return this._Color;
-			}
-			set
-			{
-				this._Color = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Color"));
-				}
-			}
-		}
+        public Color Color
+        {
+            get
+            {
+                return _Color;
+            }
+            set
+            {
+                _Color = value;
+                var _propertyChangedEventHandler = PropertyChanged;
+
+                if( _propertyChangedEventHandler != null )
+                {
+                    _propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Color" ) );
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
         /// <value>The text.</value>
         public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				this._Text = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Text"));
-				}
-			}
-		}
+        {
+            get
+            {
+                return _Text;
+            }
+            set
+            {
+                _Text = value;
+                var propertyChangedEventHandler = PropertyChanged;
+
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Text" ) );
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
         /// <value>The value.</value>
         public int Value
-		{
-			get
-			{
-				return this._value;
-			}
-			set
-			{
-				this._value = value;
-				PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-				if (propertyChangedEventHandler != null)
-				{
-					propertyChangedEventHandler(this, new PropertyChangedEventArgs("Value"));
-				}
-			}
-		}
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                var propertyChangedEventHandler = PropertyChanged;
+
+                if( propertyChangedEventHandler != null )
+                {
+                    propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Value" ) );
+                }
+            }
+        }
 
         /// <summary>
         /// Occurs when [property changed].
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-	}
+    }
 }

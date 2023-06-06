@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetSeparatorDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -45,83 +45,88 @@ using System.Windows.Forms.Design;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetSeparatorDesigner.
-	/// </summary>
-	/// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-	public class BudgetSeparatorDesigner : ControlDesigner
-	{
-		/// <summary>
-		/// The lists
-		/// </summary>
-		private DesignerActionListCollection lists;
+    /// <summary>
+    /// Class BudgetSeparatorDesigner.
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
+    public class BudgetSeparatorDesigner : ControlDesigner
+    {
+        /// <summary>
+        /// The lists
+        /// </summary>
+        private DesignerActionListCollection lists;
 
-		/// <summary>
-		/// Gets the design-time action lists supported by the component associated with the designer.
-		/// </summary>
-		/// <value>The action lists.</value>
-		public override DesignerActionListCollection ActionLists
-		{
-			get
-			{
-				if (this.lists == null)
-				{
-					this.lists = new DesignerActionListCollection();
-					this.lists.Add(new BudgetSeparatorActionList(this.Component));
-				}
-				return this.lists;
-			}
-		}
+        /// <summary>
+        /// Gets the design-time action lists supported by the component associated with the designer.
+        /// </summary>
+        /// <value>The action lists.</value>
+        public override DesignerActionListCollection ActionLists
+        {
+            get
+            {
+                if( lists == null )
+                {
+                    lists = new DesignerActionListCollection( );
+                    lists.Add( new BudgetSeparatorActionList( Component ) );
+                }
 
-		/// <summary>
-		/// Gets the host control.
-		/// </summary>
-		/// <value>The host control.</value>
-		private BudgetSeparator HostControl
-		{
-			get
-			{
-				return (BudgetSeparator)this.Control;
-			}
-		}
+                return lists;
+            }
+        }
 
-		/// <summary>
-		/// Gets the selection rules that indicate the movement capabilities of a component.
-		/// </summary>
-		/// <value>The selection rules.</value>
-		public override System.Windows.Forms.Design.SelectionRules SelectionRules
-		{
-			get
-			{
-				System.Windows.Forms.Design.SelectionRules selectionRule = System.Windows.Forms.Design.SelectionRules.Moveable;
-				selectionRule = (this.HostControl.Orientation != Design.Orientation.Horizontal ? selectionRule | System.Windows.Forms.Design.SelectionRules.TopSizeable | System.Windows.Forms.Design.SelectionRules.BottomSizeable : selectionRule | System.Windows.Forms.Design.SelectionRules.LeftSizeable | System.Windows.Forms.Design.SelectionRules.RightSizeable);
-				return selectionRule;
-			}
-		}
+        /// <summary>
+        /// Gets the host control.
+        /// </summary>
+        /// <value>The host control.</value>
+        private BudgetSeparator HostControl
+        {
+            get
+            {
+                return (BudgetSeparator)Control;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetSeparatorDesigner"/> class.
-		/// </summary>
-		[DebuggerNonUserCode]
-		public BudgetSeparatorDesigner()
-		{
-		}
+        /// <summary>
+        /// Gets the selection rules that indicate the movement capabilities of a component.
+        /// </summary>
+        /// <value>The selection rules.</value>
+        public override SelectionRules SelectionRules
+        {
+            get
+            {
+                var selectionRule = SelectionRules.Moveable;
 
-		/// <summary>
-		/// Allows a designer to change or remove items from the set of properties that it exposes through a <see cref="T:System.ComponentModel.TypeDescriptor" />.
-		/// </summary>
-		/// <param name="properties">The properties for the class of the component.</param>
-		protected override void PostFilterProperties(IDictionary properties)
-		{
-			properties.Remove("BackColor");
-			properties.Remove("BackgroundImage");
-			properties.Remove("BackgroundImageLayout");
-			properties.Remove("BorderStyle");
-			properties.Remove("Font");
-			properties.Remove("ForeColor");
-			properties.Remove("RightToLeft");
-			properties.Remove("Text");
-			base.PostFilterProperties(properties);
-		}
-	}
+                selectionRule = HostControl.Orientation != Design.Orientation.Horizontal
+                    ? selectionRule | SelectionRules.TopSizeable | SelectionRules.BottomSizeable
+                    : selectionRule | SelectionRules.LeftSizeable | SelectionRules.RightSizeable;
+
+                return selectionRule;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetSeparatorDesigner"/> class.
+        /// </summary>
+        [ DebuggerNonUserCode ]
+        public BudgetSeparatorDesigner( )
+        {
+        }
+
+        /// <summary>
+        /// Allows a designer to change or remove items from the set of properties that it exposes through a <see cref="T:System.ComponentModel.TypeDescriptor" />.
+        /// </summary>
+        /// <param name="properties">The properties for the class of the component.</param>
+        protected override void PostFilterProperties( IDictionary properties )
+        {
+            properties.Remove( "BackColor" );
+            properties.Remove( "BackgroundImage" );
+            properties.Remove( "BackgroundImageLayout" );
+            properties.Remove( "BorderStyle" );
+            properties.Remove( "Font" );
+            properties.Remove( "ForeColor" );
+            properties.Remove( "RightToLeft" );
+            properties.Remove( "Text" );
+            base.PostFilterProperties( properties );
+        }
+    }
 }

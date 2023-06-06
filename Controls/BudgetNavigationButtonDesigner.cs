@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetNavigationButtonDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,21 +47,26 @@ using System.Text;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetNavigationButtonDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetNavigationButtonDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetNavigationButtonDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetNavigationButtonDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +82,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroNavigationButtonSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroNavigationButtonSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +107,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroNavigationButtonSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroNavigationButtonSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroNavigationButtonSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +127,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetNavigationButton colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroNavigationButtonSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroNavigationButtonSmartTagActionList(IComponent component) : base(component)
+        public MetroNavigationButtonSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetNavigationButton;
+            colUserControl = component as BudgetNavigationButton;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +154,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +183,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +199,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -194,7 +207,7 @@ namespace BudgetExecution
         /// Gets or sets the arrow direction.
         /// </summary>
         /// <value>The arrow direction.</value>
-        public System.Windows.Forms.ArrowDirection ArrowDirection
+        public ArrowDirection ArrowDirection
         {
             get
             {
@@ -202,7 +215,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ArrowDirection").SetValue(colUserControl, value);
+                GetPropertyByName( "ArrowDirection" ).SetValue( colUserControl, value );
             }
         }
 
@@ -218,7 +231,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ArrowColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ArrowColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -234,7 +247,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ArrowHoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ArrowHoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -250,7 +263,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ArrowPressedColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ArrowPressedColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -266,7 +279,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -282,7 +295,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderHoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderHoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -298,7 +311,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderPressedColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderPressedColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -314,7 +327,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DefaultColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DefaultColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -330,7 +343,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DisabledArrowColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DisabledArrowColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -338,7 +351,7 @@ namespace BudgetExecution
         /// Gets or sets the color of the disabled.
         /// </summary>
         /// <value>The color of the disabled.</value>
-        public new Color DisabledColor
+        public Color DisabledColor
         {
             get
             {
@@ -346,7 +359,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DisabledColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DisabledColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -362,7 +375,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("HoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "HoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -378,10 +391,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("PressedColor").SetValue(colUserControl, value);
+                GetPropertyByName( "PressedColor" ).SetValue( colUserControl, value );
             }
         }
-
 
         #endregion
 
@@ -391,89 +403,63 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionPropertyItem("ArrowDirection",
-                                 "Arrow Direction", "Appearance",
-                                 "Sets the arrow direction."));
+            items.Add( new DesignerActionPropertyItem( "ArrowDirection", "Arrow Direction",
+                "Appearance", "Sets the arrow direction." ) );
 
-            items.Add(new DesignerActionPropertyItem("ArrowColor",
-                                 "Arrow Color", "Appearance",
-                                 "Sets the arrow color."));
+            items.Add( new DesignerActionPropertyItem( "ArrowColor", "Arrow Color", "Appearance",
+                "Sets the arrow color." ) );
 
-            items.Add(new DesignerActionPropertyItem("ArrowHoverColor",
-                                 "Hovered Color", "Appearance",
-                                 "Sets the hovered arrow color."));
+            items.Add( new DesignerActionPropertyItem( "ArrowHoverColor", "Hovered Color",
+                "Appearance", "Sets the hovered arrow color." ) );
 
-            items.Add(new DesignerActionPropertyItem("ArrowPressedColor",
-                                 "Pressed Color", "Appearance",
-                                 "Sets the color when pressed."));
+            items.Add( new DesignerActionPropertyItem( "ArrowPressedColor", "Pressed Color",
+                "Appearance", "Sets the color when pressed." ) );
 
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Sets the border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Sets the border color."));
+            items.Add( new DesignerActionPropertyItem( "BorderHoverColor", "Border Hover Color",
+                "Appearance", "Sets the hovered border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderHoverColor",
-                "Border Hover Color", "Appearance",
-                "Sets the hovered border color."));
+            items.Add( new DesignerActionPropertyItem( "BorderPressedColor", "Border Pressed Color",
+                "Appearance", "Sets the pressed border color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "DefaultColor", "Default Color",
+                "Appearance", "Sets the default color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderPressedColor",
-                "Border Pressed Color", "Appearance",
-                "Sets the pressed border color."));
+            items.Add( new DesignerActionPropertyItem( "DisabledArrowColor", "Disabled Arrow Color",
+                "Appearance", "Sets the disabled arrow color." ) );
 
-            items.Add(new DesignerActionPropertyItem("DefaultColor",
-                "Default Color", "Appearance",
-                "Sets the default color."));
+            items.Add( new DesignerActionPropertyItem( "DisabledColor", "Inner Disabled Color",
+                "Appearance", "Sets the disabled color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "HoverColor", "Inner Hover Color",
+                "Appearance", "Sets the hovered color." ) );
 
-            items.Add(new DesignerActionPropertyItem("DisabledArrowColor",
-                "Disabled Arrow Color", "Appearance",
-                "Sets the disabled arrow color."));
-
-            items.Add(new DesignerActionPropertyItem("DisabledColor",
-                "Inner Disabled Color", "Appearance",
-                "Sets the disabled color."));
-
-
-            items.Add(new DesignerActionPropertyItem("HoverColor",
-                "Inner Hover Color", "Appearance",
-                "Sets the hovered color."));
-
-            items.Add(new DesignerActionPropertyItem("PressedColor",
-                "Inner Pressed Color", "Appearance",
-                "Sets the pressed color."));
-            
+            items.Add( new DesignerActionPropertyItem( "PressedColor", "Inner Pressed Color",
+                "Appearance", "Sets the pressed color." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
-
 }

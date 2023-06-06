@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetSeparator.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -46,237 +46,244 @@ using System.Windows.Forms;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// A class collection for rendering a metro-style seperator.
-	/// </summary>
-	/// <seealso cref="System.Windows.Forms.Control" />
-	[DefaultEvent("Click")]
-	[Designer(typeof(BudgetSeparatorDesigner))]
-	[DesignerCategory("Value")]
-	[ToolboxBitmap(typeof(BudgetSeparator), "MetroSeperator.bmp")]
-	public class BudgetSeparator : Control
-	{
+    /// <summary>
+    /// A class collection for rendering a metro-style seperator.
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Control" />
+    [ DefaultEvent( "Click" ) ]
+    [ Designer( typeof( BudgetSeparatorDesigner ) ) ]
+    [ DesignerCategory( "Value" ) ]
+    [ ToolboxBitmap( typeof( BudgetSeparator ), "MetroSeperator.bmp" ) ]
+    public class BudgetSeparator : Control
+    {
+        #region Private Fields
 
-		#region Private Fields
-		/// <summary>
-		/// The style
-		/// </summary>
-		private Design.Style _Style;
+        /// <summary>
+        /// The style
+        /// </summary>
+        private Design.Style _Style;
 
-		/// <summary>
-		/// The orientation
-		/// </summary>
-		private Design.Orientation _Orientation;
-		#endregion
+        /// <summary>
+        /// The orientation
+        /// </summary>
+        private Design.Orientation _Orientation;
 
-		#region Public Properties        
-		/// <summary>
-		/// Gets or sets the color scheme.
-		/// </summary>
-		/// <value>The color scheme.</value>
-		[Browsable(true)]
-		[Category("Appearance")]
-		[Description("Sets the color scheme.")]
-		[ReadOnly(false)]
-		[TypeConverter(typeof(ExpandableObjectConverter))]
-		public BudgetSeparator.MainColorScheme ColorScheme
-		{
-			[DebuggerNonUserCode]
-			get;
-			[DebuggerNonUserCode]
-			set;
-		}
+        #endregion
 
-		/// <summary>
-		/// Gets or sets the orientation.
-		/// </summary>
-		/// <value>The orientation.</value>
-		[Browsable(true)]
-		[Category("Behavior")]
-		[DefaultValue(0)]
-		[Description("Sets the orientation.")]
-		public Design.Orientation Orientation
-		{
-			get
-			{
-				return this._Orientation;
-			}
-			set
-			{
-				if (value != this._Orientation)
-				{
-					this._Orientation = value;
-					if (value != Design.Orientation.Horizontal)
-					{
-						this.Height = this.Width;
-						this.Width = 2;
-					}
-					else
-					{
-						this.Width = this.Height;
-						this.Height = 2;
-					}
-					this.Invalidate();
-				}
-			}
-		}
+        #region Public Properties
 
-		/// <summary>
-		/// Gets or sets the style.
-		/// </summary>
-		/// <value>The style.</value>
-		[Browsable(true)]
-		[Category("Appearance")]
-		[DefaultValue(0)]
-		[Description("Sets the style.")]
-		public Design.Style Style
-		{
-			get
-			{
-				return this._Style;
-			}
-			set
-			{
-				if (value != this._Style)
-				{
-					this._Style = value;
-					if (this.Style == Design.Style.Light)
-					{
-						this.ColorScheme._Color1 = Color.FromArgb(98, 98, 98);
-						this.ColorScheme._Color2 = Color.White;
-					}
-					else if (this.Style != Design.Style.Dark)
-					{
-						this.Style = Design.Style.Custom;
-					}
-					else
-					{
-						this.ColorScheme._Color1 = Color.FromArgb(51, 51, 51);
-						this.ColorScheme._Color2 = Color.FromArgb(98, 98, 98);
-					}
-					this.Invalidate();
-				}
-			}
-		}
+        /// <summary>
+        /// Gets or sets the color scheme.
+        /// </summary>
+        /// <value>The color scheme.</value>
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ Description( "Sets the color scheme." ) ]
+        [ ReadOnly( false ) ]
+        [ TypeConverter( typeof( ExpandableObjectConverter ) ) ]
+        public MainColorScheme ColorScheme
+        {
+            [ DebuggerNonUserCode ]
+            get;
+            [ DebuggerNonUserCode ]
+            set;
+        }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the orientation.
+        /// </summary>
+        /// <value>The orientation.</value>
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the orientation." ) ]
+        public Design.Orientation Orientation
+        {
+            get
+            {
+                return _Orientation;
+            }
+            set
+            {
+                if( value != _Orientation )
+                {
+                    _Orientation = value;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetSeparator" /> class.
-		/// </summary>
-		public BudgetSeparator()
-		{
-			this._Style = Design.Style.Light;
-			this._Orientation = Design.Orientation.Horizontal;
-			this.ColorScheme = new BudgetSeparator.MainColorScheme();
-			this.Height = 2;
-			this._Style = Design.Style.Light;
-		}
+                    if( value != Design.Orientation.Horizontal )
+                    {
+                        Height = Width;
+                        Width = 2;
+                    }
+                    else
+                    {
+                        Width = Height;
+                        Height = 2;
+                    }
 
+                    Invalidate( );
+                }
+            }
+        }
 
-		/// <summary>
-		/// Handles the <see cref="E:PaintBackground" /> event.
-		/// </summary>
-		/// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
-		protected override void OnPaintBackground(PaintEventArgs e)
-		{
-			base.OnPaintBackground(e);
-			if (this.Orientation != Design.Orientation.Horizontal)
-			{
-				e.Graphics.DrawLine(new Pen(this.ColorScheme.Color1), 0, 0, 0, this.Height);
-				e.Graphics.DrawLine(new Pen(this.ColorScheme.Color2), 1, 0, 1, this.Height);
-			}
-			else
-			{
-				e.Graphics.DrawLine(new Pen(this.ColorScheme.Color1), 0, 0, this.Width, 0);
-				e.Graphics.DrawLine(new Pen(this.ColorScheme.Color2), 0, 1, this.Width, 1);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the style.
+        /// </summary>
+        /// <value>The style.</value>
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the style." ) ]
+        public Design.Style Style
+        {
+            get
+            {
+                return _Style;
+            }
+            set
+            {
+                if( value != _Style )
+                {
+                    _Style = value;
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
-		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize(e);
-			if (this.Orientation != Design.Orientation.Horizontal)
-			{
-				this.Width = 2;
-			}
-			else
-			{
-				this.Height = 2;
-			}
-		}
+                    if( Style == Design.Style.Light )
+                    {
+                        ColorScheme._Color1 = Color.FromArgb( 98, 98, 98 );
+                        ColorScheme._Color2 = Color.White;
+                    }
+                    else if( Style != Design.Style.Dark )
+                    {
+                        Style = Design.Style.Custom;
+                    }
+                    else
+                    {
+                        ColorScheme._Color1 = Color.FromArgb( 51, 51, 51 );
+                        ColorScheme._Color2 = Color.FromArgb( 98, 98, 98 );
+                    }
 
-		/// <summary>
-		/// Class MainColorScheme.
-		/// </summary>
-		public class MainColorScheme
-		{
-			/// <summary>
-			/// The color1
-			/// </summary>
-			public Color _Color1;
+                    Invalidate( );
+                }
+            }
+        }
 
-			/// <summary>
-			/// The color2
-			/// </summary>
-			public Color _Color2;
+        #endregion
 
-			/// <summary>
-			/// Gets or sets the color1.
-			/// </summary>
-			/// <value>The color1.</value>
-			[Browsable(true)]
-			[Category("Appearance")]
-			[Description("Setzt die Hauptfarbe des Seperators.")]
-			public Color Color1
-			{
-				get
-				{
-					return this._Color1;
-				}
-				set
-				{
-					if (value != this._Color1)
-					{
-						this._Color1 = value;
-					}
-				}
-			}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetSeparator" /> class.
+        /// </summary>
+        public BudgetSeparator( )
+        {
+            _Style = Design.Style.Light;
+            _Orientation = Design.Orientation.Horizontal;
+            ColorScheme = new MainColorScheme( );
+            Height = 2;
+            _Style = Design.Style.Light;
+        }
 
-			/// <summary>
-			/// Gets or sets the color2.
-			/// </summary>
-			/// <value>The color2.</value>
-			[Browsable(true)]
-			[Category("Appearance")]
-			[Description("Setzt die Farbe für den Akzent des Seperators.")]
-			public Color Color2
-			{
-				get
-				{
-					return this._Color2;
-				}
-				set
-				{
-					if (value != this.Color2)
-					{
-						this._Color2 = value;
-					}
-				}
-			}
+        /// <summary>
+        /// Handles the <see cref="E:PaintBackground" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        protected override void OnPaintBackground( PaintEventArgs e )
+        {
+            base.OnPaintBackground( e );
 
-			/// <summary>
-			/// Initializes a new instance of the <see cref="MainColorScheme"/> class.
-			/// </summary>
-			public MainColorScheme()
-			{
-				this._Color1 = Color.FromArgb(98, 98, 98);
-				this._Color2 = Color.White;
-			}
-		}
-	}
+            if( Orientation != Design.Orientation.Horizontal )
+            {
+                e.Graphics.DrawLine( new Pen( ColorScheme.Color1 ), 0, 0, 0, Height );
+                e.Graphics.DrawLine( new Pen( ColorScheme.Color2 ), 1, 0, 1, Height );
+            }
+            else
+            {
+                e.Graphics.DrawLine( new Pen( ColorScheme.Color1 ), 0, 0, Width, 0 );
+                e.Graphics.DrawLine( new Pen( ColorScheme.Color2 ), 0, 1, Width, 1 );
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        protected override void OnResize( EventArgs e )
+        {
+            base.OnResize( e );
+
+            if( Orientation != Design.Orientation.Horizontal )
+            {
+                Width = 2;
+            }
+            else
+            {
+                Height = 2;
+            }
+        }
+
+        /// <summary>
+        /// Class MainColorScheme.
+        /// </summary>
+        public class MainColorScheme
+        {
+            /// <summary>
+            /// The color1
+            /// </summary>
+            public Color _Color1;
+
+            /// <summary>
+            /// The color2
+            /// </summary>
+            public Color _Color2;
+
+            /// <summary>
+            /// Gets or sets the color1.
+            /// </summary>
+            /// <value>The color1.</value>
+            [ Browsable( true ) ]
+            [ Category( "Appearance" ) ]
+            [ Description( "Setzt die Hauptfarbe des Seperators." ) ]
+            public Color Color1
+            {
+                get
+                {
+                    return _Color1;
+                }
+                set
+                {
+                    if( value != _Color1 )
+                    {
+                        _Color1 = value;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the color2.
+            /// </summary>
+            /// <value>The color2.</value>
+            [ Browsable( true ) ]
+            [ Category( "Appearance" ) ]
+            [ Description( "Setzt die Farbe für den Akzent des Seperators." ) ]
+            public Color Color2
+            {
+                get
+                {
+                    return _Color2;
+                }
+                set
+                {
+                    if( value != Color2 )
+                    {
+                        _Color2 = value;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MainColorScheme"/> class.
+            /// </summary>
+            public MainColorScheme( )
+            {
+                _Color1 = Color.FromArgb( 98, 98, 98 );
+                _Color2 = Color.White;
+            }
+        }
+    }
 }

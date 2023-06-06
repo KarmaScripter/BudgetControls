@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackerPath.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -58,7 +58,7 @@ namespace BudgetExecution
     /// <seealso cref="System.Collections.ICollection" />
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class BudgetTrackerPath : IEnumerable<int>, ICollection, INotifyPropertyChanged
-	{
+    {
         /// <summary>
         /// The enc list
         /// </summary>
@@ -132,7 +132,7 @@ namespace BudgetExecution
         /// <summary>
         /// The style
         /// </summary>
-        private BudgetTrackerPath.PathStyle _Style;
+        private PathStyle _Style;
 
         /// <summary>
         /// The drawing style
@@ -148,605 +148,654 @@ namespace BudgetExecution
         /// Gets or sets the alert above.
         /// </summary>
         /// <value>The alert above.</value>
-        [DefaultValue(100)]
-		public int AlertAbove
-		{
-			get
-			{
-				return this._AlertAbove;
-			}
-			set
-			{
-				if (this._AlertAbove != value)
-				{
-					this._AlertAbove = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("AlertAbove"));
-					}
-				}
-			}
-		}
+        [ DefaultValue( 100 ) ]
+        public int AlertAbove
+        {
+            get
+            {
+                return _AlertAbove;
+            }
+            set
+            {
+                if( _AlertAbove != value )
+                {
+                    _AlertAbove = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "AlertAbove" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the alert under.
         /// </summary>
         /// <value>The alert under.</value>
-        [DefaultValue(0)]
-		public int AlertUnder
-		{
-			get
-			{
-				return this._AlertUnder;
-			}
-			set
-			{
-				if (this._AlertUnder != value)
-				{
-					this._AlertUnder = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("AlertUnder"));
-					}
-				}
-			}
-		}
+        [ DefaultValue( 0 ) ]
+        public int AlertUnder
+        {
+            get
+            {
+                return _AlertUnder;
+            }
+            set
+            {
+                if( _AlertUnder != value )
+                {
+                    _AlertUnder = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "AlertUnder" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the number of elements contained in the <see cref="T:System.Collections.ICollection" />.
         /// </summary>
         /// <value>The count.</value>
         public int Count
-		{
-			get
-			{
-				return this.values.Count;
-			}
-		}
+        {
+            get
+            {
+                return values.Count;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the dash offset.
         /// </summary>
         /// <value>The dash offset.</value>
         public float DashOffset
-		{
-			get
-			{
-				return this._DashOffset;
-			}
-			set
-			{
-				if (value != this._DashOffset)
-				{
-					this._DashOffset = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("DashOffset"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _DashOffset;
+            }
+            set
+            {
+                if( value != _DashOffset )
+                {
+                    _DashOffset = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "DashOffset" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the drawing style.
         /// </summary>
         /// <value>The drawing style.</value>
         public DashStyle DrawingStyle
-		{
-			get
-			{
-				return this._DrawingStyle;
-			}
-			set
-			{
-				if (value != this._DrawingStyle)
-				{
-					this._DrawingStyle = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("DrawingStyle"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _DrawingStyle;
+            }
+            set
+            {
+                if( value != _DrawingStyle )
+                {
+                    _DrawingStyle = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "DrawingStyle" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the color of the fill.
         /// </summary>
         /// <value>The color of the fill.</value>
         public Color FillColor
-		{
-			get
-			{
-				return this._fillColor;
-			}
-			set
-			{
-				if (this._fillColor != value)
-				{
-					this._fillColor = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("FillColor"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _fillColor;
+            }
+            set
+            {
+                if( _fillColor != value )
+                {
+                    _fillColor = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "FillColor" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is filled.
         /// </summary>
         /// <value><c>true</c> if this instance is filled; otherwise, <c>false</c>.</value>
         public bool IsFilled
-		{
-			get
-			{
-				return this._isFilled;
-			}
-			set
-			{
-				if (this._isFilled != value)
-				{
-					this._isFilled = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("IsFilled"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _isFilled;
+            }
+            set
+            {
+                if( _isFilled != value )
+                {
+                    _isFilled = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "IsFilled" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is over value.
         /// </summary>
         /// <value><c>true</c> if this instance is over value; otherwise, <c>false</c>.</value>
         public bool IsOverValue
-		{
-			get
-			{
-				return this._IsOverValue;
-			}
-		}
+        {
+            get
+            {
+                return _IsOverValue;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection" /> is synchronized (thread safe).
         /// </summary>
         /// <value><c>true</c> if this instance is synchronized; otherwise, <c>false</c>.</value>
         public bool IsSynchronized
-		{
-			get
-			{
-				return false;
-			}
-		}
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is under value.
         /// </summary>
         /// <value><c>true</c> if this instance is under value; otherwise, <c>false</c>.</value>
         public bool IsUnderValue
-		{
-			get
-			{
-				return this._IsUnderValue;
-			}
-		}
+        {
+            get
+            {
+                return _IsUnderValue;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the color of the line.
         /// </summary>
         /// <value>The color of the line.</value>
         public Color LineColor
-		{
-			get
-			{
-				return this._lineColor;
-			}
-			set
-			{
-				if (this._lineColor != value)
-				{
-					this._lineColor = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("LineColor"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _lineColor;
+            }
+            set
+            {
+                if( _lineColor != value )
+                {
+                    _lineColor = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "LineColor" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the width of the line.
         /// </summary>
         /// <value>The width of the line.</value>
         public float LineWidth
-		{
-			get
-			{
-				return this._lineWidth;
-			}
-			set
-			{
-				if (this._lineWidth != value)
-				{
-					this._lineWidth = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("LineWidth"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _lineWidth;
+            }
+            set
+            {
+                if( _lineWidth != value )
+                {
+                    _lineWidth = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "LineWidth" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the maximum.
         /// </summary>
         /// <value>The maximum.</value>
         public int Maximum
-		{
-			get
-			{
-				return this._maximum;
-			}
-			set
-			{
-				if (this._maximum != value)
-				{
-					this._maximum = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("Maximum"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _maximum;
+            }
+            set
+            {
+                if( _maximum != value )
+                {
+                    _maximum = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "Maximum" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the maximum stored values.
         /// </summary>
         /// <value>The maximum stored values.</value>
         public int MaxStoredValues
-		{
-			get
-			{
-				return this.maxStored;
-			}
-			set
-			{
-				if (this.maxStored != value)
-				{
-					this.maxStored = value;
-					if (this.maxStored < this.values.Count)
-					{
-						this.CutQueue();
-						PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-						if (propertyChangedEventHandler != null)
-						{
-							propertyChangedEventHandler(this, new PropertyChangedEventArgs("Items"));
-						}
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return maxStored;
+            }
+            set
+            {
+                if( maxStored != value )
+                {
+                    maxStored = value;
+
+                    if( maxStored < values.Count )
+                    {
+                        CutQueue( );
+                        var propertyChangedEventHandler = PropertyChanged;
+
+                        if( propertyChangedEventHandler != null )
+                        {
+                            propertyChangedEventHandler( this,
+                                new PropertyChangedEventArgs( "Items" ) );
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
         public string Name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if (Operators.CompareString(this._name, value, false) != 0)
-				{
-					this._name = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("Name"));
-					}
-				}
-			}
-		}
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if( Operators.CompareString( _name, value, false ) != 0 )
+                {
+                    _name = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Name" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [perform alerts].
         /// </summary>
         /// <value><c>true</c> if [perform alerts]; otherwise, <c>false</c>.</value>
-        [DefaultValue(false)]
-		public bool PerformAlerts
-		{
-			get
-			{
-				return this._performAlers;
-			}
-			set
-			{
-				if (this._performAlers != value)
-				{
-					this._performAlers = value;
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("PerformAlerts"));
-					}
-				}
-			}
-		}
+        [ DefaultValue( false ) ]
+        public bool PerformAlerts
+        {
+            get
+            {
+                return _performAlers;
+            }
+            set
+            {
+                if( _performAlers != value )
+                {
+                    _performAlers = value;
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "PerformAlerts" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the style.
         /// </summary>
         /// <value>The style.</value>
-        [Browsable(true)]
-		[Category("Appearance")]
-		[DefaultValue(0)]
-		[Description("Gibt an, welches Farb-Schema der BudgetTracker besitzen soll.")]
-		public BudgetTrackerPath.PathStyle Style
-		{
-			get
-			{
-				return this._Style;
-			}
-			set
-			{
-				if (this._Style != value)
-				{
-					this._Style = value;
-					switch (this._Style)
-					{
-						case BudgetTrackerPath.PathStyle.Light:
-						{
-							this.LineColor = Color.FromArgb(0, 164, 240);
-							this.FillColor = Color.FromArgb(35, 0, 164, 240);
-							break;
-						}
-						case BudgetTrackerPath.PathStyle.Dark:
-						{
-							this.LineColor = Color.FromArgb(0, 164, 240);
-							this.FillColor = Color.FromArgb(35, 0, 164, 240);
-							break;
-						}
-						case BudgetTrackerPath.PathStyle.CPU:
-						{
-							this.LineColor = Color.FromArgb(17, 125, 187);
-							this.FillColor = Color.FromArgb(35, 152, 207, 249);
-							break;
-						}
-						case BudgetTrackerPath.PathStyle.Disk:
-						{
-							this.LineColor = Color.FromArgb(77, 166, 12);
-							this.FillColor = Color.FromArgb(35, 103, 239, 0);
-							break;
-						}
-						case BudgetTrackerPath.PathStyle.Memory:
-						{
-							this.LineColor = Color.FromArgb(149, 40, 180);
-							this.FillColor = Color.FromArgb(35, 242, 150, 242);
-							break;
-						}
-						case BudgetTrackerPath.PathStyle.Ethernet:
-						{
-							this.LineColor = Color.FromArgb(167, 79, 1);
-							this.FillColor = Color.FromArgb(35, 165, 118, 77);
-							break;
-						}
-					}
-					PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("LineColor"));
-					}
-					propertyChangedEventHandler = this.PropertyChanged;
-					if (propertyChangedEventHandler != null)
-					{
-						propertyChangedEventHandler(this, new PropertyChangedEventArgs("Style"));
-					}
-				}
-			}
-		}
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Gibt an, welches Farb-Schema der BudgetTracker besitzen soll." ) ]
+        public PathStyle Style
+        {
+            get
+            {
+                return _Style;
+            }
+            set
+            {
+                if( _Style != value )
+                {
+                    _Style = value;
+
+                    switch( _Style )
+                    {
+                        case PathStyle.Light:
+                        {
+                            LineColor = Color.FromArgb( 0, 164, 240 );
+                            FillColor = Color.FromArgb( 35, 0, 164, 240 );
+                            break;
+                        }
+                        case PathStyle.Dark:
+                        {
+                            LineColor = Color.FromArgb( 0, 164, 240 );
+                            FillColor = Color.FromArgb( 35, 0, 164, 240 );
+                            break;
+                        }
+                        case PathStyle.CPU:
+                        {
+                            LineColor = Color.FromArgb( 17, 125, 187 );
+                            FillColor = Color.FromArgb( 35, 152, 207, 249 );
+                            break;
+                        }
+                        case PathStyle.Disk:
+                        {
+                            LineColor = Color.FromArgb( 77, 166, 12 );
+                            FillColor = Color.FromArgb( 35, 103, 239, 0 );
+                            break;
+                        }
+                        case PathStyle.Memory:
+                        {
+                            LineColor = Color.FromArgb( 149, 40, 180 );
+                            FillColor = Color.FromArgb( 35, 242, 150, 242 );
+                            break;
+                        }
+                        case PathStyle.Ethernet:
+                        {
+                            LineColor = Color.FromArgb( 167, 79, 1 );
+                            FillColor = Color.FromArgb( 35, 165, 118, 77 );
+                            break;
+                        }
+                    }
+
+                    var propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "LineColor" ) );
+                    }
+
+                    propertyChangedEventHandler = PropertyChanged;
+
+                    if( propertyChangedEventHandler != null )
+                    {
+                        propertyChangedEventHandler( this,
+                            new PropertyChangedEventArgs( "Style" ) );
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection" />.
         /// </summary>
         /// <value>The synchronize root.</value>
         public object SyncRoot
-		{
-			get
-			{
-				return ((ICollection)this.values).SyncRoot;
-			}
-		}
+        {
+            get
+            {
+                return ( (ICollection)values ).SyncRoot;
+            }
+        }
 
         /// <summary>
         /// Initializes static members of the <see cref="BudgetTrackerPath"/> class.
         /// </summary>
-        [DebuggerNonUserCode]
-		static BudgetTrackerPath()
-		{
-			BudgetTrackerPath.__ENCList = new List<WeakReference>();
-		}
+        [ DebuggerNonUserCode ]
+        static BudgetTrackerPath( )
+        {
+            BudgetTrackerPath.__ENCList = new List<WeakReference>( );
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetTrackerPath"/> class.
         /// </summary>
-        public BudgetTrackerPath()
-		{
-			BudgetTrackerPath.__ENCAddToList(this);
-			this._AlertAbove = 100;
-			this._AlertUnder = 0;
-			this._performAlers = false;
-			this._IsOverValue = false;
-			this._IsUnderValue = false;
-			this._DrawingStyle = DashStyle.Solid;
-			this._DashOffset = 2f;
-			this.values = new Queue<int>();
-			this.maxStored = 100;
-			this._maximum = 100;
-			this._lineWidth = 1f;
-			this._isFilled = false;
-		}
+        public BudgetTrackerPath( )
+        {
+            BudgetTrackerPath.__ENCAddToList( this );
+            _AlertAbove = 100;
+            _AlertUnder = 0;
+            _performAlers = false;
+            _IsOverValue = false;
+            _IsUnderValue = false;
+            _DrawingStyle = DashStyle.Solid;
+            _DashOffset = 2f;
+            values = new Queue<int>( );
+            maxStored = 100;
+            _maximum = 100;
+            _lineWidth = 1f;
+            _isFilled = false;
+        }
 
         /// <summary>
         /// Encs the add to list.
         /// </summary>
         /// <param name="value">The value.</param>
-        [DebuggerNonUserCode]
-		private static void __ENCAddToList(object value)
-		{
-			List<WeakReference> _ENCList = BudgetTrackerPath.__ENCList;
-			Monitor.Enter(_ENCList);
-			try
-			{
-				if (BudgetTrackerPath.__ENCList.Count == BudgetTrackerPath.__ENCList.Capacity)
-				{
-					int item = 0;
-					int count = checked(BudgetTrackerPath.__ENCList.Count - 1);
-					for (int i = 0; i <= count; i = checked(i + 1))
-					{
-						if (BudgetTrackerPath.__ENCList[i].IsAlive)
-						{
-							if (i != item)
-							{
-								BudgetTrackerPath.__ENCList[item] = BudgetTrackerPath.__ENCList[i];
-							}
-							item = checked(item + 1);
-						}
-					}
-					BudgetTrackerPath.__ENCList.RemoveRange(item, checked(BudgetTrackerPath.__ENCList.Count - item));
-					BudgetTrackerPath.__ENCList.Capacity = BudgetTrackerPath.__ENCList.Count;
-				}
-				BudgetTrackerPath.__ENCList.Add(new WeakReference(RuntimeHelpers.GetObjectValue(value)));
-			}
-			finally
-			{
-				Monitor.Exit(_ENCList);
-			}
-		}
+        [ DebuggerNonUserCode ]
+        private static void __ENCAddToList( object value )
+        {
+            var _ENCList = BudgetTrackerPath.__ENCList;
+            Monitor.Enter( _ENCList );
+
+            try
+            {
+                if( BudgetTrackerPath.__ENCList.Count == BudgetTrackerPath.__ENCList.Capacity )
+                {
+                    var item = 0;
+                    var count = checked( BudgetTrackerPath.__ENCList.Count - 1 );
+
+                    for( var i = 0; i <= count; i = checked( i + 1 ) )
+                    {
+                        if( BudgetTrackerPath.__ENCList[ i ].IsAlive )
+                        {
+                            if( i != item )
+                            {
+                                BudgetTrackerPath.__ENCList[ item ] =
+                                    BudgetTrackerPath.__ENCList[ i ];
+                            }
+
+                            item = checked( item + 1 );
+                        }
+                    }
+
+                    BudgetTrackerPath.__ENCList.RemoveRange( item,
+                        checked( BudgetTrackerPath.__ENCList.Count - item ) );
+
+                    BudgetTrackerPath.__ENCList.Capacity = BudgetTrackerPath.__ENCList.Count;
+                }
+
+                BudgetTrackerPath.__ENCList.Add(
+                    new WeakReference( RuntimeHelpers.GetObjectValue( value ) ) );
+            }
+            finally
+            {
+                Monitor.Exit( _ENCList );
+            }
+        }
 
         /// <summary>
         /// Adds the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
-        public void Add(int value)
-		{
-			EventHandler<BudgetTrackerPathAlertEventArgs> eventHandler;
-			this.values.Enqueue(value);
-			if (this.maxStored < this.values.Count)
-			{
-				this.CutQueue();
-			}
-			if (this.PerformAlerts)
-			{
-				if (value > this.AlertAbove)
-				{
-					eventHandler = this.AboveAlerted;
-					if (eventHandler != null)
-					{
-						eventHandler(this, new BudgetTrackerPathAlertEventArgs(this, value));
-					}
-				}
-				if (value < this.AlertUnder)
-				{
-					eventHandler = this.UnderAlerted;
-					if (eventHandler != null)
-					{
-						eventHandler(this, new BudgetTrackerPathAlertEventArgs(this, value));
-					}
-				}
-			}
-			if (value <= this.AlertAbove)
-			{
-				this._IsOverValue = false;
-			}
-			else
-			{
-				this._IsOverValue = true;
-			}
-			if (value >= this.AlertUnder)
-			{
-				this._IsUnderValue = false;
-			}
-			else
-			{
-				this._IsUnderValue = true;
-			}
-			PropertyChangedEventHandler propertyChangedEventHandler = this.PropertyChanged;
-			if (propertyChangedEventHandler != null)
-			{
-				propertyChangedEventHandler(this, new PropertyChangedEventArgs("Items"));
-			}
-		}
+        public void Add( int value )
+        {
+            EventHandler<BudgetTrackerPathAlertEventArgs> eventHandler;
+            values.Enqueue( value );
+
+            if( maxStored < values.Count )
+            {
+                CutQueue( );
+            }
+
+            if( PerformAlerts )
+            {
+                if( value > AlertAbove )
+                {
+                    eventHandler = AboveAlerted;
+
+                    if( eventHandler != null )
+                    {
+                        eventHandler( this, new BudgetTrackerPathAlertEventArgs( this, value ) );
+                    }
+                }
+
+                if( value < AlertUnder )
+                {
+                    eventHandler = UnderAlerted;
+
+                    if( eventHandler != null )
+                    {
+                        eventHandler( this, new BudgetTrackerPathAlertEventArgs( this, value ) );
+                    }
+                }
+            }
+
+            if( value <= AlertAbove )
+            {
+                _IsOverValue = false;
+            }
+            else
+            {
+                _IsOverValue = true;
+            }
+
+            if( value >= AlertUnder )
+            {
+                _IsUnderValue = false;
+            }
+            else
+            {
+                _IsUnderValue = true;
+            }
+
+            var propertyChangedEventHandler = PropertyChanged;
+
+            if( propertyChangedEventHandler != null )
+            {
+                propertyChangedEventHandler( this, new PropertyChangedEventArgs( "Items" ) );
+            }
+        }
 
         /// <summary>
         /// Copies to.
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="index">The index.</param>
-        public void CopyTo(int[] array, int index)
-		{
-			this.values.CopyTo(array, index);
-		}
+        public void CopyTo( int[ ] array, int index )
+        {
+            values.CopyTo( array, index );
+        }
 
         /// <summary>
         /// Copies the elements of the <see cref="T:System.Collections.ICollection" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.
         /// </summary>
         /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
         /// <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
-        public void CopyTo(Array array, int index)
-		{
-			this.values.CopyTo((int[])array, index);
-		}
+        public void CopyTo( Array array, int index )
+        {
+            values.CopyTo( (int[ ])array, index );
+        }
 
         /// <summary>
         /// Cuts the queue.
         /// </summary>
-        private void CutQueue()
-		{
-			while (this.values.Count > this.maxStored)
-			{
-				this.values.Dequeue();
-			}
-		}
+        private void CutQueue( )
+        {
+            while( values.Count > maxStored )
+            {
+                values.Dequeue( );
+            }
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<int> GetEnumerator()
-		{
-			return (IEnumerator<int>)(object)this.values.GetEnumerator();
-		}
+        public IEnumerator<int> GetEnumerator( )
+        {
+            return values.GetEnumerator( );
+        }
 
         /// <summary>
         /// Gets the enumerator1.
         /// </summary>
         /// <returns>IEnumerator.</returns>
-        IEnumerator GetEnumerator1()
-		{
-			return (IEnumerator)(object)this.values.GetEnumerator();
-		}
+        private IEnumerator GetEnumerator1( )
+        {
+            return values.GetEnumerator( );
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator( )
         {
-            return (IEnumerator<int>)(object)this.values.GetEnumerator();
+            return values.GetEnumerator( );
         }
 
         /// <summary>
@@ -768,35 +817,41 @@ namespace BudgetExecution
         /// Enum PathStyle
         /// </summary>
         public enum PathStyle
-		{
+        {
             /// <summary>
             /// The light
             /// </summary>
             Light,
+
             /// <summary>
             /// The dark
             /// </summary>
             Dark,
+
             /// <summary>
             /// The cpu
             /// </summary>
             CPU,
+
             /// <summary>
             /// The disk
             /// </summary>
             Disk,
+
             /// <summary>
             /// The memory
             /// </summary>
             Memory,
+
             /// <summary>
             /// The ethernet
             /// </summary>
             Ethernet,
+
             /// <summary>
             /// The custom
             /// </summary>
             Custom
         }
-	}
+    }
 }

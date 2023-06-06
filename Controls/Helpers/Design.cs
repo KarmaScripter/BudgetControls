@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="Design.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -56,8 +56,8 @@ namespace BudgetExecution
         /// <summary>
         /// Initializes a new instance of the <see cref="Design"/> class.
         /// </summary>
-        [DebuggerNonUserCode]
-        public Design()
+        [ DebuggerNonUserCode ]
+        public Design( )
         {
         }
 
@@ -69,8 +69,8 @@ namespace BudgetExecution
             /// <summary>
             /// Initializes a new instance of the <see cref="Controls"/> class.
             /// </summary>
-            [DebuggerNonUserCode]
-            public Controls()
+            [ DebuggerNonUserCode ]
+            public Controls( )
             {
             }
 
@@ -79,12 +79,14 @@ namespace BudgetExecution
             /// </summary>
             /// <param name="ctrl">The control.</param>
             /// <param name="value">if set to <c>true</c> [value].</param>
-            public static void SetDoubleBuffered(Control ctrl, bool value)
+            public static void SetDoubleBuffered( Control ctrl, bool value )
             {
-                if (!SystemInformation.TerminalServerSession)
+                if( !SystemInformation.TerminalServerSession )
                 {
-                    PropertyInfo property = typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-                    property.SetValue(ctrl, value, null);
+                    var property = typeof( Control ).GetProperty( "DoubleBuffered",
+                        BindingFlags.Instance | BindingFlags.NonPublic );
+
+                    property.SetValue( ctrl, value, null );
                 }
             }
         }
@@ -97,8 +99,8 @@ namespace BudgetExecution
             /// <summary>
             /// Initializes a new instance of the <see cref="Drawing"/> class.
             /// </summary>
-            [DebuggerNonUserCode]
-            public Drawing()
+            [ DebuggerNonUserCode ]
+            public Drawing( )
             {
             }
 
@@ -114,11 +116,16 @@ namespace BudgetExecution
             /// <param name="TopRight">if set to <c>true</c> [top right].</param>
             /// <param name="BottomLeft">if set to <c>true</c> [bottom left].</param>
             /// <param name="BottomRight">if set to <c>true</c> [bottom right].</param>
-            public static void DrawRoundedPath(Graphics g, Color c, float size, Rectangle rect, int curve, bool TopLeft = true, bool TopRight = true, bool BottomLeft = true, bool BottomRight = true)
+            public static void DrawRoundedPath(
+                Graphics g, Color c, float size, Rectangle rect,
+                int curve, bool TopLeft = true, bool TopRight = true, bool BottomLeft = true,
+                bool BottomRight = true )
             {
-                using (Pen pen = new Pen(c, size))
+                using( var pen = new Pen( c, size ) )
                 {
-                    g.DrawPath(pen, Design.Drawing.RoundRectangle(rect, curve, TopLeft, TopRight, BottomLeft, BottomRight));
+                    g.DrawPath( pen,
+                        Drawing.RoundRectangle( rect, curve, TopLeft, TopRight, BottomLeft,
+                            BottomRight ) );
                 }
             }
 
@@ -128,13 +135,15 @@ namespace BudgetExecution
             /// <param name="original">The original.</param>
             /// <param name="size">The size.</param>
             /// <returns>Bitmap.</returns>
-            public static Bitmap ExtractIcon(Icon original, int size)
+            public static Bitmap ExtractIcon( Icon original, int size )
             {
                 Bitmap bitmap;
-                using (Icon icon = new Icon(original, new Size(size, size)))
+
+                using( var icon = new Icon( original, new Size( size, size ) ) )
                 {
-                    bitmap = icon.ToBitmap();
+                    bitmap = icon.ToBitmap( );
                 }
+
                 return bitmap;
             }
 
@@ -146,16 +155,27 @@ namespace BudgetExecution
             /// <param name="rect">The rect.</param>
             /// <param name="stages">The stages.</param>
             /// <param name="stageWidth">Width of the stage.</param>
-            public static void FadeEllipse(Graphics g, Color c, Rectangle rect, int stages = 5, int stageWidth = 4)
+            public static void FadeEllipse(
+                Graphics g, Color c, Rectangle rect, int stages = 5,
+                int stageWidth = 4 )
             {
-                int num = checked(checked((int)Math.Round((double)c.A / (double)stages)) - 1);
-                int num1 = stages;
-                for (int i = 0; i <= num1; i = checked(i + 1))
+                var num = checked( checked( (int)Math.Round( c.A / (double)stages ) ) - 1 );
+                var num1 = stages;
+
+                for( var i = 0; i <= num1; i = checked( i + 1 ) )
                 {
-                    using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(checked(num * (num == 0 ? 1 : i)), c)))
+                    using( var solidBrush = new SolidBrush( Color.FromArgb( checked( num
+                              * ( num == 0
+                                  ? 1
+                                  : i ) ), c ) ) )
                     {
-                        Rectangle rectangle = new Rectangle(checked(rect.X + checked(stageWidth * i)), checked(rect.Y + checked(stageWidth * i)), checked(rect.Width - checked(checked(stageWidth * i) * 2)), checked(rect.Height - checked(checked(stageWidth * i) * 2)));
-                        g.FillEllipse(solidBrush, rectangle);
+                        var rectangle = new Rectangle(
+                            checked( rect.X + checked( stageWidth * i ) ),
+                            checked( rect.Y + checked( stageWidth * i ) ),
+                            checked( rect.Width - checked( checked( stageWidth * i ) * 2 ) ),
+                            checked( rect.Height - checked( checked( stageWidth * i ) * 2 ) ) );
+
+                        g.FillEllipse( solidBrush, rectangle );
                     }
                 }
             }
@@ -171,10 +191,12 @@ namespace BudgetExecution
             /// <param name="height">The height.</param>
             /// <param name="stages">The stages.</param>
             /// <param name="stageWidth">Width of the stage.</param>
-            public static void FadeEllipse(Graphics g, Color c, int x, int y, int width, int height, int stages = 5, int stageWidth = 4)
+            public static void FadeEllipse(
+                Graphics g, Color c, int x, int y,
+                int width, int height, int stages = 5, int stageWidth = 4 )
             {
-                Rectangle rectangle = new Rectangle(x, y, width, height);
-                Design.Drawing.FadeEllipse(g, c, rectangle, stages, stageWidth);
+                var rectangle = new Rectangle( x, y, width, height );
+                Drawing.FadeEllipse( g, c, rectangle, stages, stageWidth );
             }
 
             /// <summary>
@@ -185,16 +207,27 @@ namespace BudgetExecution
             /// <param name="rect">The rect.</param>
             /// <param name="stages">The stages.</param>
             /// <param name="stageWidth">Width of the stage.</param>
-            public static void FadeRectangle(Graphics g, Color c, Rectangle rect, int stages = 5, int stageWidth = 4)
+            public static void FadeRectangle(
+                Graphics g, Color c, Rectangle rect, int stages = 5,
+                int stageWidth = 4 )
             {
-                int num = checked(checked((int)Math.Round(255 / (double)stages)) - 1);
-                int num1 = stages;
-                for (int i = 0; i <= num1; i = checked(i + 1))
+                var num = checked( checked( (int)Math.Round( 255 / (double)stages ) ) - 1 );
+                var num1 = stages;
+
+                for( var i = 0; i <= num1; i = checked( i + 1 ) )
                 {
-                    using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(checked(num * (num == 0 ? 1 : i)), c)))
+                    using( var solidBrush = new SolidBrush( Color.FromArgb( checked( num
+                              * ( num == 0
+                                  ? 1
+                                  : i ) ), c ) ) )
                     {
-                        Rectangle rectangle = new Rectangle(checked(rect.X + checked(stageWidth * i)), checked(rect.Y + checked(stageWidth * i)), checked(rect.Width - checked(checked(stageWidth * i) * 2)), checked(rect.Height - checked(checked(stageWidth * i) * 2)));
-                        g.FillRectangle(solidBrush, rectangle);
+                        var rectangle = new Rectangle(
+                            checked( rect.X + checked( stageWidth * i ) ),
+                            checked( rect.Y + checked( stageWidth * i ) ),
+                            checked( rect.Width - checked( checked( stageWidth * i ) * 2 ) ),
+                            checked( rect.Height - checked( checked( stageWidth * i ) * 2 ) ) );
+
+                        g.FillRectangle( solidBrush, rectangle );
                     }
                 }
             }
@@ -210,10 +243,12 @@ namespace BudgetExecution
             /// <param name="height">The height.</param>
             /// <param name="stages">The stages.</param>
             /// <param name="stageWidth">Width of the stage.</param>
-            public static void FadeRectangle(Graphics g, Color c, int x, int y, int width, int height, int stages = 5, int stageWidth = 4)
+            public static void FadeRectangle(
+                Graphics g, Color c, int x, int y,
+                int width, int height, int stages = 5, int stageWidth = 4 )
             {
-                Rectangle rectangle = new Rectangle(x, y, width, height);
-                Design.Drawing.FadeRectangle(g, c, rectangle, stages, stageWidth);
+                var rectangle = new Rectangle( x, y, width, height );
+                Drawing.FadeRectangle( g, c, rectangle, stages, stageWidth );
             }
 
             /// <summary>
@@ -227,11 +262,16 @@ namespace BudgetExecution
             /// <param name="TopRight">if set to <c>true</c> [top right].</param>
             /// <param name="BottomLeft">if set to <c>true</c> [bottom left].</param>
             /// <param name="BottomRight">if set to <c>true</c> [bottom right].</param>
-            public static void FillRoundedPath(Graphics g, Color c, Rectangle rect, int curve, bool TopLeft = true, bool TopRight = true, bool BottomLeft = true, bool BottomRight = true)
+            public static void FillRoundedPath(
+                Graphics g, Color c, Rectangle rect, int curve,
+                bool TopLeft = true, bool TopRight = true, bool BottomLeft = true,
+                bool BottomRight = true )
             {
-                using (SolidBrush solidBrush = new SolidBrush(c))
+                using( var solidBrush = new SolidBrush( c ) )
                 {
-                    g.FillPath(solidBrush, Design.Drawing.RoundRectangle(rect, curve, TopLeft, TopRight, BottomLeft, BottomRight));
+                    g.FillPath( solidBrush,
+                        Drawing.RoundRectangle( rect, curve, TopLeft, TopRight, BottomLeft,
+                            BottomRight ) );
                 }
             }
 
@@ -246,9 +286,13 @@ namespace BudgetExecution
             /// <param name="TopRight">if set to <c>true</c> [top right].</param>
             /// <param name="BottomLeft">if set to <c>true</c> [bottom left].</param>
             /// <param name="BottomRight">if set to <c>true</c> [bottom right].</param>
-            public static void FillRoundedPath(Graphics g, Brush b, Rectangle rect, int curve, bool TopLeft = true, bool TopRight = true, bool BottomLeft = true, bool BottomRight = true)
+            public static void FillRoundedPath(
+                Graphics g, Brush b, Rectangle rect, int curve,
+                bool TopLeft = true, bool TopRight = true, bool BottomLeft = true,
+                bool BottomRight = true )
             {
-                g.FillPath(b, Design.Drawing.RoundRectangle(rect, curve, TopLeft, TopRight, BottomLeft, BottomRight));
+                g.FillPath( b, Drawing.RoundRectangle( rect, curve, TopLeft, TopRight, BottomLeft,
+                    BottomRight ) );
             }
 
             /// <summary>
@@ -258,38 +302,60 @@ namespace BudgetExecution
             /// <param name="point1">The point1.</param>
             /// <param name="point2">The point2.</param>
             /// <returns>Point[].</returns>
-            public static Point[] GetCircleIntersectionPoints(Rectangle ellipse, Point point1, Point point2)
+            public static Point[ ] GetCircleIntersectionPoints(
+                Rectangle ellipse, Point point1, Point point2 )
             {
                 float single;
                 Point point;
-                List<Point> points = new List<Point>();
-                float x = (float)(checked(ellipse.X + checked((int)Math.Round((double)ellipse.Width / 2))));
-                float y = (float)(checked(ellipse.Y + checked((int)Math.Round((double)ellipse.Height / 2))));
-                float x1 = (float)(checked(point2.X - point1.X));
-                float y1 = (float)(checked(point2.Y - point1.Y));
-                float single1 = x1 * x1 + y1 * y1;
-                float x2 = 2f * (x1 * ((float)point1.X - x) + y1 * ((float)point1.Y - y));
-                float single2 = ((float)point1.X - x) * ((float)point1.X - x) + ((float)point1.Y - y) * ((float)point1.Y - y) - (float)(checked(checked((int)Math.Round((double)ellipse.Width / 2)) * checked((int)Math.Round((double)ellipse.Width / 2))));
-                float single3 = x2 * x2 - 4f * single1 * single2;
-                if (!((double)single1 <= 1E-07 | single3 < 0f))
+                var points = new List<Point>( );
+
+                float x = checked( ellipse.X
+                    + checked( (int)Math.Round( (double)ellipse.Width / 2 ) ) );
+
+                float y = checked( ellipse.Y
+                    + checked( (int)Math.Round( (double)ellipse.Height / 2 ) ) );
+
+                float x1 = checked( point2.X - point1.X );
+                float y1 = checked( point2.Y - point1.Y );
+                var single1 = x1 * x1 + y1 * y1;
+                var x2 = 2f * ( x1 * ( point1.X - x ) + y1 * ( point1.Y - y ) );
+
+                var single2 = ( point1.X - x ) * ( point1.X - x )
+                    + ( point1.Y - y ) * ( point1.Y - y )
+                    - checked( checked( (int)Math.Round( (double)ellipse.Width / 2 ) )
+                        * checked( (int)Math.Round( (double)ellipse.Width / 2 ) ) );
+
+                var single3 = x2 * x2 - 4f * single1 * single2;
+
+                if( !( single1 <= 1E-07 | single3 < 0f ) )
                 {
-                    if (single3 != 0f)
+                    if( single3 != 0f )
                     {
-                        single = (float)(((double)(-x2) + Math.Sqrt((double)single3)) / (double)(2f * single1));
-                        point = new Point(checked((int)Math.Round((double)((float)((float)point1.X + single * x1)))), checked((int)Math.Round((double)((float)((float)point1.Y + single * y1)))));
-                        points.Add(point);
-                        single = (float)(((double)(-x2) - Math.Sqrt((double)single3)) / (double)(2f * single1));
-                        point = new Point(checked((int)Math.Round((double)((float)((float)point1.X + single * x1)))), checked((int)Math.Round((double)((float)((float)point1.Y + single * y1)))));
-                        points.Add(point);
+                        single = (float)( ( -x2 + Math.Sqrt( single3 ) ) / ( 2f * single1 ) );
+
+                        point = new Point( checked( (int)Math.Round( point1.X + single * x1 ) ),
+                            checked( (int)Math.Round( point1.Y + single * y1 ) ) );
+
+                        points.Add( point );
+                        single = (float)( ( -x2 - Math.Sqrt( single3 ) ) / ( 2f * single1 ) );
+
+                        point = new Point( checked( (int)Math.Round( point1.X + single * x1 ) ),
+                            checked( (int)Math.Round( point1.Y + single * y1 ) ) );
+
+                        points.Add( point );
                     }
                     else
                     {
-                        single = -x2 / (2f * single1);
-                        point = new Point(checked((int)Math.Round((double)((float)((float)point1.X + single * x1)))), checked((int)Math.Round((double)((float)((float)point1.Y + single * y1)))));
-                        points.Add(point);
+                        single = -x2 / ( 2f * single1 );
+
+                        point = new Point( checked( (int)Math.Round( point1.X + single * x1 ) ),
+                            checked( (int)Math.Round( point1.Y + single * y1 ) ) );
+
+                        points.Add( point );
                     }
                 }
-                return points.ToArray();
+
+                return points.ToArray( );
             }
 
             /// <summary>
@@ -301,11 +367,13 @@ namespace BudgetExecution
             /// <param name="x2">The x2.</param>
             /// <param name="y2">The y2.</param>
             /// <returns>Point[].</returns>
-            public static Point[] GetCircleIntersectionPoints(Rectangle ellipse, int x1, int y1, int x2, int y2)
+            public static Point[ ] GetCircleIntersectionPoints(
+                Rectangle ellipse, int x1, int y1, int x2,
+                int y2 )
             {
-                Point point = new Point(x1, y1);
-                Point point1 = new Point(x2, y2);
-                return Design.Drawing.GetCircleIntersectionPoints(ellipse, point, point1);
+                var point = new Point( x1, y1 );
+                var point1 = new Point( x2, y2 );
+                return Drawing.GetCircleIntersectionPoints( ellipse, point, point1 );
             }
 
             /// <summary>
@@ -315,11 +383,14 @@ namespace BudgetExecution
             /// <param name="p2">The p2.</param>
             /// <param name="perc">The perc.</param>
             /// <returns>Point.</returns>
-            public static Point GetPointOnLine(Point p1, Point p2, int perc)
+            public static Point GetPointOnLine( Point p1, Point p2, int perc )
             {
-                float x = (float)((double)(checked(p2.X - p1.X)) * ((double)perc / 100) + (double)p1.X);
-                float y = (float)((double)(checked(p2.Y - p1.Y)) * ((double)perc / 100) + (double)p1.Y);
-                Point point = new Point(checked((int)Math.Round((double)x)), checked((int)Math.Round((double)y)));
+                var x = (float)( checked( p2.X - p1.X ) * ( (double)perc / 100 ) + p1.X );
+                var y = (float)( checked( p2.Y - p1.Y ) * ( (double)perc / 100 ) + p1.Y );
+
+                var point = new Point( checked( (int)Math.Round( x ) ),
+                    checked( (int)Math.Round( y ) ) );
+
                 return point;
             }
 
@@ -332,11 +403,13 @@ namespace BudgetExecution
             /// <param name="y2">The y2.</param>
             /// <param name="perc">The perc.</param>
             /// <returns>Point.</returns>
-            public static Point GetPointOnLine(int x1, int y1, int x2, int y2, int perc)
+            public static Point GetPointOnLine(
+                int x1, int y1, int x2, int y2,
+                int perc )
             {
-                Point point = new Point(x1, y1);
-                Point point1 = new Point(x2, y2);
-                return Design.Drawing.GetPointOnLine(point, point1, perc);
+                var point = new Point( x1, y1 );
+                var point1 = new Point( x2, y2 );
+                return Drawing.GetPointOnLine( point, point1, perc );
             }
 
             /// <summary>
@@ -347,10 +420,10 @@ namespace BudgetExecution
             /// <param name="point2">The point2.</param>
             /// <param name="perc">The perc.</param>
             /// <returns>Point.</returns>
-            public static Point GetPointOnLine(int x1, int y1, Point point2, int perc)
+            public static Point GetPointOnLine( int x1, int y1, Point point2, int perc )
             {
-                Point point = new Point(x1, y1);
-                return Design.Drawing.GetPointOnLine(point, point2, perc);
+                var point = new Point( x1, y1 );
+                return Drawing.GetPointOnLine( point, point2, perc );
             }
 
             /// <summary>
@@ -361,10 +434,10 @@ namespace BudgetExecution
             /// <param name="y2">The y2.</param>
             /// <param name="perc">The perc.</param>
             /// <returns>Point.</returns>
-            public static Point GetPointOnLine(Point point1, int x2, int y2, int perc)
+            public static Point GetPointOnLine( Point point1, int x2, int y2, int perc )
             {
-                Point point = new Point(x2, y2);
-                return Design.Drawing.GetPointOnLine(point1, point, perc);
+                var point = new Point( x2, y2 );
+                return Drawing.GetPointOnLine( point1, point, perc );
             }
 
             /// <summary>
@@ -373,11 +446,11 @@ namespace BudgetExecution
             /// <param name="p1">The p1.</param>
             /// <param name="p2">The p2.</param>
             /// <returns>System.Double.</returns>
-            public static double MeasurePointDistance(Point p1, Point p2)
+            public static double MeasurePointDistance( Point p1, Point p2 )
             {
-                int x = checked(p2.X - p1.X);
-                int y = checked(p2.Y - p1.Y);
-                double num = Math.Sqrt((double)(checked(checked(x * x) + checked(y * y))));
+                var x = checked( p2.X - p1.X );
+                var y = checked( p2.Y - p1.Y );
+                var num = Math.Sqrt( checked( checked( x * x ) + checked( y * y ) ) );
                 return num;
             }
 
@@ -389,10 +462,10 @@ namespace BudgetExecution
             /// <param name="x2">The x2.</param>
             /// <param name="y2">The y2.</param>
             /// <returns>System.Double.</returns>
-            public static double MeasurePointDistance(int x1, int y1, int x2, int y2)
+            public static double MeasurePointDistance( int x1, int y1, int x2, int y2 )
             {
-                Point point = new Point(x1, y1);
-                return Design.Drawing.MeasurePointDistance(point, new Point(x2, y2));
+                var point = new Point( x1, y1 );
+                return Drawing.MeasurePointDistance( point, new Point( x2, y2 ) );
             }
 
             /// <summary>
@@ -405,42 +478,53 @@ namespace BudgetExecution
             /// <param name="BottomLeft">if set to <c>true</c> [bottom left].</param>
             /// <param name="BottomRight">if set to <c>true</c> [bottom right].</param>
             /// <returns>GraphicsPath.</returns>
-            public static GraphicsPath RoundRectangle(Rectangle r, int Curve, bool TopLeft = true, bool TopRight = true, bool BottomLeft = true, bool BottomRight = true)
+            public static GraphicsPath RoundRectangle(
+                Rectangle r, int Curve, bool TopLeft = true, bool TopRight = true,
+                bool BottomLeft = true, bool BottomRight = true )
             {
-                GraphicsPath graphicsPath = new GraphicsPath(FillMode.Winding);
-                if (!TopLeft)
+                var graphicsPath = new GraphicsPath( FillMode.Winding );
+
+                if( !TopLeft )
                 {
-                    graphicsPath.AddLine(r.X, r.Y, r.X, r.Y);
+                    graphicsPath.AddLine( r.X, r.Y, r.X, r.Y );
                 }
                 else
                 {
-                    graphicsPath.AddArc(r.X, r.Y, Curve, Curve, 180f, 90f);
+                    graphicsPath.AddArc( r.X, r.Y, Curve, Curve, 180f,
+                        90f );
                 }
-                if (!TopRight)
+
+                if( !TopRight )
                 {
-                    graphicsPath.AddLine(checked(r.Right - r.Width), r.Y, r.Width, r.Y);
+                    graphicsPath.AddLine( checked( r.Right - r.Width ), r.Y, r.Width, r.Y );
                 }
                 else
                 {
-                    graphicsPath.AddArc(checked(r.Right - Curve), r.Y, Curve, Curve, 270f, 90f);
+                    graphicsPath.AddArc( checked( r.Right - Curve ), r.Y, Curve, Curve, 270f,
+                        90f );
                 }
-                if (!BottomRight)
+
+                if( !BottomRight )
                 {
-                    graphicsPath.AddLine(r.Right, r.Bottom, r.Right, r.Bottom);
+                    graphicsPath.AddLine( r.Right, r.Bottom, r.Right, r.Bottom );
                 }
                 else
                 {
-                    graphicsPath.AddArc(checked(r.Right - Curve), checked(r.Bottom - Curve), Curve, Curve, 0f, 90f);
+                    graphicsPath.AddArc( checked( r.Right - Curve ), checked( r.Bottom - Curve ),
+                        Curve, Curve, 0f, 90f );
                 }
-                if (!BottomLeft)
+
+                if( !BottomLeft )
                 {
-                    graphicsPath.AddLine(r.X, r.Bottom, r.X, r.Bottom);
+                    graphicsPath.AddLine( r.X, r.Bottom, r.X, r.Bottom );
                 }
                 else
                 {
-                    graphicsPath.AddArc(r.X, checked(r.Bottom - Curve), Curve, Curve, 90f, 90f);
+                    graphicsPath.AddArc( r.X, checked( r.Bottom - Curve ), Curve, Curve, 90f,
+                        90f );
                 }
-                graphicsPath.CloseFigure();
+
+                graphicsPath.CloseFigure( );
                 return graphicsPath;
             }
         }
@@ -454,14 +538,17 @@ namespace BudgetExecution
             /// The none
             /// </summary>
             None,
+
             /// <summary>
             /// The horizontal
             /// </summary>
             Horizontal,
+
             /// <summary>
             /// The vertical
             /// </summary>
             Vertical,
+
             /// <summary>
             /// The crossed
             /// </summary>
@@ -477,12 +564,12 @@ namespace BudgetExecution
             /// The horizontal
             /// </summary>
             Horizontal,
+
             /// <summary>
             /// The vertical
             /// </summary>
             Vertical
         }
-
 
         /// <summary>
         /// Class BudgetColors.
@@ -637,7 +724,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._AccentBlue;
+                    return BudgetColors._AccentBlue;
                 }
             }
 
@@ -649,7 +736,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._AccentDarkBlue;
+                    return BudgetColors._AccentDarkBlue;
                 }
             }
 
@@ -661,7 +748,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._AccentLightBlue;
+                    return BudgetColors._AccentLightBlue;
                 }
             }
 
@@ -673,7 +760,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._AccentOrange;
+                    return BudgetColors._AccentOrange;
                 }
             }
 
@@ -685,7 +772,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._AccentPurple;
+                    return BudgetColors._AccentPurple;
                 }
             }
 
@@ -697,7 +784,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkDefault;
+                    return BudgetColors._DarkDefault;
                 }
             }
 
@@ -709,7 +796,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkDisabled;
+                    return BudgetColors._DarkDisabled;
                 }
             }
 
@@ -721,7 +808,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkDisabledFont;
+                    return BudgetColors._DarkDisabledFont;
                 }
             }
 
@@ -733,7 +820,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkFont;
+                    return BudgetColors._DarkFont;
                 }
             }
 
@@ -745,7 +832,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkHover;
+                    return BudgetColors._DarkHover;
                 }
             }
 
@@ -757,7 +844,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkIcon;
+                    return BudgetColors._DarkIcon;
                 }
             }
 
@@ -769,7 +856,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DarkTaskColor;
+                    return BudgetColors._DarkTaskColor;
                 }
             }
 
@@ -781,7 +868,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._DisabledBorder;
+                    return BudgetColors._DisabledBorder;
                 }
             }
 
@@ -793,7 +880,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightBorder;
+                    return BudgetColors._LightBorder;
                 }
             }
 
@@ -805,7 +892,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightDarkDefault;
+                    return BudgetColors._LightDarkDefault;
                 }
             }
 
@@ -817,7 +904,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightDefault;
+                    return BudgetColors._LightDefault;
                 }
             }
 
@@ -829,7 +916,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightDisabled;
+                    return BudgetColors._LightDisabled;
                 }
             }
 
@@ -841,7 +928,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightDisabledFont;
+                    return BudgetColors._LightDisabledFont;
                 }
             }
 
@@ -853,7 +940,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightFont;
+                    return BudgetColors._LightFont;
                 }
             }
 
@@ -865,7 +952,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightHover;
+                    return BudgetColors._LightHover;
                 }
             }
 
@@ -877,7 +964,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightIcon;
+                    return BudgetColors._LightIcon;
                 }
             }
 
@@ -889,7 +976,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._LightSwitchRail;
+                    return BudgetColors._LightSwitchRail;
                 }
             }
 
@@ -901,7 +988,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._PopUpBorder;
+                    return BudgetColors._PopUpBorder;
                 }
             }
 
@@ -913,7 +1000,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._PopUpFont;
+                    return BudgetColors._PopUpFont;
                 }
             }
 
@@ -925,7 +1012,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._SelectionColor;
+                    return BudgetColors._SelectionColor;
                 }
             }
 
@@ -937,7 +1024,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._TabItemHover;
+                    return BudgetColors._TabItemHover;
                 }
             }
 
@@ -949,7 +1036,7 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._TaskColor;
+                    return BudgetColors._TaskColor;
                 }
             }
 
@@ -961,50 +1048,50 @@ namespace BudgetExecution
             {
                 get
                 {
-                    return Design.BudgetColors._TextShadow;
+                    return BudgetColors._TextShadow;
                 }
             }
 
             /// <summary>
             /// Initializes static members of the <see cref="BudgetColors"/> class.
             /// </summary>
-            static BudgetColors()
+            static BudgetColors( )
             {
-                Design.BudgetColors._AccentBlue = Color.FromArgb(0, 122, 204);
-                Design.BudgetColors._AccentPurple = Color.FromArgb(104, 33, 122);
-                Design.BudgetColors._AccentOrange = Color.FromArgb(202, 81, 0);
-                Design.BudgetColors._AccentDarkBlue = Color.FromArgb(0, 99, 165);
-                Design.BudgetColors._AccentLightBlue = Color.FromArgb(0, 153, 255);
-                Design.BudgetColors._SelectionColor = Color.FromArgb(30, 0, 122, 204);
-                Design.BudgetColors._PopUpBorder = Color.FromArgb(240, 240, 240);
-                Design.BudgetColors._PopUpFont = Color.FromArgb(106, 115, 124);
-                Design.BudgetColors._TabItemHover = Color.FromArgb(10, 0, 122, 204);
-                Design.BudgetColors._DisabledBorder = Color.FromArgb(200, 200, 200);
-                Design.BudgetColors._TaskColor = Color.FromArgb(230, 230, 230);
-                Design.BudgetColors._DarkTaskColor = Color.FromArgb(25, 25, 25);
-                Design.BudgetColors._LightDefault = Color.White;
-                Design.BudgetColors._LightDarkDefault = Color.FromArgb(230, 230, 230);
-                Design.BudgetColors._LightHover = Color.FromArgb(240, 240, 240);
-                Design.BudgetColors._LightIcon = Color.Black;
-                Design.BudgetColors._LightBorder = Color.FromArgb(98, 98, 98);
-                Design.BudgetColors._LightFont = Color.Black;
-                Design.BudgetColors._LightDisabled = Color.FromArgb(250, 250, 250);
-                Design.BudgetColors._LightDisabledFont = Color.Gray;
-                Design.BudgetColors._LightSwitchRail = Color.FromArgb(190, 190, 190);
-                Design.BudgetColors._DarkDefault = Color.FromArgb(40, 40, 40);
-                Design.BudgetColors._DarkHover = Color.FromArgb(63, 63, 63);
-                Design.BudgetColors._DarkIcon = Color.FromArgb(241, 241, 241);
-                Design.BudgetColors._DarkFont = Color.FromArgb(153, 153, 153);
-                Design.BudgetColors._DarkDisabled = Color.FromArgb(35, 35, 35);
-                Design.BudgetColors._DarkDisabledFont = Color.FromArgb(133, 133, 133);
-                Design.BudgetColors._TextShadow = Color.FromArgb(30, Color.Black);
+                BudgetColors._AccentBlue = Color.FromArgb( 0, 122, 204 );
+                BudgetColors._AccentPurple = Color.FromArgb( 104, 33, 122 );
+                BudgetColors._AccentOrange = Color.FromArgb( 202, 81, 0 );
+                BudgetColors._AccentDarkBlue = Color.FromArgb( 0, 99, 165 );
+                BudgetColors._AccentLightBlue = Color.FromArgb( 0, 153, 255 );
+                BudgetColors._SelectionColor = Color.FromArgb( 30, 0, 122, 204 );
+                BudgetColors._PopUpBorder = Color.FromArgb( 240, 240, 240 );
+                BudgetColors._PopUpFont = Color.FromArgb( 106, 115, 124 );
+                BudgetColors._TabItemHover = Color.FromArgb( 10, 0, 122, 204 );
+                BudgetColors._DisabledBorder = Color.FromArgb( 200, 200, 200 );
+                BudgetColors._TaskColor = Color.FromArgb( 230, 230, 230 );
+                BudgetColors._DarkTaskColor = Color.FromArgb( 25, 25, 25 );
+                BudgetColors._LightDefault = Color.White;
+                BudgetColors._LightDarkDefault = Color.FromArgb( 230, 230, 230 );
+                BudgetColors._LightHover = Color.FromArgb( 240, 240, 240 );
+                BudgetColors._LightIcon = Color.Black;
+                BudgetColors._LightBorder = Color.FromArgb( 98, 98, 98 );
+                BudgetColors._LightFont = Color.Black;
+                BudgetColors._LightDisabled = Color.FromArgb( 250, 250, 250 );
+                BudgetColors._LightDisabledFont = Color.Gray;
+                BudgetColors._LightSwitchRail = Color.FromArgb( 190, 190, 190 );
+                BudgetColors._DarkDefault = Color.FromArgb( 40, 40, 40 );
+                BudgetColors._DarkHover = Color.FromArgb( 63, 63, 63 );
+                BudgetColors._DarkIcon = Color.FromArgb( 241, 241, 241 );
+                BudgetColors._DarkFont = Color.FromArgb( 153, 153, 153 );
+                BudgetColors._DarkDisabled = Color.FromArgb( 35, 35, 35 );
+                BudgetColors._DarkDisabledFont = Color.FromArgb( 133, 133, 133 );
+                BudgetColors._TextShadow = Color.FromArgb( 30, Color.Black );
             }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="BudgetColors"/> class.
             /// </summary>
-            [DebuggerNonUserCode]
-            public BudgetColors()
+            [ DebuggerNonUserCode ]
+            public BudgetColors( )
             {
             }
 
@@ -1014,16 +1101,17 @@ namespace BudgetExecution
             /// <param name="color">The color.</param>
             /// <param name="correctionFactor">The correction factor.</param>
             /// <returns>Color.</returns>
-            public static Color ChangeColorBrightness(Color color, float correctionFactor)
+            public static Color ChangeColorBrightness( Color color, float correctionFactor )
             {
-                float r = (float)color.R;
-                float g = (float)color.G;
-                float b = (float)color.B;
-                if (correctionFactor >= 0f)
+                float r = color.R;
+                float g = color.G;
+                float b = color.B;
+
+                if( correctionFactor >= 0f )
                 {
-                    r = (255f - r) * correctionFactor + r;
-                    g = (255f - g) * correctionFactor + g;
-                    b = (255f - b) * correctionFactor + b;
+                    r = ( 255f - r ) * correctionFactor + r;
+                    g = ( 255f - g ) * correctionFactor + g;
+                    b = ( 255f - b ) * correctionFactor + b;
                 }
                 else
                 {
@@ -1032,7 +1120,10 @@ namespace BudgetExecution
                     g *= correctionFactor;
                     b *= correctionFactor;
                 }
-                Color color1 = Color.FromArgb((int)color.A, checked((int)Math.Round((double)r)), checked((int)Math.Round((double)g)), checked((int)Math.Round((double)b)));
+
+                var color1 = Color.FromArgb( color.A, checked( (int)Math.Round( r ) ),
+                    checked( (int)Math.Round( g ) ), checked( (int)Math.Round( b ) ) );
+
                 return color1;
             }
 
@@ -1041,9 +1132,9 @@ namespace BudgetExecution
             /// </summary>
             /// <param name="C">The c.</param>
             /// <returns>System.String.</returns>
-            public static string ColorToHTML(Color C)
+            public static string ColorToHTML( Color C )
             {
-                return ColorTranslator.ToHtml(C);
+                return ColorTranslator.ToHtml( C );
             }
 
             /// <summary>
@@ -1053,17 +1144,24 @@ namespace BudgetExecution
             /// <param name="defaultColor">The default color.</param>
             /// <param name="isEnabled">if set to <c>true</c> [is enabled].</param>
             /// <returns>Color.</returns>
-            public static Color GetCorrectBackColor(Design.Style style, Color defaultColor, bool isEnabled = true)
+            public static Color GetCorrectBackColor(
+                Style style, Color defaultColor, bool isEnabled = true )
             {
-                Color color = defaultColor;
-                if (style == Design.Style.Light)
+                var color = defaultColor;
+
+                if( style == Style.Light )
                 {
-                    color = (isEnabled ? Design.BudgetColors.LightDefault : Design.BudgetColors.LightDisabled);
+                    color = isEnabled
+                        ? BudgetColors.LightDefault
+                        : BudgetColors.LightDisabled;
                 }
-                else if (style == Design.Style.Dark)
+                else if( style == Style.Dark )
                 {
-                    color = (isEnabled ? Design.BudgetColors.DarkDefault : Design.BudgetColors.DarkDisabled);
+                    color = isEnabled
+                        ? BudgetColors.DarkDefault
+                        : BudgetColors.DarkDisabled;
                 }
+
                 return color;
             }
 
@@ -1074,17 +1172,24 @@ namespace BudgetExecution
             /// <param name="defaultColor">The default color.</param>
             /// <param name="isEnabled">if set to <c>true</c> [is enabled].</param>
             /// <returns>Color.</returns>
-            public static Color GetCorrectForeColor(Design.Style style, Color defaultColor, bool isEnabled = true)
+            public static Color GetCorrectForeColor(
+                Style style, Color defaultColor, bool isEnabled = true )
             {
-                Color color = defaultColor;
-                if (style == Design.Style.Light)
+                var color = defaultColor;
+
+                if( style == Style.Light )
                 {
-                    color = (isEnabled ? Design.BudgetColors.LightFont : Design.BudgetColors.LightDisabledFont);
+                    color = isEnabled
+                        ? BudgetColors.LightFont
+                        : BudgetColors.LightDisabledFont;
                 }
-                else if (style == Design.Style.Dark)
+                else if( style == Style.Dark )
                 {
-                    color = (isEnabled ? Design.BudgetColors.DarkFont : Design.BudgetColors.DarkDisabledFont);
+                    color = isEnabled
+                        ? BudgetColors.DarkFont
+                        : BudgetColors.DarkDisabledFont;
                 }
+
                 return color;
             }
 
@@ -1093,9 +1198,9 @@ namespace BudgetExecution
             /// </summary>
             /// <param name="sColor">Color of the s.</param>
             /// <returns>Color.</returns>
-            public static Color HTMLToColor(string sColor)
+            public static Color HTMLToColor( string sColor )
             {
-                return ColorTranslator.FromHtml(string.Concat("#", sColor));
+                return ColorTranslator.FromHtml( string.Concat( "#", sColor ) );
             }
 
             /// <summary>
@@ -1103,9 +1208,9 @@ namespace BudgetExecution
             /// </summary>
             /// <param name="c">The c.</param>
             /// <returns>Color.</returns>
-            public static Color InvertColor(Color c)
+            public static Color InvertColor( Color c )
             {
-                return Color.FromArgb(c.ToArgb() ^ 16777215);
+                return Color.FromArgb( c.ToArgb( ) ^ 16777215 );
             }
         }
 
@@ -1118,15 +1223,16 @@ namespace BudgetExecution
             /// The light
             /// </summary>
             Light,
+
             /// <summary>
             /// The dark
             /// </summary>
             Dark,
+
             /// <summary>
             /// The custom
             /// </summary>
             Custom
         }
     }
-
 }

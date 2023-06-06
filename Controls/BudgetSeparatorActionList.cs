@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetSeparatorActionList.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -44,110 +44,122 @@ using System.Drawing;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetSeparatorActionList.
-	/// </summary>
-	/// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-	public class BudgetSeparatorActionList : DesignerActionList
-	{
-		/// <summary>
-		/// The sep
-		/// </summary>
-		private BudgetSeparator _sep;
+    /// <summary>
+    /// Class BudgetSeparatorActionList.
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
+    public class BudgetSeparatorActionList : DesignerActionList
+    {
+        /// <summary>
+        /// The sep
+        /// </summary>
+        private BudgetSeparator _sep;
 
-		/// <summary>
-		/// The designer action SVC
-		/// </summary>
-		private DesignerActionUIService designerActionSvc;
+        /// <summary>
+        /// The designer action SVC
+        /// </summary>
+        private DesignerActionUIService designerActionSvc;
 
-		/// <summary>
-		/// Gets or sets the color1.
-		/// </summary>
-		/// <value>The color1.</value>
-		public Color Color1
-		{
-			get
-			{
-				return this._sep.ColorScheme.Color1;
-			}
-			set
-			{
-				this._sep.ColorScheme.Color1 = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the color1.
+        /// </summary>
+        /// <value>The color1.</value>
+        public Color Color1
+        {
+            get
+            {
+                return _sep.ColorScheme.Color1;
+            }
+            set
+            {
+                _sep.ColorScheme.Color1 = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the color2.
-		/// </summary>
-		/// <value>The color2.</value>
-		public Color Color2
-		{
-			get
-			{
-				return this._sep.ColorScheme.Color2;
-			}
-			set
-			{
-				this._sep.ColorScheme.Color2 = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the color2.
+        /// </summary>
+        /// <value>The color2.</value>
+        public Color Color2
+        {
+            get
+            {
+                return _sep.ColorScheme.Color2;
+            }
+            set
+            {
+                _sep.ColorScheme.Color2 = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the orientation.
-		/// </summary>
-		/// <value>The orientation.</value>
-		public Design.Orientation Orientation
-		{
-			get
-			{
-				return this._sep.Orientation;
-			}
-			set
-			{
-				this._sep.Orientation = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the orientation.
+        /// </summary>
+        /// <value>The orientation.</value>
+        public Design.Orientation Orientation
+        {
+            get
+            {
+                return _sep.Orientation;
+            }
+            set
+            {
+                _sep.Orientation = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the style.
-		/// </summary>
-		/// <value>The style.</value>
-		public Design.Style Style
-		{
-			get
-			{
-				return this._sep.Style;
-			}
-			set
-			{
-				this._sep.Style = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the style.
+        /// </summary>
+        /// <value>The style.</value>
+        public Design.Style Style
+        {
+            get
+            {
+                return _sep.Style;
+            }
+            set
+            {
+                _sep.Style = value;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetSeparatorActionList"/> class.
-		/// </summary>
-		/// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-		public BudgetSeparatorActionList(IComponent component) : base(component)
-		{
-			this.designerActionSvc = null;
-			this._sep = (BudgetSeparator)component;
-			this.designerActionSvc = (DesignerActionUIService)this.GetService(typeof(DesignerActionUIService));
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetSeparatorActionList"/> class.
+        /// </summary>
+        /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
+        public BudgetSeparatorActionList( IComponent component )
+            : base( component )
+        {
+            designerActionSvc = null;
+            _sep = (BudgetSeparator)component;
 
-		/// <summary>
-		/// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
-		/// </summary>
-		/// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-		public override DesignerActionItemCollection GetSortedActionItems()
-		{
-			DesignerActionItemCollection designerActionItemCollection = new DesignerActionItemCollection();
-			designerActionItemCollection.Add(new DesignerActionHeaderItem("Properties"));
-			designerActionItemCollection.Add(new DesignerActionPropertyItem("Color1", "Color1:", "Properties", "Gibt die erste Farbe an. (=Oben/Links)"));
-			designerActionItemCollection.Add(new DesignerActionPropertyItem("Color2", "Color2:", "Properties", "Gibt die zweite Farbe an. (= Unten/Rechts)"));
-			designerActionItemCollection.Add(new DesignerActionPropertyItem("Orientation", "Orientation:", "Properties", "Gibt die Orientierung des Separators an."));
-			designerActionItemCollection.Add(new DesignerActionPropertyItem("Style", "Style:", "Properties", "Setzt das Design."));
-			return designerActionItemCollection;
-		}
-	}
+            designerActionSvc =
+                (DesignerActionUIService)GetService( typeof( DesignerActionUIService ) );
+        }
+
+        /// <summary>
+        /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
+        /// </summary>
+        /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
+        public override DesignerActionItemCollection GetSortedActionItems( )
+        {
+            var designerActionItemCollection = new DesignerActionItemCollection( );
+            designerActionItemCollection.Add( new DesignerActionHeaderItem( "Properties" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "Color1", "Color1:",
+                "Properties", "Gibt die erste Farbe an. (=Oben/Links)" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "Color2", "Color2:",
+                "Properties", "Gibt die zweite Farbe an. (= Unten/Rechts)" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "Orientation",
+                "Orientation:", "Properties", "Gibt die Orientierung des Separators an." ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "Style", "Style:",
+                "Properties", "Setzt das Design." ) );
+
+            return designerActionItemCollection;
+        }
+    }
 }

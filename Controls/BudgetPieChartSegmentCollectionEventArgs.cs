@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetPieChartSegmentCollectionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,36 +42,36 @@ using System;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetPieChartSegmentCollectionEventArgs.
-	/// </summary>
-	/// <seealso cref="System.EventArgs" />
-	public class BudgetPieChartSegmentCollectionEventArgs : EventArgs
-	{
-		/// <summary>
-		/// The item
-		/// </summary>
-		private BudgetPieChartSegment _item;
+    /// <summary>
+    /// Class BudgetPieChartSegmentCollectionEventArgs.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class BudgetPieChartSegmentCollectionEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The item
+        /// </summary>
+        private BudgetPieChartSegment _item;
 
-		/// <summary>
-		/// Gets the item.
-		/// </summary>
-		/// <value>The item.</value>
-		public BudgetPieChartSegment Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <value>The item.</value>
+        public BudgetPieChartSegment Item
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetPieChartSegmentCollectionEventArgs"/> class.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		public BudgetPieChartSegmentCollectionEventArgs(BudgetPieChartSegment item)
-		{
-			this._item = item;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetPieChartSegmentCollectionEventArgs"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        public BudgetPieChartSegmentCollectionEventArgs( BudgetPieChartSegment item )
+        {
+            _item = item;
+        }
+    }
 }

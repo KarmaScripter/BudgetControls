@@ -1,10 +1,10 @@
 ﻿// ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="Animator.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -49,17 +49,19 @@ using System.Windows.Forms;
 
 namespace BudgetExecution
 {
+    using Timer = System.Windows.Forms.Timer;
+
     /// <summary>
     /// A class collection for rendering a click animation.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Component" />
-    [Description("This is a click animation control")]
-    [DesignerCategory("Code")]
-    [ToolboxBitmap(typeof(ClickAnimator))]
+    [ Description( "This is a click animation control" ) ]
+    [ DesignerCategory( "Code" ) ]
+    [ ToolboxBitmap( typeof( ClickAnimator ) ) ]
     public class ClickAnimator : Component
     {
-
         #region Private Fields
+
         /// <summary>
         /// The click control
         /// </summary>
@@ -68,8 +70,8 @@ namespace BudgetExecution
         /// <summary>
         /// The effect timer
         /// </summary>
-        [AccessedThroughProperty("Timer")]
-        private System.Windows.Forms.Timer _effectTimer;
+        [ AccessedThroughProperty( "Timer" ) ]
+        private Timer _effectTimer;
 
         /// <summary>
         /// The step
@@ -100,25 +102,31 @@ namespace BudgetExecution
         /// The sides
         /// </summary>
         private int sides = 3;
+
         /// <summary>
         /// The radius
         /// </summary>
         private int radius = 9;
+
         /// <summary>
         /// The starting angle
         /// </summary>
         private int startingAngle = 90;
+
         /// <summary>
         /// The center width
         /// </summary>
         private int centerWidth = 18;
+
         /// <summary>
         /// The center
         /// </summary>
-        Point center;
+        private Point center;
+
         #endregion
 
         #region Enumeration
+
         /// <summary>
         /// Enum representing the type of drawing animation.
         /// </summary>
@@ -128,14 +136,17 @@ namespace BudgetExecution
             /// The circle
             /// </summary>
             Circle,
+
             /// <summary>
             /// The rectangle
             /// </summary>
             Rectangle
         }
+
         #endregion
 
         #region Public Properties
+
         /// <summary>
         /// Gets or sets the shape.
         /// </summary>
@@ -146,7 +157,6 @@ namespace BudgetExecution
             set
             {
                 _drawMode = value;
-
             }
         }
 
@@ -154,18 +164,18 @@ namespace BudgetExecution
         /// Gets or sets the color of the animation.
         /// </summary>
         /// <value>The color of the animation.</value>
-        [Browsable(true)]
-        [DefaultValue(typeof(Color), "120, 255, 255, 255")]
-        [Description("Sets the color of the animation.")]
+        [ Browsable( true ) ]
+        [ DefaultValue( typeof( Color ), "120, 255, 255, 255" ) ]
+        [ Description( "Sets the color of the animation." ) ]
         public Color AnimationColor
         {
             get
             {
-                return this._AnimationColor;
+                return _AnimationColor;
             }
             set
             {
-                this._AnimationColor = value;
+                _AnimationColor = value;
             }
         }
 
@@ -173,23 +183,24 @@ namespace BudgetExecution
         /// Gets or sets the click control.
         /// </summary>
         /// <value>The click control.</value>
-        [Browsable(true)]
-        [DefaultValue(null)]
-        [Description("Set the control to render the animation on.")]
+        [ Browsable( true ) ]
+        [ DefaultValue( null ) ]
+        [ Description( "Set the control to render the animation on." ) ]
         public Control ClickControl
         {
             get
             {
-                return this._ClickControl;
+                return _ClickControl;
             }
             set
             {
-                this.UnRegisterControl();
-                this._ClickControl = value;
-                this.RegisterControl();
-                if (this._ClickControl != null)
+                UnRegisterControl( );
+                _ClickControl = value;
+                RegisterControl( );
+
+                if( _ClickControl != null )
                 {
-                    this._Speed = checked((int)Math.Round((double)this._ClickControl.Width / 10));
+                    _Speed = checked( (int)Math.Round( (double)_ClickControl.Width / 10 ) );
                 }
             }
         }
@@ -198,27 +209,30 @@ namespace BudgetExecution
         /// Gets or sets the animation timer.
         /// </summary>
         /// <value>The timer.</value>
-        public virtual System.Windows.Forms.Timer Timer
+        public virtual Timer Timer
         {
-            [DebuggerNonUserCode]
+            [ DebuggerNonUserCode ]
             get
             {
-                return this._effectTimer;
+                return _effectTimer;
             }
-            [DebuggerNonUserCode]
-            [MethodImpl(MethodImplOptions.Synchronized)]
+            [ DebuggerNonUserCode ]
+            [ MethodImpl( MethodImplOptions.Synchronized ) ]
             set
             {
-                ClickAnimator metroAnimator = this;
-                EventHandler eventHandler = new EventHandler(metroAnimator.effectTimer_Tick);
-                if (this._effectTimer != null)
+                var metroAnimator = this;
+                EventHandler eventHandler = metroAnimator.effectTimer_Tick;
+
+                if( _effectTimer != null )
                 {
-                    this._effectTimer.Tick -= eventHandler;
+                    _effectTimer.Tick -= eventHandler;
                 }
-                this._effectTimer = value;
-                if (this._effectTimer != null)
+
+                _effectTimer = value;
+
+                if( _effectTimer != null )
                 {
-                    this._effectTimer.Tick += eventHandler;
+                    _effectTimer.Tick += eventHandler;
                 }
             }
         }
@@ -227,51 +241,55 @@ namespace BudgetExecution
         /// Gets or sets the animation speed.
         /// </summary>
         /// <value>The speed.</value>
-        [Browsable(true)]
-        [DefaultValue(10)]
-        [Description("Sets the animation speed.")]
+        [ Browsable( true ) ]
+        [ DefaultValue( 10 ) ]
+        [ Description( "Sets the animation speed." ) ]
         public int Speed
         {
             get
             {
-                return this._Speed;
+                return _Speed;
             }
             set
             {
-                this._Speed = value;
+                _Speed = value;
             }
         }
+
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ClickAnimator" /> class.
         /// </summary>
-        public ClickAnimator()
+        public ClickAnimator( )
         {
-            this.Timer = new System.Windows.Forms.Timer()
+            Timer = new Timer( )
             {
                 Interval = 10
             };
-            this._Step = 0;
-            this._Speed = 10;
-            this.startPoint = new Point();
-            this._AnimationColor = Color.FromArgb(120, 255, 255, 255);
+
+            _Step = 0;
+            _Speed = 10;
+            startPoint = new Point( );
+            _AnimationColor = Color.FromArgb( 120, 255, 255, 255 );
         }
 
         #endregion
 
         #region Methods and Overrides
+
         /// <summary>
         /// Handles the Click event of the control control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void control_Click(object sender, EventArgs e)
+        private void control_Click( object sender, EventArgs e )
         {
-            this.Timer.Enabled = true;
-            this.startPoint = this._ClickControl.PointToClient(Cursor.Position);
-            this._Step = 0;
+            Timer.Enabled = true;
+            startPoint = _ClickControl.PointToClient( Cursor.Position );
+            _Step = 0;
         }
 
         /// <summary>
@@ -279,31 +297,33 @@ namespace BudgetExecution
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
-        private void control_Paint(object sender, PaintEventArgs e)
+        private void control_Paint( object sender, PaintEventArgs e )
         {
-            Graphics graphics = e.Graphics;
-            using (SolidBrush solidBrush = new SolidBrush(this._AnimationColor))
+            var graphics = e.Graphics;
+
+            using( var solidBrush = new SolidBrush( _AnimationColor ) )
             {
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Rectangle rectangle = new Rectangle(checked((int)Math.Round((double)this.startPoint.X - (double)this._Step * ((double)this._Speed / 2))), checked((int)Math.Round((double)this.startPoint.Y - (double)this._Step * ((double)this._Speed / 2))), checked(this._Step * this._Speed), checked(this._Step * this._Speed));
 
-                center = new Point(100 / 2, 100 / 2);
+                var rectangle = new Rectangle(
+                    checked( (int)Math.Round( startPoint.X - _Step * ( (double)_Speed / 2 ) ) ),
+                    checked( (int)Math.Round( startPoint.Y - _Step * ( (double)_Speed / 2 ) ) ),
+                    checked( _Step * _Speed ), checked( _Step * _Speed ) );
+
+                center = new Point( 100 / 2, 100 / 2 );
                 radius = _ClickControl.Width / 4;
 
-
-                switch (_drawMode)
+                switch( _drawMode )
                 {
                     case DrawMode.Circle:
-                        graphics.FillEllipse(solidBrush, rectangle);
+                        graphics.FillEllipse( solidBrush, rectangle );
                         break;
                     case DrawMode.Rectangle:
-                        graphics.FillRectangle(solidBrush, rectangle);
+                        graphics.FillRectangle( solidBrush, rectangle );
                         break;
-
                 }
-
-
             }
+
             graphics = null;
         }
 
@@ -312,32 +332,39 @@ namespace BudgetExecution
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void effectTimer_Tick(object sender, EventArgs e)
+        private void effectTimer_Tick( object sender, EventArgs e )
         {
-            this._Step = checked(this._Step + 1);
-            if (this._ClickControl != null)
+            _Step = checked( _Step + 1 );
+
+            if( _ClickControl != null )
             {
-                this._ClickControl.Invalidate();
+                _ClickControl.Invalidate( );
             }
-            if (((double)this.startPoint.X >= (double)this._Step * ((double)this._Speed / 2) || (double)this.startPoint.Y >= (double)this._Step * ((double)this._Speed / 2) || (double)(checked(this._ClickControl.Width + this._Speed)) >= (double)this._Step * ((double)this._Speed / 2) || (double)(checked(this._ClickControl.Height + this._Speed)) >= (double)this._Step * ((double)this._Speed / 2) ? false : true))
+
+            if( startPoint.X >= _Step * ( (double)_Speed / 2 )
+               || startPoint.Y >= _Step * ( (double)_Speed / 2 )
+               || checked( _ClickControl.Width + _Speed ) >= _Step * ( (double)_Speed / 2 )
+               || checked( _ClickControl.Height + _Speed ) >= _Step * ( (double)_Speed / 2 )
+                   ? false
+                   : true )
             {
-                this.Timer.Enabled = false;
-                this._Step = 0;
+                Timer.Enabled = false;
+                _Step = 0;
             }
         }
 
         /// <summary>
         /// Registers the control.
         /// </summary>
-        private void RegisterControl()
+        private void RegisterControl( )
         {
-            if (this._ClickControl != null)
+            if( _ClickControl != null )
             {
-                ClickAnimator metroAnimator = this;
-                this._ClickControl.Paint += new PaintEventHandler(metroAnimator.control_Paint);
-                ClickAnimator metroAnimator1 = this;
-                this._ClickControl.Click += new EventHandler(metroAnimator1.control_Click);
-                this.SetDoubleBuffered(this._ClickControl);
+                var metroAnimator = this;
+                _ClickControl.Paint += metroAnimator.control_Paint;
+                var metroAnimator1 = this;
+                _ClickControl.Click += metroAnimator1.control_Click;
+                SetDoubleBuffered( _ClickControl );
             }
         }
 
@@ -345,31 +372,31 @@ namespace BudgetExecution
         /// Sets the double buffered.
         /// </summary>
         /// <param name="ctrl">The control.</param>
-        private void SetDoubleBuffered(Control ctrl)
+        private void SetDoubleBuffered( Control ctrl )
         {
-            if (!SystemInformation.TerminalServerSession)
+            if( !SystemInformation.TerminalServerSession )
             {
-                PropertyInfo property = typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-                property.SetValue(ctrl, true, null);
+                var property = typeof( Control ).GetProperty( "DoubleBuffered",
+                    BindingFlags.Instance | BindingFlags.NonPublic );
+
+                property.SetValue( ctrl, true, null );
             }
         }
 
         /// <summary>
         /// Uns the register control.
         /// </summary>
-        private void UnRegisterControl()
+        private void UnRegisterControl( )
         {
-            if (this._ClickControl != null)
+            if( _ClickControl != null )
             {
-                ClickAnimator metroAnimator = this;
-                this._ClickControl.Paint -= new PaintEventHandler(metroAnimator.control_Paint);
-                ClickAnimator metroAnimator1 = this;
-                this._ClickControl.Click -= new EventHandler(metroAnimator1.control_Click);
+                var metroAnimator = this;
+                _ClickControl.Paint -= metroAnimator.control_Paint;
+                var metroAnimator1 = this;
+                _ClickControl.Click -= metroAnimator1.control_Click;
             }
         }
 
         #endregion
-
     }
-
 }

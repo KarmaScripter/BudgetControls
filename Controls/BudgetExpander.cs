@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetExpander.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -46,322 +46,354 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
 namespace BudgetExecution
 {
-	/// <summary>
-	/// A class collection for rendering an expander.
-	/// </summary>
-	/// <seealso cref="System.Windows.Forms.Panel" />
-	[DesignerCategory("Code")]
-	[ToolboxBitmap(typeof(BudgetExpander), "BudgetExpander.bmp")]
-	public class BudgetExpander : Panel
-	{
-		#region Private Fields
+    using Properties;
 
-		/// <summary>
-		/// The current state
-		/// </summary>
-		private BudgetExpander.MouseState CurrentState;
+    /// <summary>
+    /// A class collection for rendering an expander.
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Panel" />
+    [ DesignerCategory( "Code" ) ]
+    [ ToolboxBitmap( typeof( BudgetExpander ), "BudgetExpander.bmp" ) ]
+    public class BudgetExpander : Panel
+    {
+        #region Private Fields
 
-		/// <summary>
-		/// The expanded size
-		/// </summary>
-		private System.Drawing.Size _ExpandedSize;
+        /// <summary>
+        /// The current state
+        /// </summary>
+        private MouseState CurrentState;
 
-		/// <summary>
-		/// The none size
-		/// </summary>
-		private System.Drawing.Size _NoneSize;
+        /// <summary>
+        /// The expanded size
+        /// </summary>
+        private Size _ExpandedSize;
 
-		/// <summary>
-		/// The state
-		/// </summary>
-		private BudgetExpander.eState _State;
-		#endregion
+        /// <summary>
+        /// The none size
+        /// </summary>
+        private Size _NoneSize;
 
-		#region Public Properties
-		/// <summary>
-		/// Gets or sets a value indicating whether to draw interect area.
-		/// </summary>
-		/// <value><c>true</c> if draw interect area; otherwise, <c>false</c>.</value>
-		[Browsable(false)]
-		[Category("Developing")]
-		[ComVisible(false)]
-		[Description("Sets a value indicating whether to draw interect area")]
-		private bool DrawInterectArea
-		{
-			[DebuggerNonUserCode]
-			get;
-			[DebuggerNonUserCode]
-			set;
-		}
+        /// <summary>
+        /// The state
+        /// </summary>
+        private eState _State;
 
-		/// <summary>
-		/// Gets or sets the size to be expanded.
-		/// </summary>
-		/// <value>The size of the expanded.</value>
-		[Browsable(true)]
-		[Category("Behavior")]
-		[Description("Sets the size to be expanded.")]
-		public System.Drawing.Size ExpandedSize
-		{
-			get
-			{
-				return this._ExpandedSize;
-			}
-			set
-			{
-				this._ExpandedSize = value;
-			}
-		}
+        #endregion
 
-		/// <summary>
-		/// Gets or sets the size when not expanded.
-		/// </summary>
-		/// <value>The size when not expanded.</value>
-		[Browsable(true)]
-		[Category("Behavior")]
-		[Description("Sets the size when not expanded.")]
-		public System.Drawing.Size NoneSize
-		{
-			get
-			{
-				return this._NoneSize;
-			}
-			set
-			{
-				this._NoneSize = value;
-			}
-		}
+        #region Public Properties
 
-		/// <summary>
-		/// Gets or sets the state.
-		/// </summary>
-		/// <value>The state.</value>
-		[Browsable(true)]
-		[Category("Behavior")]
-		[DefaultValue(0)]
-		[Description("Sets the state.")]
-		public BudgetExpander.eState State
-		{
-			get
-			{
-				return this._State;
-			}
-			set
-			{
-				if (value != BudgetExpander.eState.Expanded)
-				{
-					this.Size = this._NoneSize;
-					this._State = BudgetExpander.eState.None;
-				}
-				else
-				{
-					this.Size = this._ExpandedSize;
-					this._State = BudgetExpander.eState.Expanded;
-				}
-				this._State = value;
-			}
-		}
-		#endregion
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw interect area.
+        /// </summary>
+        /// <value><c>true</c> if draw interect area; otherwise, <c>false</c>.</value>
+        [ Browsable( false ) ]
+        [ Category( "Developing" ) ]
+        [ ComVisible( false ) ]
+        [ Description( "Sets a value indicating whether to draw interect area" ) ]
+        private bool DrawInterectArea
+        {
+            [ DebuggerNonUserCode ]
+            get;
+            [ DebuggerNonUserCode ]
+            set;
+        }
 
+        /// <summary>
+        /// Gets or sets the size to be expanded.
+        /// </summary>
+        /// <value>The size of the expanded.</value>
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ Description( "Sets the size to be expanded." ) ]
+        public Size ExpandedSize
+        {
+            get
+            {
+                return _ExpandedSize;
+            }
+            set
+            {
+                _ExpandedSize = value;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetExpander" /> class.
-		/// </summary>
-		public BudgetExpander()
-		{
-			this.CurrentState = BudgetExpander.MouseState.None;
-			this._State = BudgetExpander.eState.None;
-			this.DrawInterectArea = false;
-			this.Size = new System.Drawing.Size(150, 15);
-			this._NoneSize = new System.Drawing.Size(150, 15);
-			this._ExpandedSize = new System.Drawing.Size(300, 150);
-			this.Font = new System.Drawing.Font("Segoe UI", 9f);
-			this.SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-			this.UpdateStyles();
-		}
+        /// <summary>
+        /// Gets or sets the size when not expanded.
+        /// </summary>
+        /// <value>The size when not expanded.</value>
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ Description( "Sets the size when not expanded." ) ]
+        public Size NoneSize
+        {
+            get
+            {
+                return _NoneSize;
+            }
+            set
+            {
+                _NoneSize = value;
+            }
+        }
 
+        /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        /// <value>The state.</value>
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "Sets the state." ) ]
+        public eState State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                if( value != eState.Expanded )
+                {
+                    Size = _NoneSize;
+                    _State = eState.None;
+                }
+                else
+                {
+                    Size = _ExpandedSize;
+                    _State = eState.Expanded;
+                }
 
+                _State = value;
+            }
+        }
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.
-		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-		protected override void OnMouseDown(MouseEventArgs e)
-		{
-			Rectangle rectangle = new Rectangle(2, 2, Width, Height);
-			if (!rectangle.Contains(e.Location))
-			{
-				this.CurrentState = BudgetExpander.MouseState.None;
-			}
-			else
-			{
-				this.CurrentState = BudgetExpander.MouseState.Over;
-			}
-			this.Invalidate();
-			base.OnMouseDown(e);
-		}
+        #endregion
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" /> event.
-		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-		protected override void OnMouseLeave(EventArgs e)
-		{
-			this.CurrentState = BudgetExpander.MouseState.None;
-			this.Invalidate();
-			base.OnMouseLeave(e);
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetExpander" /> class.
+        /// </summary>
+        public BudgetExpander( )
+        {
+            CurrentState = MouseState.None;
+            _State = eState.None;
+            DrawInterectArea = false;
+            Size = new Size( 150, 15 );
+            _NoneSize = new Size( 150, 15 );
+            _ExpandedSize = new Size( 300, 150 );
+            Font = new Font( "Segoe UI", 9f );
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
-		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-		protected override void OnMouseMove(MouseEventArgs e)
-		{
-			Rectangle rectangle = new Rectangle(checked(this.Width - 14), 2, 10, 10);
-			if (!rectangle.Contains(e.Location))
-			{
-				this.CurrentState = BudgetExpander.MouseState.None;
-			}
-			else
-			{
-				this.CurrentState = BudgetExpander.MouseState.Over;
-			}
-			this.Invalidate();
-			base.OnMouseMove(e);
-		}
+            SetStyle(
+                ControlStyles.UserPaint
+                | ControlStyles.ResizeRedraw
+                | ControlStyles.AllPaintingInWmPaint
+                | ControlStyles.OptimizedDoubleBuffer, true );
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp" /> event.
-		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-		protected override void OnMouseUp(MouseEventArgs e)
-		{
-			Rectangle rectangle = new Rectangle(checked(this.Width - 14), 2, 10, 10);
-			if (!rectangle.Contains(e.Location))
-			{
-				this.CurrentState = BudgetExpander.MouseState.None;
-			}
-			else
-			{
-				if (this._State != BudgetExpander.eState.None)
-				{
-					this.Size = this._NoneSize;
-					this._State = BudgetExpander.eState.None;
-				}
-				else
-				{
-					this.Size = this._ExpandedSize;
-					this._State = BudgetExpander.eState.Expanded;
-				}
-				this.CurrentState = BudgetExpander.MouseState.Over;
-			}
-			this.Invalidate();
-			base.OnMouseUp(e);
-		}
+            UpdateStyles( );
+        }
 
-		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
-		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.</param>
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			Point point;
-			Point point1;
-			Point point2;
-			Point[] pointArray;
-			Rectangle rectangle = new Rectangle(checked(this.Width - 14), 2, 10, 10);
-			Graphics graphics = e.Graphics;
-			Rectangle rectangle1 = new Rectangle(0, 5, checked(this.Width - 16), 5);
-			graphics.SmoothingMode = SmoothingMode.HighQuality;
-			graphics.Clear(this.BackColor);
-			if (this._State != BudgetExpander.eState.None)
-			{
-				pointArray = new Point[3];
-				point2 = new Point(checked(this.Width - 12), 8);
-				pointArray[0] = point2;
-				point1 = new Point(checked(this.Width - 6), 8);
-				pointArray[1] = point1;
-				point = new Point(checked(this.Width - 9), 5);
-				pointArray[2] = point;
-				Point[] pointArray1 = pointArray;
-				if (this.CurrentState == BudgetExpander.MouseState.None)
-				{
-					Brush solidBrush = new SolidBrush(Color.FromArgb(98, 98, 98));
-					graphics.FillPolygon(solidBrush, pointArray1);
-					graphics.DrawPolygon(new Pen(new SolidBrush(Color.FromArgb(98, 98, 98))), pointArray1);
-				}
-				else if (this.CurrentState == BudgetExpander.MouseState.Over)
-				{
-					graphics.FillPolygon(new SolidBrush(this.BackColor), pointArray1);
-					graphics.DrawPolygon(new Pen(new SolidBrush(Color.FromArgb(0, 164, 240))), pointArray1);
-				}
-			}
-			else
-			{
-				pointArray = new Point[3];
-				point = new Point(checked(this.Width - 12), 5);
-				pointArray[0] = point;
-				point1 = new Point(checked(this.Width - 6), 5);
-				pointArray[1] = point1;
-				point2 = new Point(checked(this.Width - 9), 8);
-				pointArray[2] = point2;
-				Point[] pointArray2 = pointArray;
-				if (this.CurrentState == BudgetExpander.MouseState.None)
-				{
-					Brush brush = new SolidBrush(Color.FromArgb(98, 98, 98));
-					graphics.FillPolygon(brush, pointArray2);
-					graphics.DrawPolygon(new Pen(new SolidBrush(Color.FromArgb(98, 98, 98))), pointArray2);
-				}
-				else if (this.CurrentState == BudgetExpander.MouseState.Over)
-				{
-					graphics.FillPolygon(new SolidBrush(this.BackColor), pointArray2);
-					graphics.DrawPolygon(new Pen(new SolidBrush(Color.FromArgb(0, 164, 240))), pointArray2);
-				}
-			}
-			graphics.DrawImageUnscaledAndClipped(Properties.Resources.PointRow, rectangle1);
-			if (this.DrawInterectArea)
-			{
-				graphics.DrawRectangle(Pens.Red, rectangle);
-			}
-			base.OnPaint(e);
-		}
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
+        protected override void OnMouseDown( MouseEventArgs e )
+        {
+            var rectangle = new Rectangle( 2, 2, Width, Height );
 
-		/// <summary>
-		/// Enum eState
-		/// </summary>
-		public enum eState
-		{
-			/// <summary>
-			/// The none
-			/// </summary>
-			None,
-			/// <summary>
-			/// The expanded
-			/// </summary>
-			Expanded
-		}
+            if( !rectangle.Contains( e.Location ) )
+            {
+                CurrentState = MouseState.None;
+            }
+            else
+            {
+                CurrentState = MouseState.Over;
+            }
 
-		/// <summary>
-		/// Enum MouseState
-		/// </summary>
-		private enum MouseState
-		{
-			/// <summary>
-			/// The none
-			/// </summary>
-			None,
-			/// <summary>
-			/// The over
-			/// </summary>
-			Over,
-			/// <summary>
-			/// Down
-			/// </summary>
-			Down
-		}
-	}
+            Invalidate( );
+            base.OnMouseDown( e );
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        protected override void OnMouseLeave( EventArgs e )
+        {
+            CurrentState = MouseState.None;
+            Invalidate( );
+            base.OnMouseLeave( e );
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
+        protected override void OnMouseMove( MouseEventArgs e )
+        {
+            var rectangle = new Rectangle( checked( Width - 14 ), 2, 10, 10 );
+
+            if( !rectangle.Contains( e.Location ) )
+            {
+                CurrentState = MouseState.None;
+            }
+            else
+            {
+                CurrentState = MouseState.Over;
+            }
+
+            Invalidate( );
+            base.OnMouseMove( e );
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
+        protected override void OnMouseUp( MouseEventArgs e )
+        {
+            var rectangle = new Rectangle( checked( Width - 14 ), 2, 10, 10 );
+
+            if( !rectangle.Contains( e.Location ) )
+            {
+                CurrentState = MouseState.None;
+            }
+            else
+            {
+                if( _State != eState.None )
+                {
+                    Size = _NoneSize;
+                    _State = eState.None;
+                }
+                else
+                {
+                    Size = _ExpandedSize;
+                    _State = eState.Expanded;
+                }
+
+                CurrentState = MouseState.Over;
+            }
+
+            Invalidate( );
+            base.OnMouseUp( e );
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.</param>
+        protected override void OnPaint( PaintEventArgs e )
+        {
+            Point point;
+            Point point1;
+            Point point2;
+            Point[ ] pointArray;
+            var rectangle = new Rectangle( checked( Width - 14 ), 2, 10, 10 );
+            var graphics = e.Graphics;
+            var rectangle1 = new Rectangle( 0, 5, checked( Width - 16 ), 5 );
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.Clear( BackColor );
+
+            if( _State != eState.None )
+            {
+                pointArray = new Point[ 3 ];
+                point2 = new Point( checked( Width - 12 ), 8 );
+                pointArray[ 0 ] = point2;
+                point1 = new Point( checked( Width - 6 ), 8 );
+                pointArray[ 1 ] = point1;
+                point = new Point( checked( Width - 9 ), 5 );
+                pointArray[ 2 ] = point;
+                var pointArray1 = pointArray;
+
+                if( CurrentState == MouseState.None )
+                {
+                    Brush solidBrush = new SolidBrush( Color.FromArgb( 98, 98, 98 ) );
+                    graphics.FillPolygon( solidBrush, pointArray1 );
+
+                    graphics.DrawPolygon( new Pen( new SolidBrush( Color.FromArgb( 98, 98, 98 ) ) ),
+                        pointArray1 );
+                }
+                else if( CurrentState == MouseState.Over )
+                {
+                    graphics.FillPolygon( new SolidBrush( BackColor ), pointArray1 );
+
+                    graphics.DrawPolygon(
+                        new Pen( new SolidBrush( Color.FromArgb( 0, 164, 240 ) ) ), pointArray1 );
+                }
+            }
+            else
+            {
+                pointArray = new Point[ 3 ];
+                point = new Point( checked( Width - 12 ), 5 );
+                pointArray[ 0 ] = point;
+                point1 = new Point( checked( Width - 6 ), 5 );
+                pointArray[ 1 ] = point1;
+                point2 = new Point( checked( Width - 9 ), 8 );
+                pointArray[ 2 ] = point2;
+                var pointArray2 = pointArray;
+
+                if( CurrentState == MouseState.None )
+                {
+                    Brush brush = new SolidBrush( Color.FromArgb( 98, 98, 98 ) );
+                    graphics.FillPolygon( brush, pointArray2 );
+
+                    graphics.DrawPolygon( new Pen( new SolidBrush( Color.FromArgb( 98, 98, 98 ) ) ),
+                        pointArray2 );
+                }
+                else if( CurrentState == MouseState.Over )
+                {
+                    graphics.FillPolygon( new SolidBrush( BackColor ), pointArray2 );
+
+                    graphics.DrawPolygon(
+                        new Pen( new SolidBrush( Color.FromArgb( 0, 164, 240 ) ) ), pointArray2 );
+                }
+            }
+
+            graphics.DrawImageUnscaledAndClipped( Resources.PointRow, rectangle1 );
+
+            if( DrawInterectArea )
+            {
+                graphics.DrawRectangle( Pens.Red, rectangle );
+            }
+
+            base.OnPaint( e );
+        }
+
+        /// <summary>
+        /// Enum eState
+        /// </summary>
+        public enum eState
+        {
+            /// <summary>
+            /// The none
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// The expanded
+            /// </summary>
+            Expanded
+        }
+
+        /// <summary>
+        /// Enum MouseState
+        /// </summary>
+        private enum MouseState
+        {
+            /// <summary>
+            /// The none
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// The over
+            /// </summary>
+            Over,
+
+            /// <summary>
+            /// Down
+            /// </summary>
+            Down
+        }
+    }
 }

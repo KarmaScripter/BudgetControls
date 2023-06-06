@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackerPathCollectionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,36 +42,36 @@ using System;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetTrackerPathCollectionEventArgs.
-	/// </summary>
-	/// <seealso cref="System.EventArgs" />
-	public class BudgetTrackerPathCollectionEventArgs : EventArgs
-	{
-		/// <summary>
-		/// The item
-		/// </summary>
-		private BudgetTrackerPath _item;
+    /// <summary>
+    /// Class BudgetTrackerPathCollectionEventArgs.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class BudgetTrackerPathCollectionEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The item
+        /// </summary>
+        private BudgetTrackerPath _item;
 
-		/// <summary>
-		/// Gets the item.
-		/// </summary>
-		/// <value>The item.</value>
-		public BudgetTrackerPath Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <value>The item.</value>
+        public BudgetTrackerPath Item
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetTrackerPathCollectionEventArgs"/> class.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		public BudgetTrackerPathCollectionEventArgs(BudgetTrackerPath item)
-		{
-			this._item = item;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetTrackerPathCollectionEventArgs"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        public BudgetTrackerPathCollectionEventArgs( BudgetTrackerPath item )
+        {
+            _item = item;
+        }
+    }
 }

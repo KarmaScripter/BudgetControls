@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTaskPointCollectionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,36 +42,36 @@ using System;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetTaskPointCollectionEventArgs.
-	/// </summary>
-	/// <seealso cref="System.EventArgs" />
-	public class BudgetTaskPointCollectionEventArgs : EventArgs
-	{
-		/// <summary>
-		/// The item
-		/// </summary>
-		private BudgetTaskPoint _item;
+    /// <summary>
+    /// Class BudgetTaskPointCollectionEventArgs.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class BudgetTaskPointCollectionEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The item
+        /// </summary>
+        private BudgetTaskPoint _item;
 
-		/// <summary>
-		/// Gets the item.
-		/// </summary>
-		/// <value>The item.</value>
-		public BudgetTaskPoint Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <value>The item.</value>
+        public BudgetTaskPoint Item
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetTaskPointCollectionEventArgs"/> class.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		public BudgetTaskPointCollectionEventArgs(BudgetTaskPoint item)
-		{
-			this._item = item;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetTaskPointCollectionEventArgs"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        public BudgetTaskPointCollectionEventArgs( BudgetTaskPoint item )
+        {
+            _item = item;
+        }
+    }
 }

@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTrackbarRegionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,7 +47,7 @@ namespace BudgetExecution
     /// </summary>
     /// <seealso cref="System.EventArgs" />
     public class BudgetTrackbarRegionEventArgs : EventArgs
-	{
+    {
         /// <summary>
         /// The value
         /// </summary>
@@ -63,34 +63,34 @@ namespace BudgetExecution
         /// </summary>
         /// <value>The value.</value>
         public int Value
-		{
-			get
-			{
-				return this._Value;
-			}
-		}
+        {
+            get
+            {
+                return _Value;
+            }
+        }
 
         /// <summary>
         /// Gets the value two.
         /// </summary>
         /// <value>The value two.</value>
         public int ValueTwo
-		{
-			get
-			{
-				return this._Value;
-			}
-		}
+        {
+            get
+            {
+                return _Value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetTrackbarRegionEventArgs"/> class.
         /// </summary>
         /// <param name="val">The value.</param>
         /// <param name="valTwo">The value two.</param>
-        public BudgetTrackbarRegionEventArgs(int val, int valTwo)
-		{
-			this._Value = val;
-			this._ValueTwo = valTwo;
-		}
-	}
+        public BudgetTrackbarRegionEventArgs( int val, int valTwo )
+        {
+            _Value = val;
+            _ValueTwo = valTwo;
+        }
+    }
 }

@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetTextboxDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -47,21 +47,25 @@ using System.Text;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetTextboxDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetTextboxDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetTextboxDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetTextboxDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -77,22 +81,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroTextboxSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroTextboxSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -100,18 +106,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroTextboxSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroTextboxSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroTextboxSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -119,24 +126,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetTextbox colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroTextboxSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroTextboxSmartTagActionList(IComponent component) : base(component)
+        public MetroTextboxSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetTextbox;
+            colUserControl = component as BudgetTextbox;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -146,14 +153,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -170,7 +182,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -186,7 +198,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -202,7 +214,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BanIllegalChars").SetValue(colUserControl, value);
+                GetPropertyByName( "BanIllegalChars" ).SetValue( colUserControl, value );
             }
         }
 
@@ -218,7 +230,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineOnly").SetValue(colUserControl, value);
+                GetPropertyByName( "LineOnly" ).SetValue( colUserControl, value );
             }
         }
 
@@ -234,7 +246,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -250,7 +262,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DefaultColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DefaultColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -266,7 +278,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("HoverColor").SetValue(colUserControl, value);
+                GetPropertyByName( "HoverColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -274,7 +286,7 @@ namespace BudgetExecution
         /// Gets or sets the font.
         /// </summary>
         /// <value>The font.</value>
-        public System.Drawing.Font Font
+        public Font Font
         {
             get
             {
@@ -282,7 +294,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Font").SetValue(colUserControl, value);
+                GetPropertyByName( "Font" ).SetValue( colUserControl, value );
             }
         }
 
@@ -298,7 +310,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("IllegalChars").SetValue(colUserControl, value);
+                GetPropertyByName( "IllegalChars" ).SetValue( colUserControl, value );
             }
         }
 
@@ -314,7 +326,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Watermark").SetValue(colUserControl, value);
+                GetPropertyByName( "Watermark" ).SetValue( colUserControl, value );
             }
         }
 
@@ -330,7 +342,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Text").SetValue(colUserControl, value);
+                GetPropertyByName( "Text" ).SetValue( colUserControl, value );
             }
         }
 
@@ -352,89 +364,65 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Behaviour"));
+            items.Add( new DesignerActionHeaderItem( "Behaviour" ) );
 
+            items.Add( new DesignerActionPropertyItem( "BanIllegalChars", "Ban Illegal Chars",
+                "Behaviour", "Ban the use of certain characters." ) );
 
-            items.Add(new DesignerActionPropertyItem("BanIllegalChars",
-                "Ban Illegal Chars", "Behaviour",
-                "Ban the use of certain characters."));
+            items.Add( new DesignerActionPropertyItem( "LineOnly", "Line Only", "Behaviour",
+                "Set to use line only." ) );
 
-            items.Add(new DesignerActionPropertyItem("LineOnly",
-                "Line Only", "Behaviour",
-                "Set to use line only."));
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
+            items.Add( new DesignerActionPropertyItem( "BackColor", "Back Color", "Appearance",
+                "Selects the background color." ) );
 
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionPropertyItem( "ForeColor", "Fore Color", "Appearance",
+                "Sets the fore color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Sets the border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BackColor",
-                                 "Back Color", "Appearance",
-                                 "Selects the background color."));
+            items.Add( new DesignerActionPropertyItem( "DefaultColor", "Default Color",
+                "Appearance", "Sets the default color." ) );
 
-            items.Add(new DesignerActionPropertyItem("ForeColor",
-                                 "Fore Color", "Appearance",
-                                 "Sets the fore color."));
+            items.Add( new DesignerActionPropertyItem( "HoverColor", "Hover Color", "Appearance",
+                "Sets the hover color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Sets the border color."));
+            items.Add( new DesignerActionPropertyItem( "Border", "Border", "Appearance",
+                "Sets the border width." ) );
 
-            items.Add(new DesignerActionPropertyItem("DefaultColor",
-                "Default Color", "Appearance",
-                "Sets the default color."));
+            items.Add( new DesignerActionPropertyItem( "Font", "Font", "Appearance",
+                "Sets the font." ) );
 
-            items.Add(new DesignerActionPropertyItem("HoverColor",
-                "Hover Color", "Appearance",
-                "Sets the hover color."));
+            items.Add( new DesignerActionPropertyItem( "IllegalChars", "Illegal Characters",
+                "Appearance", "Sets the illegal characters." ) );
 
-            items.Add(new DesignerActionPropertyItem("Border",
-                "Border", "Appearance",
-                "Sets the border width."));
+            items.Add( new DesignerActionPropertyItem( "Watermark", "Watermark", "Appearance",
+                "Sets the water mark." ) );
 
-            items.Add(new DesignerActionPropertyItem("Font",
-                "Font", "Appearance",
-                "Sets the font."));
-
-            items.Add(new DesignerActionPropertyItem("IllegalChars",
-                "Illegal Characters", "Appearance",
-                "Sets the illegal characters."));
-
-            items.Add(new DesignerActionPropertyItem("Watermark",
-                "Watermark", "Appearance",
-                "Sets the water mark."));
-
-            items.Add(new DesignerActionPropertyItem("Text",
-                "Text", "Appearance",
-                "Sets the text."));
-
+            items.Add( new DesignerActionPropertyItem( "Text", "Text", "Appearance",
+                "Sets the text." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

@@ -4,7 +4,7 @@
 //     Created:                 05-29-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetControlBoxAreaCollectionEventArgs.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -42,36 +42,36 @@ using System;
 
 namespace BudgetExecution
 {
-	/// <summary>
-	/// Class BudgetControlBoxAreaCollectionEventArgs.
-	/// </summary>
-	/// <seealso cref="System.EventArgs" />
-	public class BudgetControlBoxAreaCollectionEventArgs : EventArgs
-	{
-		/// <summary>
-		/// The item
-		/// </summary>
-		private BudgetControlBoxArea _item;
+    /// <summary>
+    /// Class BudgetControlBoxAreaCollectionEventArgs.
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
+    public class BudgetControlBoxAreaCollectionEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The item
+        /// </summary>
+        private BudgetControlBoxArea _item;
 
-		/// <summary>
-		/// Gets the item.
-		/// </summary>
-		/// <value>The item.</value>
-		public BudgetControlBoxArea Item
-		{
-			get
-			{
-				return this._item;
-			}
-		}
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <value>The item.</value>
+        public BudgetControlBoxArea Item
+        {
+            get
+            {
+                return _item;
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BudgetControlBoxAreaCollectionEventArgs"/> class.
-		/// </summary>
-		/// <param name="item">The item.</param>
-		public BudgetControlBoxAreaCollectionEventArgs(BudgetControlBoxArea item)
-		{
-			this._item = item;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetControlBoxAreaCollectionEventArgs"/> class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        public BudgetControlBoxAreaCollectionEventArgs( BudgetControlBoxArea item )
+        {
+            _item = item;
+        }
+    }
 }

@@ -1,10 +1,10 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
 // <copyright file="BudgetPanelCategoryDesigner.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
@@ -48,21 +48,25 @@ using System.Windows.Forms;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+    using System.Windows.Forms.Design;
 
     #region Smart Tag Code
 
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(BudgetPanelCategoryDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class BudgetPanelCategoryDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class BudgetPanelCategoryDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class BudgetPanelCategoryDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -78,22 +82,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroPanelCategorySmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroPanelCategorySmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -101,18 +107,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroPanelCategorySmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroPanelCategorySmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroPanelCategorySmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -120,24 +127,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetPanelCategory colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroPanelCategorySmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroPanelCategorySmartTagActionList(IComponent component) : base(component)
+        public MetroPanelCategorySmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetPanelCategory;
+            colUserControl = component as BudgetPanelCategory;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -147,14 +154,19 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
@@ -171,7 +183,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -187,7 +199,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -203,7 +215,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("UseGradient").SetValue(colUserControl, value);
+                GetPropertyByName( "UseGradient" ).SetValue( colUserControl, value );
             }
         }
 
@@ -219,7 +231,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("UseGradientOnLine").SetValue(colUserControl, value);
+                GetPropertyByName( "UseGradientOnLine" ).SetValue( colUserControl, value );
             }
         }
 
@@ -235,7 +247,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("AllowFormMoving").SetValue(colUserControl, value);
+                GetPropertyByName( "AllowFormMoving" ).SetValue( colUserControl, value );
             }
         }
 
@@ -251,7 +263,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Appearance").SetValue(colUserControl, value);
+                GetPropertyByName( "Appearance" ).SetValue( colUserControl, value );
             }
         }
 
@@ -267,7 +279,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineAlign").SetValue(colUserControl, value);
+                GetPropertyByName( "LineAlign" ).SetValue( colUserControl, value );
             }
         }
 
@@ -283,7 +295,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineOrientation").SetValue(colUserControl, value);
+                GetPropertyByName( "LineOrientation" ).SetValue( colUserControl, value );
             }
         }
 
@@ -299,7 +311,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("TextAlign").SetValue(colUserControl, value);
+                GetPropertyByName( "TextAlign" ).SetValue( colUserControl, value );
             }
         }
 
@@ -315,7 +327,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("AccentColor").SetValue(colUserControl, value);
+                GetPropertyByName( "AccentColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -331,7 +343,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BorderColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BorderColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -347,7 +359,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("DefaultColor").SetValue(colUserControl, value);
+                GetPropertyByName( "DefaultColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -363,7 +375,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("GradientColor").SetValue(colUserControl, value);
+                GetPropertyByName( "GradientColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -379,7 +391,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineGradientColor").SetValue(colUserControl, value);
+                GetPropertyByName( "LineGradientColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -395,7 +407,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("GradientPointA").SetValue(colUserControl, value);
+                GetPropertyByName( "GradientPointA" ).SetValue( colUserControl, value );
             }
         }
 
@@ -411,7 +423,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("GradientPointB").SetValue(colUserControl, value);
+                GetPropertyByName( "GradientPointB" ).SetValue( colUserControl, value );
             }
         }
 
@@ -427,7 +439,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("LineThickness").SetValue(colUserControl, value);
+                GetPropertyByName( "LineThickness" ).SetValue( colUserControl, value );
             }
         }
 
@@ -443,7 +455,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("RoundingArc").SetValue(colUserControl, value);
+                GetPropertyByName( "RoundingArc" ).SetValue( colUserControl, value );
             }
         }
 
@@ -459,7 +471,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SlopeA").SetValue(colUserControl, value);
+                GetPropertyByName( "SlopeA" ).SetValue( colUserControl, value );
             }
         }
 
@@ -475,10 +487,9 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("SlopeB").SetValue(colUserControl, value);
+                GetPropertyByName( "SlopeB" ).SetValue( colUserControl, value );
             }
         }
-
 
         #endregion
 
@@ -488,118 +499,81 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionPropertyItem("UseGradient",
-                                 "Use Gradient", "Appearance",
-                                 "Set to use gradient."));
+            items.Add( new DesignerActionPropertyItem( "UseGradient", "Use Gradient", "Appearance",
+                "Set to use gradient." ) );
 
-            items.Add(new DesignerActionPropertyItem("UseGradientOnLine",
-                                 "Gradient On Line", "Appearance",
-                                 "Set to use gradient on line."));
+            items.Add( new DesignerActionPropertyItem( "UseGradientOnLine", "Gradient On Line",
+                "Appearance", "Set to use gradient on line." ) );
 
-            items.Add(new DesignerActionPropertyItem("AllowFormMoving",
-                                 "Allow Form Moving", "Appearance",
-                                 "Set to allow panel to move form."));
+            items.Add( new DesignerActionPropertyItem( "AllowFormMoving", "Allow Form Moving",
+                "Appearance", "Set to allow panel to move form." ) );
 
-            items.Add(new DesignerActionPropertyItem("Appearance",
-                                 "Appearance", "Appearance",
-                                 "Sets the appearance parameters."));
+            items.Add( new DesignerActionPropertyItem( "Appearance", "Appearance", "Appearance",
+                "Sets the appearance parameters." ) );
 
+            items.Add( new DesignerActionPropertyItem( "LineAlign", "Line Alignment", "Appearance",
+                "Sets the line alignment." ) );
 
-            items.Add(new DesignerActionPropertyItem("LineAlign",
-                "Line Alignment", "Appearance",
-                "Sets the line alignment."));
+            items.Add( new DesignerActionPropertyItem( "LineOrientation", "Line Orientation",
+                "Appearance", "Sets the line orientation." ) );
 
-            items.Add(new DesignerActionPropertyItem("LineOrientation",
-                "Line Orientation", "Appearance",
-                "Sets the line orientation."));
+            items.Add( new DesignerActionPropertyItem( "TextAlign", "Text Alignment", "Appearance",
+                "Sets the text alignment." ) );
 
+            items.Add( new DesignerActionPropertyItem( "AccentColor", "Accent Color", "Appearance",
+                "Sets the accent color." ) );
 
-            items.Add(new DesignerActionPropertyItem("TextAlign",
-                "Text Alignment", "Appearance",
-                "Sets the text alignment."));
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Sets the border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("AccentColor",
-                "Accent Color", "Appearance",
-                "Sets the accent color."));
+            items.Add( new DesignerActionPropertyItem( "DefaultColor", "Default Color",
+                "Appearance", "Sets the default color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "GradientColor", "Gradient Color",
+                "Appearance", "Sets the gradient color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Sets the border color."));
+            items.Add( new DesignerActionPropertyItem( "LineGradientColor", "Line Gradient Color",
+                "Appearance", "Sets the line's gradient color." ) );
 
-            items.Add(new DesignerActionPropertyItem("DefaultColor",
-                "Default Color", "Appearance",
-                "Sets the default color."));
+            items.Add( new DesignerActionPropertyItem( "GradientPointA", "Gradient Point A",
+                "Appearance", "Sets the gradient point." ) );
 
+            items.Add( new DesignerActionPropertyItem( "GradientPointB", "Gradient Point B",
+                "Appearance", "Sets the gradient point." ) );
 
-            items.Add(new DesignerActionPropertyItem("GradientColor",
-                "Gradient Color", "Appearance",
-                "Sets the gradient color."));
+            items.Add( new DesignerActionPropertyItem( "LineThickness", "Line Thickness",
+                "Appearance", "Sets the line thickness." ) );
 
-            items.Add(new DesignerActionPropertyItem("LineGradientColor",
-                "Line Gradient Color", "Appearance",
-                "Sets the line's gradient color."));
+            items.Add( new DesignerActionPropertyItem( "RoundingArc", "Rounding Corners",
+                "Appearance", "Sets the rounding corners of the panel." ) );
 
+            items.Add( new DesignerActionPropertyItem( "SlopeA", "Slope A", "Appearance",
+                "Sets the slope." ) );
 
-            items.Add(new DesignerActionPropertyItem("GradientPointA",
-                "Gradient Point A", "Appearance",
-                "Sets the gradient point."));
-
-            items.Add(new DesignerActionPropertyItem("GradientPointB",
-                "Gradient Point B", "Appearance",
-                "Sets the gradient point."));
-
-
-            items.Add(new DesignerActionPropertyItem("LineThickness",
-                "Line Thickness", "Appearance",
-                "Sets the line thickness."));
-
-            items.Add(new DesignerActionPropertyItem("RoundingArc",
-                "Rounding Corners", "Appearance",
-                "Sets the rounding corners of the panel."));
-
-
-            items.Add(new DesignerActionPropertyItem("SlopeA",
-                "Slope A", "Appearance",
-                "Sets the slope."));
-
-            items.Add(new DesignerActionPropertyItem("SlopeB",
-                "Slope B", "Appearance",
-                "Sets the slope."));
-            
-
-            
-            
+            items.Add( new DesignerActionPropertyItem( "SlopeB", "Slope B", "Appearance",
+                "Sets the slope." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 }

@@ -1,12 +1,12 @@
 // ******************************************************************************************
 //     Assembly:                Budget Execution
 //     Author:                  Terry D. Eppler
-//     Created:                 05-29-2023
+//     Created:                 06-05-2023
 // 
 //     Last Modified By:        Terry D. Eppler
-//     Last Modified On:        05-31-2023
+//     Last Modified On:        06-05-2023
 // ******************************************************************************************
-// <copyright file="MetroCheckCircle.cs" company="Terry D. Eppler">
+// <copyright file="BudgetCheckCircle.cs" company="Terry D. Eppler">
 //    This is a Federal Budget, Finance, and Accounting application for the
 //    US Environmental Protection Agency (US EPA).
 //    Copyright ©  2023  Terry Eppler
@@ -34,7 +34,7 @@
 //    You can contact me at:   terryeppler@gmail.com or eppler.terry@epa.gov
 // </copyright>
 // <summary>
-//   MetroCheckCircle.cs
+//   BudgetCheckCircle.cs
 // </summary>
 // ******************************************************************************************
 
@@ -52,21 +52,23 @@ using System.Windows.Forms.Design;
 
 namespace BudgetExecution
 {
+    using System.Security.Permissions;
+
     #region Control
 
     /// <summary>
     /// A class collection for rendering a metro-like circle checkbox.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Control" />
-    [DefaultEvent("Click")]
-    [Description("Draws a circular checkbox.")]
-    [Designer(typeof(MetroCheckCircleDesigner))]
-    [DesignerCategory("Code")]
-    [ToolboxBitmap(typeof(CheckBox))]
+    [ DefaultEvent( "Click" ) ]
+    [ Description( "Draws a circular checkbox." ) ]
+    [ Designer( typeof( MetroCheckCircleDesigner ) ) ]
+    [ DesignerCategory( "Code" ) ]
+    [ ToolboxBitmap( typeof( CheckBox ) ) ]
     public class BudgetCheckCircle : Control
     {
-
         #region Private Fields
+
         /// <summary>
         /// The rect
         /// </summary>
@@ -75,7 +77,7 @@ namespace BudgetExecution
         /// <summary>
         /// The current state
         /// </summary>
-        private BudgetCheckCircle.MouseState CurrentState;
+        private MouseState CurrentState;
 
         /// <summary>
         /// The text
@@ -106,47 +108,48 @@ namespace BudgetExecution
         /// The use full detection area
         /// </summary>
         private bool _UseFullDetectionArea;
+
         #endregion
 
-        #region Public Properties  
-
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the color scheme.
         /// </summary>
         /// <value>The color scheme.</value>
-        [Browsable(true)]
-        [Category("Appearance")]
-        [Description("sets the color scheme.")]
-        [ReadOnly(false)]
-        [TypeConverter(typeof(ExpandableObjectConverter))]
-        public BudgetCheckCircle.MainColorScheme ColorScheme
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ Description( "sets the color scheme." ) ]
+        [ ReadOnly( false ) ]
+        [ TypeConverter( typeof( ExpandableObjectConverter ) ) ]
+        public MainColorScheme ColorScheme
         {
-            [DebuggerNonUserCode]
+            [ DebuggerNonUserCode ]
             get;
-            [DebuggerNonUserCode]
+            [ DebuggerNonUserCode ]
             set;
         }
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="BudgetCheckCircle" /> is checked.
         /// </summary>
         /// <value><c>true</c> if checked; otherwise, <c>false</c>.</value>
-        [Browsable(true)]
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        [Description("Set to enable the control to be checked.")]
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Set to enable the control to be checked." ) ]
         public bool Checked
         {
             get
             {
-                return this._Checked;
+                return _Checked;
             }
             set
             {
-                if (value != this._Checked)
+                if( value != _Checked )
                 {
-                    this._Checked = value;
-                    this.Invalidate();
+                    _Checked = value;
+                    Invalidate( );
                 }
             }
         }
@@ -155,21 +158,21 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to check on click.
         /// </summary>
         /// <value><c>true</c> if [check on click]; otherwise, <c>false</c>.</value>
-        [Browsable(true)]
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        [Description("Sets a value indicating whether to check on click.")]
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( true ) ]
+        [ Description( "Sets a value indicating whether to check on click." ) ]
         public bool CheckOnClick
         {
             get
             {
-                return this._CheckOnClick;
+                return _CheckOnClick;
             }
             set
             {
-                if (value != this._CheckOnClick)
+                if( value != _CheckOnClick )
                 {
-                    this._CheckOnClick = value;
+                    _CheckOnClick = value;
                 }
             }
         }
@@ -182,7 +185,7 @@ namespace BudgetExecution
         {
             get
             {
-                return this._DrawBorders;
+                return _DrawBorders;
             }
         }
 
@@ -190,40 +193,42 @@ namespace BudgetExecution
         /// Gets or sets the style.
         /// </summary>
         /// <value>The style.</value>
-        [Browsable(true)]
-        [Category("Appearance")]
-        [DefaultValue(0)]
-        [Description("sets the style.")]
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ DefaultValue( 0 ) ]
+        [ Description( "sets the style." ) ]
         public Design.Style Style
         {
             get
             {
-                return this._Style;
+                return _Style;
             }
             set
             {
-                if (value != this._Style)
+                if( value != _Style )
                 {
-                    this._Style = value;
-                    if (this._Style == Design.Style.Light)
+                    _Style = value;
+
+                    if( _Style == Design.Style.Light )
                     {
-                        this.ForeColor = Color.Black;
-                        this.ColorScheme._InnerCircleColor = Color.FromArgb(98, 98, 98);
-                        this.ColorScheme._BorderColor = Color.FromArgb(250, 250, 250);
-                        this.ColorScheme._FillColor = Color.FromArgb(0, 164, 240);
+                        ForeColor = Color.Black;
+                        ColorScheme._InnerCircleColor = Color.FromArgb( 98, 98, 98 );
+                        ColorScheme._BorderColor = Color.FromArgb( 250, 250, 250 );
+                        ColorScheme._FillColor = Color.FromArgb( 0, 164, 240 );
                     }
-                    else if (this._Style != Design.Style.Dark)
+                    else if( _Style != Design.Style.Dark )
                     {
-                        this._Style = Design.Style.Custom;
+                        _Style = Design.Style.Custom;
                     }
                     else
                     {
-                        this.ForeColor = Color.FromArgb(153, 153, 153);
-                        this.ColorScheme._InnerCircleColor = Color.FromArgb(98, 98, 98);
-                        this.ColorScheme._BorderColor = Color.FromArgb(0, 164, 240);
-                        this.ColorScheme._FillColor = Color.FromArgb(0, 164, 240);
+                        ForeColor = Color.FromArgb( 153, 153, 153 );
+                        ColorScheme._InnerCircleColor = Color.FromArgb( 98, 98, 98 );
+                        ColorScheme._BorderColor = Color.FromArgb( 0, 164, 240 );
+                        ColorScheme._FillColor = Color.FromArgb( 0, 164, 240 );
                     }
-                    this.Invalidate();
+
+                    Invalidate( );
                 }
             }
         }
@@ -232,21 +237,21 @@ namespace BudgetExecution
         /// Gets or sets the text associated with this control.
         /// </summary>
         /// <value>The text.</value>
-        [Browsable(true)]
-        [Category("Appearance")]
-        [Description("sets the text associated with this control.")]
+        [ Browsable( true ) ]
+        [ Category( "Appearance" ) ]
+        [ Description( "sets the text associated with this control." ) ]
         public override string Text
         {
             get
             {
-                return this._Text;
+                return _Text;
             }
             set
             {
-                if (Operators.CompareString(value, this._Text, false) != 0)
+                if( Operators.CompareString( value, _Text, false ) != 0 )
                 {
-                    this._Text = value;
-                    this.Invalidate();
+                    _Text = value;
+                    Invalidate( );
                 }
             }
         }
@@ -255,21 +260,21 @@ namespace BudgetExecution
         /// Gets or sets a value indicating whether to use full detection area.
         /// </summary>
         /// <value><c>true</c> if use full detection area; otherwise, <c>false</c>.</value>
-        [Browsable(true)]
-        [Category("Behavior")]
-        [DefaultValue(false)]
-        [Description("Sets a value indicating whether to use full detection area.")]
+        [ Browsable( true ) ]
+        [ Category( "Behavior" ) ]
+        [ DefaultValue( false ) ]
+        [ Description( "Sets a value indicating whether to use full detection area." ) ]
         public bool UseFullDetectionArea
         {
             get
             {
-                return this._UseFullDetectionArea;
+                return _UseFullDetectionArea;
             }
             set
             {
-                if (value != this._UseFullDetectionArea)
+                if( value != _UseFullDetectionArea )
                 {
-                    this._UseFullDetectionArea = value;
+                    _UseFullDetectionArea = value;
                 }
             }
         }
@@ -281,21 +286,27 @@ namespace BudgetExecution
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetCheckCircle" /> class.
         /// </summary>
-        public BudgetCheckCircle()
+        public BudgetCheckCircle( )
         {
-            this.rect = new Rectangle(0 + 2, 0 + 2, 16, 16);
-            this.CurrentState = BudgetCheckCircle.MouseState.None;
-            this.Size = new Size(159, 22);
-            this._Text = this.Name;
-            this._Style = Design.Style.Light;
-            this._DrawBorders = true;
-            this._Checked = true;
-            this._CheckOnClick = true;
-            this._UseFullDetectionArea = false;
-            this.ColorScheme = new BudgetCheckCircle.MainColorScheme();
-            this.Size = new System.Drawing.Size(115, 18);
-            this.SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-            this.UpdateStyles();
+            rect = new Rectangle( 0 + 2, 0 + 2, 16, 16 );
+            CurrentState = MouseState.None;
+            Size = new Size( 159, 22 );
+            _Text = Name;
+            _Style = Design.Style.Light;
+            _DrawBorders = true;
+            _Checked = true;
+            _CheckOnClick = true;
+            _UseFullDetectionArea = false;
+            ColorScheme = new MainColorScheme( );
+            Size = new Size( 115, 18 );
+
+            SetStyle(
+                ControlStyles.UserPaint
+                | ControlStyles.ResizeRedraw
+                | ControlStyles.AllPaintingInWmPaint
+                | ControlStyles.OptimizedDoubleBuffer, true );
+
+            UpdateStyles( );
         }
 
         #endregion
@@ -303,133 +314,145 @@ namespace BudgetExecution
         /// <summary>
         /// Fixes the bug.
         /// </summary>
-        private void FixBug()
+        private void FixBug( )
         {
-            this.Style = Design.Style.Dark;
-            this.Invalidate();
-            this.Style = Design.Style.Light;
-            this.Invalidate();
+            Style = Design.Style.Dark;
+            Invalidate( );
+            Style = Design.Style.Light;
+            Invalidate( );
         }
 
         /// <summary>
         /// Gets the color of the back.
         /// </summary>
         /// <returns>Color.</returns>
-        private Color GetBackColor()
+        private Color GetBackColor( )
         {
-            System.Windows.Forms.Form form = base.FindForm();
-            Color backColor = form.BackColor;
-            int r = checked(backColor.R + 11);
+            var form = FindForm( );
+            var backColor = form.BackColor;
+            var r = checked( backColor.R + 11 );
             backColor = form.BackColor;
-            int b = checked(backColor.B + 11);
+            var b = checked( backColor.B + 11 );
             backColor = form.BackColor;
-            int g = checked(backColor.G + 11);
-            if (r >= 255)
+            var g = checked( backColor.G + 11 );
+
+            if( r >= 255 )
             {
                 r = 255;
             }
-            if (b >= 255)
+
+            if( b >= 255 )
             {
                 b = 255;
             }
-            if (g >= 255)
+
+            if( g >= 255 )
             {
                 g = 255;
             }
-            return Color.FromArgb(r, g, b);
+
+            return Color.FromArgb( r, g, b );
         }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected override void OnMouseDown( MouseEventArgs e )
         {
-            this.CurrentState = BudgetCheckCircle.MouseState.Over;
-            this.Invalidate();
-            base.OnMouseDown(e);
+            CurrentState = MouseState.Over;
+            Invalidate( );
+            base.OnMouseDown( e );
         }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseEnter" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnMouseEnter(EventArgs e)
+        protected override void OnMouseEnter( EventArgs e )
         {
-            this.CurrentState = BudgetCheckCircle.MouseState.Over;
-            this.Invalidate();
-            base.OnMouseEnter(e);
+            CurrentState = MouseState.Over;
+            Invalidate( );
+            base.OnMouseEnter( e );
         }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnMouseLeave(EventArgs e)
+        protected override void OnMouseLeave( EventArgs e )
         {
-            this.CurrentState = BudgetCheckCircle.MouseState.None;
-            this.Invalidate();
-            base.OnMouseLeave(e);
+            CurrentState = MouseState.None;
+            Invalidate( );
+            base.OnMouseLeave( e );
         }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.MouseUp" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.</param>
-        protected override void OnMouseUp(MouseEventArgs e)
+        protected override void OnMouseUp( MouseEventArgs e )
         {
-            BudgetCheckCircle.CheckedChangedEventHandler checkedChangedEventHandler;
-            if (this.UseFullDetectionArea)
+            CheckedChangedEventHandler checkedChangedEventHandler;
+
+            if( UseFullDetectionArea )
             {
-                if (this.CheckOnClick)
+                if( CheckOnClick )
                 {
-                    if (this.Checked)
+                    if( Checked )
                     {
-                        this.Checked = false;
+                        Checked = false;
                     }
-                    else if (!this.Checked)
+                    else if( !Checked )
                     {
-                        this.Checked = true;
+                        Checked = true;
                     }
+
                     checkedChangedEventHandler = BudgetCheckCircle.CheckedChanged;
-                    if (checkedChangedEventHandler != null)
+
+                    if( checkedChangedEventHandler != null )
                     {
-                        checkedChangedEventHandler(this, new EventArgs());
+                        checkedChangedEventHandler( this, new EventArgs( ) );
                     }
-                    this.Invalidate();
+
+                    Invalidate( );
                 }
             }
-            else if (this.rect.Contains(e.Location))
+            else if( rect.Contains( e.Location ) )
             {
-                if (this.CheckOnClick)
+                if( CheckOnClick )
                 {
-                    if (this.Checked)
+                    if( Checked )
                     {
-                        this.Checked = false;
+                        Checked = false;
                     }
-                    else if (!this.Checked)
+                    else if( !Checked )
                     {
-                        this.Checked = true;
+                        Checked = true;
                     }
+
                     checkedChangedEventHandler = BudgetCheckCircle.CheckedChanged;
-                    if (checkedChangedEventHandler != null)
+
+                    if( checkedChangedEventHandler != null )
                     {
-                        checkedChangedEventHandler(this, new EventArgs());
+                        checkedChangedEventHandler( this, new EventArgs( ) );
                     }
-                    this.Invalidate();
+
+                    Invalidate( );
                 }
             }
-            this.CurrentState = BudgetCheckCircle.MouseState.Over;
-            base.OnMouseUp(e);
+
+            CurrentState = MouseState.Over;
+            base.OnMouseUp( e );
         }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize( EventArgs e )
         {
-            base.OnResize(e);
+            base.OnResize( e );
             Height = 22;
         }
 
@@ -437,76 +460,79 @@ namespace BudgetExecution
         /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.</param>
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaint( PaintEventArgs e )
         {
-            Graphics graphics = e.Graphics;
-
-            Rectangle rectangle1 = new Rectangle(3, 3, 10, 10);
-            Rectangle rectangle = new Rectangle(5, 5, 10, 10);
-
+            var graphics = e.Graphics;
+            var rectangle1 = new Rectangle( 3, 3, 10, 10 );
+            var rectangle = new Rectangle( 5, 5, 10, 10 );
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            switch (this.CurrentState)
+
+            switch( CurrentState )
             {
-                case BudgetCheckCircle.MouseState.None:
+                case MouseState.None:
+                {
+                    if( Checked )
                     {
-                        if (this.Checked)
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._FillColor), this.rect);
-                            graphics.FillEllipse(new SolidBrush(this.ColorScheme._FillColor), rectangle);
-                        }
-                        else
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._InnerCircleColor), this.rect);
-                        }
-                        break;
+                        graphics.DrawEllipse( new Pen( ColorScheme._FillColor ), rect );
+                        graphics.FillEllipse( new SolidBrush( ColorScheme._FillColor ), rectangle );
                     }
-                case BudgetCheckCircle.MouseState.Over:
+                    else
                     {
-                        if (this.Checked)
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._FillColor), this.rect);
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._BorderColor), rectangle1);
-                            graphics.FillEllipse(new SolidBrush(this.ColorScheme._FillColor), rectangle);
-                        }
-                        else
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._FillColor), this.rect);
-                        }
-                        break;
+                        graphics.DrawEllipse( new Pen( ColorScheme._InnerCircleColor ), rect );
                     }
-                case BudgetCheckCircle.MouseState.Down:
+
+                    break;
+                }
+                case MouseState.Over:
+                {
+                    if( Checked )
                     {
-                        if (this.Checked)
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._InnerCircleColor), this.rect);
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._BorderColor), rectangle1);
-                            graphics.FillEllipse(new SolidBrush(this.ColorScheme._FillColor), rectangle);
-                        }
-                        else
-                        {
-                            graphics.DrawEllipse(new Pen(this.ColorScheme._FillColor), this.rect);
-                        }
-                        break;
+                        graphics.DrawEllipse( new Pen( ColorScheme._FillColor ), rect );
+                        graphics.DrawEllipse( new Pen( ColorScheme._BorderColor ), rectangle1 );
+                        graphics.FillEllipse( new SolidBrush( ColorScheme._FillColor ), rectangle );
                     }
+                    else
+                    {
+                        graphics.DrawEllipse( new Pen( ColorScheme._FillColor ), rect );
+                    }
+
+                    break;
+                }
+                case MouseState.Down:
+                {
+                    if( Checked )
+                    {
+                        graphics.DrawEllipse( new Pen( ColorScheme._InnerCircleColor ), rect );
+                        graphics.DrawEllipse( new Pen( ColorScheme._BorderColor ), rectangle1 );
+                        graphics.FillEllipse( new SolidBrush( ColorScheme._FillColor ), rectangle );
+                    }
+                    else
+                    {
+                        graphics.DrawEllipse( new Pen( ColorScheme._FillColor ), rect );
+                    }
+
+                    break;
+                }
             }
-            Point point = new Point(21, 2);
-            Brush solidBrush = new SolidBrush(this.ForeColor);
-            graphics.DrawString(this.Text, this.Font, solidBrush, point);
-            base.OnPaint(e);
+
+            var point = new Point( 21, 2 );
+            Brush solidBrush = new SolidBrush( ForeColor );
+            graphics.DrawString( Text, Font, solidBrush, point );
+            base.OnPaint( e );
         }
 
         /// <summary>
         /// Occurs when [checked changed].
         /// </summary>
-        public static event BudgetCheckCircle.CheckedChangedEventHandler CheckedChanged;
+        public static event CheckedChangedEventHandler CheckedChanged;
 
         /// <summary>
         /// Delegate CheckedChangedEventHandler
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        public delegate void CheckedChangedEventHandler(object sender, EventArgs e);
+        public delegate void CheckedChangedEventHandler( object sender, EventArgs e );
 
         /// <summary>
         /// Class MainColorScheme.
@@ -532,20 +558,20 @@ namespace BudgetExecution
             /// Gets or sets the color of the border.
             /// </summary>
             /// <value>The color of the border.</value>
-            [Browsable(true)]
-            [Category("Appearance")]
-            [Description("Gibt die Farbe für die Umrandung an.")]
+            [ Browsable( true ) ]
+            [ Category( "Appearance" ) ]
+            [ Description( "Gibt die Farbe für die Umrandung an." ) ]
             public Color BorderColor
             {
                 get
                 {
-                    return this._BorderColor;
+                    return _BorderColor;
                 }
                 set
                 {
-                    if (value != this._BorderColor)
+                    if( value != _BorderColor )
                     {
-                        this._BorderColor = value;
+                        _BorderColor = value;
                     }
                 }
             }
@@ -554,20 +580,20 @@ namespace BudgetExecution
             /// Gets or sets the color of the fill.
             /// </summary>
             /// <value>The color of the fill.</value>
-            [Browsable(true)]
-            [Category("Appearance")]
-            [Description("Gibt die Hintergrundfarbe des CheckCircles an.")]
+            [ Browsable( true ) ]
+            [ Category( "Appearance" ) ]
+            [ Description( "Gibt die Hintergrundfarbe des CheckCircles an." ) ]
             public Color FillColor
             {
                 get
                 {
-                    return this._FillColor;
+                    return _FillColor;
                 }
                 set
                 {
-                    if (value != this._FillColor)
+                    if( value != _FillColor )
                     {
-                        this._FillColor = value;
+                        _FillColor = value;
                     }
                 }
             }
@@ -576,20 +602,20 @@ namespace BudgetExecution
             /// Gets or sets the inner circlecolor.
             /// </summary>
             /// <value>The inner circlecolor.</value>
-            [Browsable(true)]
-            [Category("Appearance")]
-            [Description("Gibt die Hauptfarbe des CheckCircles an.")]
+            [ Browsable( true ) ]
+            [ Category( "Appearance" ) ]
+            [ Description( "Gibt die Hauptfarbe des CheckCircles an." ) ]
             public Color InnerCirclecolor
             {
                 get
                 {
-                    return this._InnerCircleColor;
+                    return _InnerCircleColor;
                 }
                 set
                 {
-                    if (value != this._InnerCircleColor)
+                    if( value != _InnerCircleColor )
                     {
-                        this._InnerCircleColor = value;
+                        _InnerCircleColor = value;
                     }
                 }
             }
@@ -597,11 +623,11 @@ namespace BudgetExecution
             /// <summary>
             /// Initializes a new instance of the <see cref="MainColorScheme"/> class.
             /// </summary>
-            public MainColorScheme()
+            public MainColorScheme( )
             {
-                this._InnerCircleColor = Color.FromArgb(98, 98, 98);
-                this._FillColor = Color.FromArgb(0, 164, 240);
-                this._BorderColor = Color.FromArgb(250, 250, 250);
+                _InnerCircleColor = Color.FromArgb( 98, 98, 98 );
+                _FillColor = Color.FromArgb( 0, 164, 240 );
+                _BorderColor = Color.FromArgb( 250, 250, 250 );
             }
         }
 
@@ -614,10 +640,12 @@ namespace BudgetExecution
             /// The none
             /// </summary>
             None,
+
             /// <summary>
             /// The over
             /// </summary>
             Over,
+
             /// <summary>
             /// Down
             /// </summary>
@@ -632,15 +660,17 @@ namespace BudgetExecution
     #region Cut and Paste it on top of the component class
 
     //--------------- [Designer(typeof(MetroCheckCircleDesigner))] --------------------//
+
     #endregion
 
     #region ControlDesigner
+
     /// <summary>
     /// Class MetroCheckCircleDesigner.
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Design.ControlDesigner" />
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-    public class MetroCheckCircleDesigner : System.Windows.Forms.Design.ControlDesigner
+    [ PermissionSet( SecurityAction.Demand, Name = "FullTrust" ) ]
+    public class MetroCheckCircleDesigner : ControlDesigner
     {
         /// <summary>
         /// The action lists
@@ -656,22 +686,24 @@ namespace BudgetExecution
         {
             get
             {
-                if (null == actionLists)
+                if( null == actionLists )
                 {
-                    actionLists = new DesignerActionListCollection();
-                    actionLists.Add(new MetroCheckCircleSmartTagActionList(this.Component));
+                    actionLists = new DesignerActionListCollection( );
+                    actionLists.Add( new MetroCheckCircleSmartTagActionList( Component ) );
                 }
+
                 return actionLists;
             }
         }
 
         #region Budget Filter (Remove Properties)
+
         /// <summary>
         /// Remove Button and Control properties that are
         /// not supported by the <see cref="MACButton" />.
         /// </summary>
         /// <param name="Properties">The properties.</param>
-        protected override void PostFilterProperties(IDictionary Properties)
+        protected override void PostFilterProperties( IDictionary Properties )
         {
             //Properties.Remove("AllowDrop");
             //Properties.Remove("FlatStyle");
@@ -679,18 +711,19 @@ namespace BudgetExecution
             //Properties.Remove("ImageIndex");
             //Properties.Remove("ImageList");
         }
-        #endregion
 
+        #endregion
     }
 
     #endregion
 
     #region SmartTagActionList
+
     /// <summary>
     /// Class MetroCheckCircleSmartTagActionList.
     /// </summary>
     /// <seealso cref="System.ComponentModel.Design.DesignerActionList" />
-    public class MetroCheckCircleSmartTagActionList : System.ComponentModel.Design.DesignerActionList
+    public class MetroCheckCircleSmartTagActionList : DesignerActionList
     {
         //Replace SmartTag with the Component Class Name. In this case the component class name is SmartTag
         /// <summary>
@@ -698,24 +731,24 @@ namespace BudgetExecution
         /// </summary>
         private BudgetCheckCircle colUserControl;
 
-
         /// <summary>
         /// The designer action UI SVC
         /// </summary>
-        private DesignerActionUIService designerActionUISvc = null;
-
+        private DesignerActionUIService designerActionUISvc;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetroCheckCircleSmartTagActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroCheckCircleSmartTagActionList(IComponent component) : base(component)
+        public MetroCheckCircleSmartTagActionList( IComponent component )
+            : base( component )
         {
-            this.colUserControl = component as BudgetCheckCircle;
+            colUserControl = component as BudgetCheckCircle;
 
             // Cache a reference to DesignerActionUIService, so the 
             // DesigneractionList can be refreshed. 
-            this.designerActionUISvc = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+            designerActionUISvc =
+                GetService( typeof( DesignerActionUIService ) ) as DesignerActionUIService;
         }
 
         // Helper method to retrieve control properties. Use of GetProperties enables undo and menu updates to work properly.
@@ -725,18 +758,22 @@ namespace BudgetExecution
         /// <param name="propName">Name of the property.</param>
         /// <returns>PropertyDescriptor.</returns>
         /// <exception cref="System.ArgumentException">Matching ColorLabel property not found!</exception>
-        private PropertyDescriptor GetPropertyByName(String propName)
+        private PropertyDescriptor GetPropertyByName( String propName )
         {
             PropertyDescriptor prop;
-            prop = TypeDescriptor.GetProperties(colUserControl)[propName];
-            if (null == prop)
-                throw new ArgumentException("Matching ColorLabel property not found!", propName);
+            prop = TypeDescriptor.GetProperties( colUserControl )[ propName ];
+
+            if( null == prop )
+            {
+                throw new ArgumentException( "Matching ColorLabel property not found!", propName );
+            }
             else
+            {
                 return prop;
+            }
         }
 
         #region Properties that are targets of DesignerActionPropertyItem entries.
-
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="MetroCheckCircleSmartTagActionList"/> is checked.
@@ -750,7 +787,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Checked").SetValue(colUserControl, value);
+                GetPropertyByName( "Checked" ).SetValue( colUserControl, value );
             }
         }
 
@@ -766,7 +803,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("CheckOnClick").SetValue(colUserControl, value);
+                GetPropertyByName( "CheckOnClick" ).SetValue( colUserControl, value );
             }
         }
 
@@ -782,7 +819,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("UseFullDetectionArea").SetValue(colUserControl, value);
+                GetPropertyByName( "UseFullDetectionArea" ).SetValue( colUserControl, value );
             }
         }
 
@@ -798,7 +835,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("BackColor").SetValue(colUserControl, value);
+                GetPropertyByName( "BackColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -814,7 +851,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("ForeColor").SetValue(colUserControl, value);
+                GetPropertyByName( "ForeColor" ).SetValue( colUserControl, value );
             }
         }
 
@@ -830,7 +867,7 @@ namespace BudgetExecution
             }
             set
             {
-                this.colUserControl.ColorScheme.BorderColor = value;
+                colUserControl.ColorScheme.BorderColor = value;
             }
         }
 
@@ -842,11 +879,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this.colUserControl.ColorScheme.FillColor;
+                return colUserControl.ColorScheme.FillColor;
             }
             set
             {
-                this.colUserControl.ColorScheme.FillColor = value;
+                colUserControl.ColorScheme.FillColor = value;
             }
         }
 
@@ -858,11 +895,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this.colUserControl.ColorScheme._InnerCircleColor;
+                return colUserControl.ColorScheme._InnerCircleColor;
             }
             set
             {
-                this.colUserControl.ColorScheme._InnerCircleColor = value;
+                colUserControl.ColorScheme._InnerCircleColor = value;
             }
         }
 
@@ -878,7 +915,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Style").SetValue(colUserControl, value);
+                GetPropertyByName( "Style" ).SetValue( colUserControl, value );
             }
         }
 
@@ -886,7 +923,7 @@ namespace BudgetExecution
         /// Gets or sets the text.
         /// </summary>
         /// <value>The text.</value>
-        public new string Text
+        public string Text
         {
             get
             {
@@ -894,7 +931,7 @@ namespace BudgetExecution
             }
             set
             {
-                GetPropertyByName("Text").SetValue(colUserControl, value);
+                GetPropertyByName( "Text" ).SetValue( colUserControl, value );
             }
         }
 
@@ -906,77 +943,58 @@ namespace BudgetExecution
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection items = new DesignerActionItemCollection();
+            var items = new DesignerActionItemCollection( );
 
             //Define static section header entries.
-            items.Add(new DesignerActionHeaderItem("Behaviour"));
+            items.Add( new DesignerActionHeaderItem( "Behaviour" ) );
 
+            items.Add( new DesignerActionPropertyItem( "Checked", "Checked", "Behaviour",
+                "Sets the checked state." ) );
 
-            items.Add(new DesignerActionPropertyItem("Checked",
-                "Checked", "Behaviour",
-                "Sets the checked state."));
+            items.Add( new DesignerActionPropertyItem( "CheckOnClick", "Check On Click",
+                "Behaviour", "Set to change checked state on mouse click." ) );
 
-            items.Add(new DesignerActionPropertyItem("CheckOnClick",
-                "Check On Click", "Behaviour",
-                "Set to change checked state on mouse click."));
+            items.Add( new DesignerActionPropertyItem( "UseFullDetectionArea",
+                "Use Full Detection Area", "Behaviour", "Set to maximize detection area." ) );
 
-            items.Add(new DesignerActionPropertyItem("UseFullDetectionArea",
-                "Use Full Detection Area", "Behaviour",
-                "Set to maximize detection area."));
+            items.Add( new DesignerActionHeaderItem( "Appearance" ) );
 
-            items.Add(new DesignerActionHeaderItem("Appearance"));
+            items.Add( new DesignerActionPropertyItem( "ForeColor", "Fore Color", "Appearance",
+                "Selects the foreground color." ) );
 
+            items.Add( new DesignerActionPropertyItem( "BorderColor", "Border Color", "Appearance",
+                "Type few characters to filter Cities." ) );
 
-            items.Add(new DesignerActionPropertyItem("ForeColor",
-                                 "Fore Color", "Appearance",
-                                 "Selects the foreground color."));
+            items.Add( new DesignerActionPropertyItem( "FillColor", "Fill Color", "Appearance",
+                "Sets the border color." ) );
 
-            items.Add(new DesignerActionPropertyItem("BorderColor",
-                "Border Color", "Appearance",
-                "Type few characters to filter Cities."));
+            items.Add( new DesignerActionPropertyItem( "MainColor", "Main Color", "Appearance",
+                "Sets the main color." ) );
 
-            items.Add(new DesignerActionPropertyItem("FillColor",
-                "Fill Color", "Appearance",
-                "Sets the border color."));
+            items.Add( new DesignerActionPropertyItem( "Style", "Style", "Appearance",
+                "Sets the theme style." ) );
 
-            items.Add(new DesignerActionPropertyItem("MainColor",
-                "Main Color", "Appearance",
-                "Sets the main color."));
-
-            items.Add(new DesignerActionPropertyItem("Style",
-                "Style", "Appearance",
-                "Sets the theme style."));
-
-            items.Add(new DesignerActionPropertyItem("Text",
-                "Text", "Appearance",
-                "Sets the text."));
+            items.Add( new DesignerActionPropertyItem( "Text", "Text", "Appearance",
+                "Sets the text." ) );
 
             //Create entries for static Information section.
-            StringBuilder location = new StringBuilder("Product: ");
-            location.Append(colUserControl.ProductName);
-            StringBuilder size = new StringBuilder("Version: ");
-            size.Append(colUserControl.ProductVersion);
-            items.Add(new DesignerActionTextItem(location.ToString(),
-                             "Information"));
-            items.Add(new DesignerActionTextItem(size.ToString(),
-                             "Information"));
-
+            var location = new StringBuilder( "Product: " );
+            location.Append( colUserControl.ProductName );
+            var size = new StringBuilder( "Version: " );
+            size.Append( colUserControl.ProductVersion );
+            items.Add( new DesignerActionTextItem( location.ToString( ), "Information" ) );
+            items.Add( new DesignerActionTextItem( size.ToString( ), "Information" ) );
             return items;
         }
 
         #endregion
-
-
-
-
     }
 
     #endregion
 
     #endregion
-
 
     #region Old SmartTag
 
@@ -1004,11 +1022,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this._ccl.ColorScheme.BorderColor;
+                return _ccl.ColorScheme.BorderColor;
             }
             set
             {
-                this._ccl.ColorScheme.BorderColor = value;
+                _ccl.ColorScheme.BorderColor = value;
             }
         }
 
@@ -1020,11 +1038,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this._ccl.ColorScheme.FillColor;
+                return _ccl.ColorScheme.FillColor;
             }
             set
             {
-                this._ccl.ColorScheme.FillColor = value;
+                _ccl.ColorScheme.FillColor = value;
             }
         }
 
@@ -1036,11 +1054,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this._ccl.ColorScheme._InnerCircleColor;
+                return _ccl.ColorScheme._InnerCircleColor;
             }
             set
             {
-                this._ccl.ColorScheme._InnerCircleColor = value;
+                _ccl.ColorScheme._InnerCircleColor = value;
             }
         }
 
@@ -1052,11 +1070,11 @@ namespace BudgetExecution
         {
             get
             {
-                return this._ccl.Style;
+                return _ccl.Style;
             }
             set
             {
-                this._ccl.Style = value;
+                _ccl.Style = value;
             }
         }
 
@@ -1064,31 +1082,45 @@ namespace BudgetExecution
         /// Initializes a new instance of the <see cref="MetroCheckCircleActionList"/> class.
         /// </summary>
         /// <param name="component">A component related to the <see cref="T:System.ComponentModel.Design.DesignerActionList" />.</param>
-        public MetroCheckCircleActionList(IComponent component) : base(component)
+        public MetroCheckCircleActionList( IComponent component )
+            : base( component )
         {
-            this.designerActionSvc = null;
-            this._ccl = (BudgetCheckCircle)component;
-            this.designerActionSvc = (DesignerActionUIService)this.GetService(typeof(DesignerActionUIService));
+            designerActionSvc = null;
+            _ccl = (BudgetCheckCircle)component;
+
+            designerActionSvc =
+                (DesignerActionUIService)GetService( typeof( DesignerActionUIService ) );
         }
 
         /// <summary>
         /// Returns the collection of <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> objects contained in the list.
         /// </summary>
         /// <returns>A <see cref="T:System.ComponentModel.Design.DesignerActionItem" /> array that contains the items in this list.</returns>
-        public override DesignerActionItemCollection GetSortedActionItems()
+        public override DesignerActionItemCollection GetSortedActionItems( )
         {
-            DesignerActionItemCollection designerActionItemCollection = new DesignerActionItemCollection();
-            designerActionItemCollection.Add(new DesignerActionHeaderItem("Farb-Eigenschaften"));
-            designerActionItemCollection.Add(new DesignerActionPropertyItem("MainColor", "MainColor:", "Farb-Eigenschaften", "Die Hauptfarbe des CheckCircles."));
-            designerActionItemCollection.Add(new DesignerActionPropertyItem("FillColor", "FillColor:", "Farb-Eigenschaften", "Die Füll-Farbe des CheckCircles."));
-            designerActionItemCollection.Add(new DesignerActionPropertyItem("BorderColor", "BorderColor:", "Farb-Eigenschaften", "Die Farbe der Umrandung des CheckCircles."));
-            designerActionItemCollection.Add(new DesignerActionHeaderItem("Eigenschaften"));
-            designerActionItemCollection.Add(new DesignerActionPropertyItem("Style", "Style:", "Eigenschaften", "Der Style der BudgetProgressbar."));
+            var designerActionItemCollection = new DesignerActionItemCollection( );
+
+            designerActionItemCollection.Add(
+                new DesignerActionHeaderItem( "Farb-Eigenschaften" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "MainColor",
+                "MainColor:", "Farb-Eigenschaften", "Die Hauptfarbe des CheckCircles." ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "FillColor",
+                "FillColor:", "Farb-Eigenschaften", "Die Füll-Farbe des CheckCircles." ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "BorderColor",
+                "BorderColor:", "Farb-Eigenschaften",
+                "Die Farbe der Umrandung des CheckCircles." ) );
+
+            designerActionItemCollection.Add( new DesignerActionHeaderItem( "Eigenschaften" ) );
+
+            designerActionItemCollection.Add( new DesignerActionPropertyItem( "Style", "Style:",
+                "Eigenschaften", "Der Style der BudgetProgressbar." ) );
+
             return designerActionItemCollection;
         }
     }
-    
-    #endregion
 
-    
+    #endregion
 }
